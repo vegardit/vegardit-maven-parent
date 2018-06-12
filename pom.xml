@@ -34,6 +34,15 @@
 
 
     <properties>
+        <!-- 
+            use credentials from settings.xml for server with id "github.com" during maven release
+            http://maven.apache.org/maven-release/maven-release-plugin/faq.html#credentials
+            https://issues.apache.org/jira/browse/MRELEASE-420
+         -->
+        <project.scm.id>github.com</project.scm.id>
+
+        <github.site.server>${project.scm.id}</github.site.server>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -232,8 +241,9 @@
         <!-- http://maven.apache.org/scm/subversion.html -->
         <!-- http://maven.apache.org/scm/git.html -->
         <url>https://github.com/vegardit/vegardit-maven-parent</url>
-	<connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
-	<developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
+        <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
+        <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
 
@@ -970,6 +980,8 @@
                         <!-- workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399 "org.codehaus.gmavenplus:gmavenplus-plugin:execute" -->
                         <!-- run groovy to restore keyword RELEASE after release build -->
                         <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
+
+                        <tagNameFormat>@{project.version}</tagNameFormat>
                     </configuration>
                     <dependencies>
                         <dependency>
@@ -1362,8 +1374,6 @@
                                                 setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")))
                                             if(!project.properties.containsKey("github.site.repositoryName"))
                                                 setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1))
-                                            if(!project.properties.containsKey("github.site.server"))
-                                                setProjectProp("github.site.server", "github")
                                             if(!project.properties.containsKey("github.site.branch"))
                                                 setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo")
                                         }
@@ -1713,7 +1723,7 @@
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
-                                                <ignore></ignore>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                         <pluginExecution>
