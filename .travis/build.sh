@@ -9,9 +9,9 @@
 set -e # abort script at first error
 set -o pipefail # causes a pipeline to return the exit status of the last command in the pipe that returned a non-zero return value
 
-if [[ -f ./release-config.sh ]]; then
-    echo "Sourcing [./release-config.sh]..." 
-    source ./release-config.sh
+if [[ -f ./release-trigger.sh ]]; then
+    echo "Sourcing [./release-trigger.sh]..." 
+    source ./release-trigger.sh
 fi
 
 MAVEN_VERSION=3.5.3
