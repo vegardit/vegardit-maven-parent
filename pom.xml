@@ -1,0 +1,1741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2013-2018 by Vegard IT GmbH, Germany, https://vegardit.com
+    SPDX-License-Identifier: Apache-2.0
+
+    @author Sebastian Thomschke, Vegard IT GmbH
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.vegardit.maven</groupId>
+    <artifactId>vegardit-maven-parent</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <url>https://vegardit.com/</url>
+    <organization>
+        <name>Vegard IT GmbH, Germany</name>
+        <url>https://vegardit.com/</url>
+    </organization>
+    <inceptionYear>2013</inceptionYear>
+
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <distribution>repo</distribution>
+            <url>https://spdx.org/licenses/Apache-2.0.html</url>
+        </license>
+    </licenses>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java.version>1.8</java.version>
+        <java.vendor>default</java.vendor>
+
+        <java.version.unit-tests>${java.version}</java.version.unit-tests>
+        <java.vendor.unit-tests>${java.vendor}</java.vendor.unit-tests>
+
+        <java.version.integration-tests>${java.version}</java.version.integration-tests>
+        <java.vendor.integration-tests>${java.vendor}</java.vendor.integration-tests>
+
+        <!-- until https://github.com/mojohaus/extra-enforcer-rules/issues/52 -->
+        <enforcer.maxBytecodeVersion>${java.version}</enforcer.maxBytecodeVersion>
+
+        <!-- requiring 3.2.2 because of https://issues.apache.org/jira/browse/MNG-4565 -->
+        <maven.minimum.version>3.2.2</maven.minimum.version>
+
+        <maven.scm.version>1.9.5</maven.scm.version>
+        <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
+        <maven.wagon.version>3.1.0</maven.wagon.version>
+
+        <!-- see http://www.mkyong.com/maven/maven-site-build-is-very-slow-dependency-report/ -->
+        <!-- see http://java-drobnosti.blogspot.de/2012/12/maven-slow-generating-dependencies.html -->
+        <dependency.locations.enabled>false</dependency.locations.enabled>
+        <dependency.details.enabled>false</dependency.details.enabled>
+
+        <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
+        <buildtime.output.log>true</buildtime.output.log>
+
+        <custom.niceManifest>true</custom.niceManifest>
+
+        <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
+        <groovy.script.onInitialize><![CDATA[
+            // workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
+            session.systemProperties["buildtime.output.log"] = "true"; 
+
+            if(project.parent != null) {
+                // workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399
+                log.info("=== PARENT-VERSION-MODIFIER: START ===");
+
+                def projectParentVersionRaw = "${project.parent.version}"
+                def projectParentVersionResolved  = project.parent.version
+                def pomXmlReleaseBackupFile = new File(project.basedir, "pom.xml.releaseBackup")
+
+                log.info("project.basedir:               " + project.basedir);
+                log.info("project.version:               " + project.version);
+                log.info("project.parent.version:        " + projectParentVersionRaw + " (raw) / " + projectParentVersionResolved + " (resolved)");
+                log.info("pom.xml.releaseBackup exists:  " + pomXmlReleaseBackupFile.exists());
+
+                def isBeforeReleasePomCommit      = !project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists();
+                def isBeforeNextSnapshotPomCommit =  project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists();
+
+                log.info("isBeforeReleasePomCommit:      " + isBeforeReleasePomCommit);
+                log.info("isBeforeNextSnapshotPomCommit: " + isBeforeNextSnapshotPomCommit);
+
+                def newParentVersion = null
+
+                if(isBeforeReleasePomCommit) {
+                    // this code block is for invocation via <preparationGoals>clean verify</preparationGoals>
+                    // --> we are working on the release POM before commit
+                    log.info("Processing release pom before commit...")
+                    if(projectParentVersionRaw in ["RELEASE", "LATEST"]) {
+                        newParentVersion = projectParentVersionResolved
+                    }
+                } else if (isBeforeNextSnapshotPomCommit) {
+                    // this code block is for invocation via <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
+                    // --> we are working on the next development snapshot POM before commit
+                    log.info("Processing next snapshot pom commit...")
+                    def oldPomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomXmlReleaseBackupFile)).documentElement
+                    use(groovy.xml.dom.DOMCategory) {
+                        oldPomParentVersion = oldPomRoot.parent.version[0].text()
+                    }
+                    if(projectParentVersionRaw != oldPomParentVersion && oldPomParentVersion in ["RELEASE", "LATEST"]) {
+                        newParentVersion = oldPomParentVersion
+                    }
+                }
+
+                if(newParentVersion) {
+                    log.info("Action: Changing <parent><version> in pom.xml to: " + newParentVersion);
+                    def pomFile = new File(project.basedir, "pom.xml")
+                    def pomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomFile)).documentElement
+                    use(groovy.xml.dom.DOMCategory) {
+                        pomRoot.parent.version[0].value = newParentVersion
+                    }
+                    xmlBadEndings = groovy.xml.XmlUtil.serialize(pomRoot);
+                    xmlLinuxEndings = xmlBadEndings.replaceAll(/\r?\n/,"\n")
+                    xml = xmlLinuxEndings.replace("\n", System.getProperty("line.separator"))
+                    pomFile.write(xml)
+                } else {
+                    log.info("Action: none");
+                }
+
+                log.info("=== PARENT-VERSION-MODIFIER: END ===");
+            } else {
+                log.debug("=== PARENT-VERSION-MODIFIER: SKIPPED ===");
+            }
+
+
+            def setProjectProp = { String name, String value -> 
+                project.properties[name] = value
+                log.info("Set project property [$name] '${project.properties[name]}'");
+            }
+
+
+            /*
+             * determine if the artefact contains Java sources
+             */
+            setProjectProp("custom.noJavaArtefact", project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"] ? "false" : "true");
+
+
+            /*
+             * loading/locating eclipse Java compiler artifact
+             */
+            def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver");
+            def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory");
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt.core.compiler", "ecj", "4.6.1", "jar", null);
+            def ecjArtifact = artifactResolver.resolve(
+                new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                .setArtifact(ecjArtifactMeta)
+                .setLocalRepository(session.localRepository)
+                .setRemoteRepositories(project.remoteArtifactRepositories)
+            ).artifacts[0];
+            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
+
+
+            /*
+             * determine bootclasspath for compilation of src/main/java
+             */
+            def compileJDKSpec = [
+                "version": project.properties["java.version"], 
+                "vendor": project.properties["java.vendor"]
+            ];
+            // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain
+            def jdkToolchains = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec);
+            if(!jdkToolchains)
+                throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
+            def compileJDK = jdkToolchains[0];
+            setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jre/lib/rt.jar;${compileJDK.javaHome}/jre/lib/jce.jar;${compileJDK.javaHome}/jre/lib/jsse.jar");
+
+
+            /*
+             * determine bootclasspath for compilation of src/test/java
+             */
+            def testCompileJDKSpec = [
+                "version": project.properties["java.version.unit-tests"], 
+                "vendor": project.properties["java.vendor.unit-tests"]
+            ];
+            jdkToolchains = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec);
+            if(!jdkToolchains)
+                throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
+            def testCompileJDK=jdkToolchains[0];
+            setProjectProp("custom.testCompileBootClasspath", "${testCompileJDK.javaHome}/jre/lib/rt.jar;${testCompileJDK.javaHome}/jre/lib/jce.jar;${testCompileJDK.javaHome}/jre/lib/jsse.jar");
+
+
+            /*
+             * configure javadoc command, https://stackoverflow.com/questions/27728733/javadoc-error-invalid-flag-xdoclintnone-when-i-use-java-7-but-it-works-i
+             * since it is toolchain aware and executed after the integration tests we check the integration test JDK if it supports "-Xdoclint:none"
+             */
+            def stdOut = new StringBuilder();
+            def proc = (testCompileJDK.javaHome + "/bin/javadoc -X").execute();
+            proc.consumeProcessOutput(stdOut, null);
+            proc.waitForOrKill(2000);
+            setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "");
+            setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "");
+            
+            if(project.properties.get("custom.noJavaArtefact") == "true" || project.version.endsWith("-SNAPSHOT")) {
+                setProjectProp("maven.javadoc.skip", "true");
+            }
+
+            /*
+             * set compile/test classpath elements as maven properties
+             */
+            def compileClasspath = new LinkedHashSet<String>();
+            compileClasspath.addAll(project.compileClasspathElements);
+            compileClasspath.addAll(project.runtimeClasspathElements);
+            setProjectProp("custom.compileClasspathElements",  org.apache.commons.lang3.StringUtils.join(compileClasspath, ";"));
+
+            compileClasspath.addAll(project.testClasspathElements);
+            setProjectProp("custom.testClasspathElements",  org.apache.commons.lang3.StringUtils.join(compileClasspath, ";"));
+
+            /*
+             * Manifest template location, used by maven-bundle-plugin
+             */
+             if (!project.properties.containsKey("custom.manifestTemplateFile")) {
+                 if(new File("src/main/resources/META-INF/MANIFEST.MF").exists())
+                     setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF");
+                 else if(new File("src/main/java/META-INF/MANIFEST.MF").exists())
+                     setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF");
+             }
+        ]]></groovy.script.onInitialize>
+    </properties>
+
+
+    <scm>
+        <!-- http://maven.apache.org/scm/subversion.html -->
+        <!-- http://maven.apache.org/scm/git.html -->
+        <url>https://github.com/vegardit/vegardit-maven-parent</url>
+	<connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
+	<developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
+    </scm>
+
+
+    <distributionManagement>
+        <downloadUrl>https://dl.bintray.com/vegardit/maven-public-releases</downloadUrl>
+        <repository>
+            <id>bintray-vegardit-maven-public-releases</id>
+            <url>https://api.bintray.com/maven/vegardit/maven-public/${project.artifactId}/;publish=0</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
+
+
+    <ciManagement>
+        <system>travis-ci.org</system>
+        <url>https://travis-ci.org/vegardit/vegardit-maven-parent</url>
+    </ciManagement>
+
+
+    <issueManagement>
+        <system>github.com</system>
+        <url>https://github.com/vegardit/vegardit-maven-parent/issues</url>
+    </issueManagement>
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>META-INF/MANIFEST.MF</include>
+                    <include>**/*.cfg</include>
+                    <include>**/*.ini</include>
+                    <include>**/*.html</include>
+                    <include>**/*.md</include>
+                    <include>**/*.props</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yaml</include>
+                    <include>**/*.yml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                    <exclude>**/*.cfg</exclude>
+                    <exclude>**/*.ini</exclude>
+                    <exclude>**/*.html</exclude>
+                    <exclude>**/*.md</exclude>
+                    <exclude>**/*.props</exclude>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>**/*.txt</exclude>
+                    <exclude>**/*.xml</exclude>
+                    <exclude>**/*.yaml</exclude>
+                    <exclude>**/*.yml</exclude>
+                </excludes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+
+
+        <plugins>
+            <!--
+            ================================================================
+            globally enabled plug-ins
+            ================================================================
+            -->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <!-- Add maven project properties containing the path to artifact in the local repo for all dependencies to see https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html -->
+                        <id>properties@initialize</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skip.maven-dependency-plugin.properties}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <!-- https://github.com/semper-reformanda/dependencyversion-maven-plugin -->
+                <groupId>io.reformanda.semper</groupId>
+                <artifactId>dependencyversion-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <!-- Add maven project properties containing the versions of all dependencies to see https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html -->
+                        <id>set-version@initialize</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>set-version</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <!-- http://groovy.github.io/GMavenPlus/ -->
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>groovy.script.onInitialize@initialize</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <scripts>
+                                <script>${groovy.script.onInitialize}</script>
+                            </scripts>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>groovy.script.onInitialize@pre-site</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <scripts>
+                                <script>${groovy.script.onInitialize}</script>
+                            </scripts>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scripts>
+                        <!-- script source used by direct invocation via <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals> -->
+                        <script>${groovy.script.onInitialize}</script>
+                    </scripts>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-ant</artifactId>
+                        <version>2.5.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-lang3</artifactId>
+                        <!-- min 3.7 because of https://issues.apache.org/jira/browse/LANG-1365 -->
+                        <version>3.7</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-toolchains-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <executions>
+                    <execution>
+                        <id>basic-checks@validate</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <rules>
+                                <banCircularDependencies />
+                                <banDuplicatePomDependencyVersions />
+
+                                <requireMavenVersion>
+                                    <version>[${maven.minimum.version},)</version>
+                                </requireMavenVersion>
+
+                                <requirePluginVersions>
+                                    <message>Always use fixed plug-in versions to ensure repeatable builds.</message>
+                                    <banLatest>true</banLatest>
+                                    <banRelease>true</banRelease>
+                                    <banSnapshots>true</banSnapshots>
+                                    <banTimestamps>false</banTimestamps>
+                                    <phases>clean,deploy,site</phases>
+                                </requirePluginVersions>
+
+                                <requireReleaseDeps>
+                                    <failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
+                                    <onlyWhenRelease>true</onlyWhenRelease>
+                                </requireReleaseDeps>
+
+                                <reactorModuleConvergence>
+                                    <message>The reactor is not valid, see https://maven.apache.org/enforcer/enforcer-rules/reactorModuleConvergence.html</message>
+                                    <ignoreModuleDependencies>true</ignoreModuleDependencies>
+                                </reactorModuleConvergence>
+
+                                <requireSameVersions>
+                                    <plugins>
+                                        <plugin>org.apache.maven.plugins:maven-surefire-plugin</plugin>
+                                        <plugin>org.apache.maven.plugins:maven-failsafe-plugin</plugin>
+                                        <plugin>org.apache.maven.plugins:maven-surefire-report-plugin</plugin>
+                                    </plugins>
+                                </requireSameVersions>
+
+                                <requireSameVersions>
+                                    <dependencies>
+                                        <dependency>org.apache.maven:*</dependency>
+                                    </dependencies>
+                                </requireSameVersions>
+
+                                <requireSameVersions>
+                                    <dependencies>
+                                        <dependency>org.apache.maven.wagon:*</dependency>
+                                    </dependencies>
+                                </requireSameVersions>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enforce-bytecode-version@validate</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <skip>${skip.enforcer.enforce-bytecode-version}</skip>
+                            <rules>
+                                <enforceBytecodeVersion>
+                                    <maxJdkVersion>${enforcer.maxBytecodeVersion}</maxJdkVersion>
+                                    <ignoredScopes>
+                                        <ignoredScope>optional</ignoredScope>
+                                        <ignoredScope>provided</ignoredScope>
+                                        <ignoredScope>runtime</ignoredScope>
+                                        <ignoredScope>test</ignoredScope>
+                                    </ignoredScopes>
+                                </enforceBytecodeVersion>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>ban-duplicate-classes@validate</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <skip>${skip.enforcer.ban-duplicate-classes}</skip>
+                            <rules>
+                                <banDuplicateClasses>
+                                    <findAllDuplicates>true</findAllDuplicates>
+                                </banDuplicateClasses>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>dependency-convergence@validate</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <skip>${skip.enforcer.dependency-convergence}</skip>
+                            <fail>false</fail>
+                            <rules>
+                                <!-- http://maven.apache.org/enforcer/enforcer-rules/dependencyConvergence.html -->
+                                <dependencyConvergence />
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <!-- http://www.mojohaus.org/extra-enforcer-rules/ -->
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>1.0-beta-7</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <!-- https://github.com/HubSpot/dependency-scope-maven-plugin -->
+                <groupId>com.hubspot.maven.plugins</groupId>
+                <artifactId>dependency-scope-maven-plugin</artifactId>
+                <version>0.8</version>
+                <executions>
+                    <execution>
+                        <id>check@validate</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <skip>${skip.dependency-scope-maven-plugin}</skip>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 
+               We are using the Eclipse Compiler via the exec-maven-plugin because neither plexus-compiler-eclipse nor tycho-compiler-jdt 
+               (https://wiki.eclipse.org/Tycho/FAQ#Can_I_use_the_Tycho_compiler_support_in_non-OSGi_projects.2C_too.3F) are toolchain aware thus would 
+               always compile against the boot-classpath of the JVM executing Maven.
+            -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <executions>
+                    <!-- this plugin's default phases are disabled in the 'outside-eclipse-profile' since we use the exec-maven-plugin to execute ecj -->
+                </executions>
+                <!-- the source and target configuration is added here for the maven-javadoc-plugin and the m2eclipse project configuration which rely on these values-->
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>ecj@compile</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <skip>${custom.noJavaArtefact}</skip>
+                            <executable>java</executable>
+                            <classpathScope>compile</classpathScope>
+                            <arguments>
+                                <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
+                                <argument>-jar</argument>
+                                <argument>${custom.ecjJarPath}</argument>
+                                <argument>-bootclasspath</argument>
+                                <argument>${custom.compileBootClasspath}</argument>
+                                <argument>-encoding</argument>
+                                <argument>${project.build.sourceEncoding}</argument>
+                                <argument>-g</argument> <!-- include debug info -->
+                                <argument>-parameters</argument> <!-- preserve information about the formal parameters -->
+                                <argument>-O</argument> <!-- optimize for execution time -->
+                                <argument>-time</argument> <!-- display speed information. -->
+                                <argument>-showversion</argument> <!-- display the build number of the compiler -->
+                                <argument>-d</argument>
+                                <argument>${project.build.outputDirectory}</argument>
+                                <argument>-source</argument>
+                                <argument>${java.version}</argument>
+                                <argument>-target</argument>
+                                <argument>${java.version}</argument>
+                                <argument>-cp</argument>
+                                <argument>${custom.compileClasspathElements}</argument> <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                                <argument>${project.build.sourceDirectory}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>ecj@test-compile</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>test-compile</phase>
+                        <configuration>
+                            <skip>${custom.noJavaArtefact}</skip>
+                            <executable>java</executable>
+                            <classpathScope>test</classpathScope>
+                            <arguments>
+                                <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
+                                <argument>-jar</argument>
+                                <argument>${custom.ecjJarPath}</argument>
+                                <arguemt>-bootclasspath</arguemt>
+                                <argument>${custom.testCompileBootClasspath}</argument>
+                                <argument>-encoding</argument>
+                                <argument>${project.build.sourceEncoding}</argument>
+                                <argument>-g</argument> <!-- include debug info -->
+                                <argument>-parameters</argument> <!-- preserve information about the formal parameters -->
+                                <argument>-O</argument> <!-- optimize for execution time -->
+                                <argument>-time</argument> <!-- display speed information. -->
+                                <argument>-showversion</argument> <!-- display the build number of the compiler -->
+                                <argument>-d</argument>
+                                <argument>${project.build.testOutputDirectory}</argument>
+                                <argument>-source</argument>
+                                <argument>${java.version.unit-tests}</argument>
+                                <argument>-target</argument>
+                                <argument>${java.version.unit-tests}</argument>
+                                <argument>-cp</argument>
+                                <argument>${custom.testClasspathElements}</argument> <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                                <argument>${project.build.testSourceDirectory}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>delete-java-stubs@process-classes</id>
+                        <phase>process-classes</phase>
+                        <configuration>
+                            <skip>${custom.noJavaArtefact}</skip>
+                            <target>
+                                <!-- delete the java.*/javax.* stubs after compilation, before testing -->
+                                <delete dir="${project.build.directory}/classes/java" />
+                                <delete dir="${project.build.directory}/classes/javax" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <!-- http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.5.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>manifest@process-classes</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${custom.noJavaArtefact}</skip>
+                            <supportedProjectTypes>
+                                <supportedProjectType>jar</supportedProjectType>
+                                <supportedProjectType>bundle</supportedProjectType>
+                                <supportedProjectType>war</supportedProjectType>
+                            </supportedProjectTypes>
+                            <instructions>
+                                <_include>${custom.manifestTemplateFile}</_include>
+                                <Private-Package>*.internal.*</Private-Package>
+                                <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                            </instructions>
+                            <niceManifest>${custom.niceManifest}</niceManifest>
+                            <obrRepository>NONE</obrRepository>
+                            <excludeDependencies>true</excludeDependencies>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources-no-fork</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${custom.noJavaArtefact}</skip>
+                    <excludes>
+                        <!-- exclude java.*, javax.* stubs -->
+                        <exclude>java/**/*</exclude>
+                        <exclude>java</exclude>
+                        <exclude>javax/**/*</exclude>
+                        <exclude>javax</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-and-attach-javadoc</id>
+                        <phase>verify</phase> <!-- only execute after successful integration tests -->
+                        <goals>
+                            <goal>javadoc-no-fork</goal>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <!-- enable code coverage -->
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.1</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <propertyName>jacoco.surefireAgent</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/code-coverage</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <propertyName>jacoco.failsafeAgent</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>${custom.noJavaArtefact}</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+
+
+        <pluginManagement>
+            <!--
+            ================================================================
+            globally defined plug-in configurations and versions
+            these settings only take effect once a plugin is actually used in the build/plugins section 
+            ================================================================
+            -->
+            <!-- 
+                executions are bound to phase "none" in child projects, thus they need to be explicitly enabled
+                https://stackoverflow.com/questions/16540808/can-i-configure-multiple-plugin-executions-in-pluginmanagement-and-choose-from
+             -->
+            <plugins>
+                <plugin>
+                    <artifactId>maven-toolchains-plugin</artifactId>
+                    <version>1.1</version>
+                    <executions>
+                        <execution>
+                            <id>toolchain@process-test-classes (i.e. pre-unit-tests)</id>
+                            <phase>process-test-classes</phase>
+                            <goals>
+                                <goal>toolchain</goal>
+                            </goals>
+                            <configuration>
+                                <toolchains>
+                                    <jdk>
+                                        <version>${java.version.unit-tests}</version>
+                                        <vendor>${java.vendor.unit-tests}</vendor>
+                                    </jdk>
+                                </toolchains>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>toolchain@pre-integration-test</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>toolchain</goal>
+                            </goals>
+                            <configuration>
+                                <toolchains>
+                                    <jdk>
+                                        <version>${java.version.integration-tests}</version>
+                                        <vendor>${java.vendor.integration-tests}</vendor>
+                                    </jdk>
+                                </toolchains>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>toolchain@verify (i.e. pre-javadoc)</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>toolchain</goal>
+                            </goals>
+                            <configuration>
+                                <toolchains>
+                                    <jdk>
+                                        <version>${java.version.integration-tests}</version>
+                                        <vendor>${java.vendor.integration-tests}</vendor>
+                                    </jdk>
+                                </toolchains>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <archive>
+                            <!-- generated by maven-bundle-plugin: -->
+                            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                            <!-- To support http://stackoverflow.com/questions/2712970/how-to-get-maven-artifact-version-at-runtime -->
+                            <manifest>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                        <excludes>
+                            <exclude>builddef.lst</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <archive>
+                            <!-- generated by maven-bundle-plugin: -->
+                            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                            <!-- To support http://stackoverflow.com/questions/2712970/how-to-get-maven-artifact-version-at-runtime -->
+                            <manifest>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                        <warSourceExcludes>WEB-INF/portlet.tld,WEB-INF/portlet_2_0.tld</warSourceExcludes>
+
+                        <!--  see https://pragmaticintegrator.wordpress.com/2010/10/22/using-a-war-module-as-dependency-in-maven/ -->
+                        <!-- see "How do I add my web project classes to another project's classpath" http://wiki.eclipse.org/M2E-WTP_FAQ#How_do_I_add_my_web_project_classes_to_another_project.27s_classpath.3F -->
+                        <attachClasses>true</attachClasses>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <!-- to support http://stackoverflow.com/questions/2712970/how-to-get-maven-artifact-version-at-runtime -->
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                        <version>6</version>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-scm-plugin</artifactId>
+                    <version>${maven.scm.version}</version>
+                    <configuration>
+                        <providerImplementations>
+                            <!-- use a pure Java based SVN implementation to allow easy cross platform builds -->
+                            <svn>javasvn</svn>
+                        </providerImplementations>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+                            <artifactId>maven-scm-provider-svnjava</artifactId>
+                            <version>${maven.scm.svnjava.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.3</version>
+                    <configuration>
+                        <providerImplementations>
+                            <!-- use a pure Java based SVN implementation to allow easy cross platform builds -->
+                            <svn>javasvn</svn>
+                        </providerImplementations>
+
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+
+                        <!-- the release profile will be removed from future versions of the super POM so better not rely on it -->
+                        <useReleaseProfile>false</useReleaseProfile>
+
+                        <!-- workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399 "org.codehaus.gmavenplus:gmavenplus-plugin:execute" -->
+                        <!-- run groovy to restore keyword RELEASE after release build -->
+                        <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+                            <artifactId>maven-scm-provider-svnjava</artifactId>
+                            <version>${maven.scm.svnjava.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-changelog-plugin</artifactId>
+                    <version>2.3</version>
+                    <configuration>
+                        <providerImplementations>
+                            <!-- use a pure Java based SVN implementation to allow easy cross platform builds -->
+                            <svn>javasvn</svn>
+                        </providerImplementations>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+                            <artifactId>maven-scm-provider-svnjava</artifactId>
+                            <version>${maven.scm.svnjava.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.scm</groupId>
+                            <artifactId>maven-scm-api</artifactId>
+                            <version>${maven.scm.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.scm</groupId>
+                            <artifactId>maven-scm-provider-svn-commons</artifactId>
+                            <version>${maven.scm.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                    <configuration>
+                        <!-- https://issues.apache.org/jira/browse/WAGON-354 -->
+                        <chmod>false</chmod>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <!-- https://tcollignon.github.io/2016/10/24/Unable-to-locate-site-descriptor-maven-site-plugin-problem.html -->
+                            <id>attach-descriptor</id>
+                            <goals>
+                                <goal>attach-descriptor</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.maven.doxia</groupId>
+                            <artifactId>doxia-module-markdown</artifactId>
+                            <version>1.8</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-webdav-jackrabbit</artifactId>
+                            <version>${maven.wagon.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <!-- faster builds -->
+                        <recompressZippedFiles>false</recompressZippedFiles>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <!-- exclude unit tests ending with ITest (= integration tests) from unit-test phase -->
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.21.0</version>
+                    <configuration>
+                        <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Duser.language=en -Duser.region=US -noverify
+                            ${jacoco.surefireAgent}</argLine>
+                        <excludes>
+                            <exclude>**/Abstract*</exclude>
+                            <exclude>**/*ITest.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <!-- http://maven.apache.org/surefire/maven-failsafe-plugin/usage.html -->
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.21.0</version>
+                    <configuration>
+                        <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Duser.language=en -Duser.region=US -noverify
+                            ${jacoco.failsafeAgent}</argLine>
+                        <excludes>
+                            <exclude>**/Abstract*</exclude>
+                        </excludes>
+                        <includes>
+                            <include>**/*ITest.java</include>
+                        </includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <!-- This plugin provides the capability to package the artifact in an uber-jar -->
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+
+                <plugin>
+                    <!-- Generate Javadoc for the project -->
+                    <!-- http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
+                    <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#Where_in_the_pom.xml_do_I_configure_the_Javadoc_Plugin -->
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <skip>${maven.javadoc.skip}</skip>
+                        <!-- exclude internal package and java.*, javax.* stubs -->
+                        <excludePackageNames>*.internal:*.internal.*:java:java.*:javax:javax.*</excludePackageNames>
+                        <linksource>false</linksource>
+                        <notimestamp>true</notimestamp>
+                        <failOnError>true</failOnError>
+                        <validateLinks>false</validateLinks>
+                        <additionalOptions>
+                            <additionalOption>${custom.javadocOptionXdoclint}</additionalOption>
+                            <additionalOption>${custom.javadocOptionHtml5}</additionalOption>
+                        </additionalOptions>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+
+        <extensions>
+            <extension>
+                <!-- measure and report time used by each plugin/goal -->
+                <!-- https://github.com/timgifford/maven-buildtime-extension -->
+                <groupId>co.leantechniques</groupId>
+                <artifactId>maven-buildtime-extension</artifactId>
+                <version>2.0.3</version>
+                <!-- 
+                  Newer versions like 3.x and other profilers like https://github.com/khmarbaise/maven-buildtime-profiler
+                  or https://github.com/jcgay/maven-profiler are not portable as they cannot be configured in the parent pom.xml 
+                  directly but need to be registered at ~/.m2/extensions.xml or <projectroot>/.m2/extensions.xml
+                 -->
+            </extension>
+
+            <extension>
+                <!-- https://github.com/trustin/os-maven-plugin -->
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.6.0</version>
+            </extension>
+
+            <extension>
+                <!-- access settings.xml/servers via maven properties -->
+                <!-- https://github.com/shyiko/servers-maven-extension -->
+                <groupId>com.github.shyiko.servers-maven-extension</groupId>
+                <artifactId>servers-maven-extension</artifactId>
+                <version>1.3.1</version>
+            </extension>
+
+            <extension>
+                <!-- webdav support -->
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>${maven.wagon.version}</version>
+            </extension>
+
+            <extension>
+                <!-- sftp support -->
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>${maven.wagon.version}</version>
+            </extension>
+        </extensions>
+    </build>
+
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <!-- Generate Javadoc for the project -->
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <skip>${skip.report.maven-javadoc-plugin}</skip>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>html</id>
+                        <reports>
+                            <report>javadoc-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <!-- Generate a report based on the results of unit tests. -->
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.21.0</version>
+                <configuration>
+                    <skip>${skip.report.maven-surefire-report-plugin}</skip>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report-only</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.1</version>
+                <configuration>
+                    <skip>${skip.report.jacoco-maven-plugin}</skip>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <!-- TODO, @todo list report -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <tagListOptions>
+                        <tagClasses>
+                            <tagClass>
+                                <displayName>FIXME Work</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>fixme</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>@fixme</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                            <tagClass>
+                                <displayName>TODO Work</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>todo</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>@todo</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                            <tagClass>
+                                <displayName>Deprecated Work</displayName>
+                                <tags>
+                                    <tag>
+                                        <matchString>@deprecated</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                        </tagClasses>
+                    </tagListOptions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <skip>${skip.report.maven-project-info-reports-plugin}</skip>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependencies</report>
+                            <report>project-team</report>
+                            <report>summary</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <!--
+                    The basic purpose of "Maven Dashboard Report Plugin" is to centralize and share all
+                    quality informations generated by other Maven report plugins
+                -->
+                <!-- <groupId>org.codehaus.mojo</groupId>
+                <artifactId>dashboard-maven-plugin</artifactId>
+                <version>1.0.0-beta-1</version>-->
+                <configuration>
+                    <skip>${skip.report.dashboard-maven-plugin}</skip>
+                </configuration>
+
+                <groupId>com.thesett</groupId>
+                <artifactId>dashboard-maven-plugin</artifactId>
+                <version>0.8.22</version>
+
+            </plugin>
+        </plugins>
+    </reporting>
+
+
+    <profiles>
+
+        <profile>
+            <id>travis-ci-deploy-snapshots-to-github</id>
+
+            <activation>
+                <property>
+                    <!-- https://docs.travis-ci.com/user/environment-variables/ -->
+                    <name>env.TRAVIS</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
+            <!-- https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
+            <!-- https://malalanayake.wordpress.com/2014/03/10/create-simple-maven-repository-on-github/ -->
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>temp-snapshots-repo</id>
+                    <url>file://${project.build.directory}/mvn-snapshots-repo</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </snapshotRepository>
+            </distributionManagement>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <altSnapshotDeploymentRepository>temp-snapshots-repo::default::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>configure-github-site-maven-plugin@initialize</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <scripts>
+                                        <script><![CDATA[
+                                        def setProjectProp = { String name, String value -> 
+                                            project.properties[name] = value
+                                            log.info("Set project property [$name] '${project.properties[name]}'");
+                                        }
+
+                                        // disable deployment via site-maven-plugin for non-SNAPSHOT builds
+                                        if(!project.version.endsWith("-SNAPSHOT"))
+                                            setProjectProp("github.site.skip", "true")
+                                        else {
+                                            def env = System.getenv()
+                                            def repoSlug = env["TRAVIS_REPO_SLUG"]
+                                            if(!project.properties.containsKey("github.site.repositoryOwner"))
+                                                setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")))
+                                            if(!project.properties.containsKey("github.site.repositoryName"))
+                                                setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1))
+                                            if(!project.properties.containsKey("github.site.server"))
+                                                setProjectProp("github.site.server", "github")
+                                            if(!project.properties.containsKey("github.site.branch"))
+                                                setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo")
+                                        }
+                                        ]]></script>
+                                    </scripts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <!-- https://github.com/github/maven-plugins -->
+                        <groupId>com.github.github</groupId>
+                        <artifactId>site-maven-plugin</artifactId>
+                        <version>0.12</version>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <goals>
+                                    <goal>site</goal>
+                                </goals>
+                                <phase>deploy</phase>
+                                <configuration>
+                                    <skip>${github.site.skip}</skip>
+                                    <message>Maven artifacts for ${project.version} (Travis CI build ${env.TRAVIS_JOB_NUMBER})</message>
+                                    <noJekyll>true</noJekyll>
+                                    <outputDirectory>${project.build.directory}/mvn-snapshots-repo</outputDirectory>
+                                    <branch>${github.site.branch}</branch>
+                                    <merge>true</merge>
+                                    <repositoryOwner>${github.site.repositoryOwner}</repositoryOwner>
+                                    <repositoryName>${github.site.repositoryName}</repositoryName>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+
+                                    <!-- server id as set in settings.xml that contains the credentials -->
+
+                                    <server>${github.site.server}</server>
+                                    <!-- 
+                                       if a access token is used it needs repo.repo_public and user.user:email permissions otherwise
+                                       "Error retrieving user info: Not Found (404)" occurs, see https://github.com/github/maven-plugins/issues/100
+                                     -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>release-config</id>
+
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <inherited>true</inherited>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <updateReleaseInfo>true</updateReleaseInfo>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>jrebel-config</id>
+            <!-- only activated if executed within Eclipse and if rebel-remote.xml is present, requires Maven 3.2.2 or higher, see https://issues.apache.org/jira/browse/MNG-4565 -->
+            <activation>
+                <property>
+                    <name>eclipse.application</name>
+                </property>
+                <file>
+                    <exists>src/main/resources/rebel-remote.xml</exists>
+                </file>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.zeroturnaround</groupId>
+                        <artifactId>jrebel-maven-plugin</artifactId>
+                        <version>1.1.8</version>
+                        <executions>
+                            <execution>
+                                <id>generate-rebel-xml</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <addResourcesDirToRebelXml>true</addResourcesDirToRebelXml>
+                            <alwaysGenerate>false</alwaysGenerate>
+                            <showGenerated>true</showGenerated>
+                            <generateDefaultElements>true</generateDefaultElements>
+                        </configuration>
+                    </plugin>
+                </plugins>
+
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <configuration>
+                                <packagingExcludes>**/rebel.xml</packagingExcludes>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-jar-plugin</artifactId>
+                            <configuration>
+                                <excludes>
+                                    <exclude>**/rebel.xml</exclude>
+                                </excludes>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>outside-eclipse</id>
+            <activation>
+                <property>
+                    <name>!eclipse.application</name>
+                </property>
+            </activation>
+            <properties>
+                <webClassifier>classes</webClassifier>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-compile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>default-testCompile</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <profile>
+            <id>inside-eclipse</id>
+            <activation>
+                <property>
+                    <name>eclipse.application</name>
+                </property>
+            </activation>
+            <properties>
+                <!-- see "How do I add my web project classes to another project's classpath" http://wiki.eclipse.org/M2E-WTP_FAQ#How_do_I_add_my_web_project_classes_to_another_project.27s_classpath.3F -->
+                <webClassifier />
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- http://stackoverflow.com/questions/7905501/get-rid-of-pom-not-found-warning-for-org-eclipse-m2elifecycle-mapping -->
+                        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.zeroturnaround</groupId>
+                                                <artifactId>jrebel-maven-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>generate</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute>
+                                                    <!-- https://wiki.eclipse.org/M2E_compatible_maven_plugins -->
+                                                    <runOnConfiguration>true</runOnConfiguration>
+                                                    <runOnIncremental>true</runOnIncremental>
+                                                </execute>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-enforcer-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>enforce</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-toolchains-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>toolchain</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-antrun-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>run</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute>
+                                                    <runOnConfiguration>true</runOnConfiguration>
+                                                    <runOnIncremental>false</runOnIncremental>
+                                                </execute>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.codehaus.mojo</groupId>
+                                                <artifactId>build-helper-maven-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>regex-property</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute>
+                                                    <!-- https://wiki.eclipse.org/M2E_compatible_maven_plugins -->
+                                                    <runOnConfiguration>true</runOnConfiguration>
+                                                    <runOnIncremental>true</runOnIncremental>
+                                                </execute>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.felix</groupId>
+                                                <artifactId>maven-bundle-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>manifest</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-plugin-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>descriptor</goal>
+                                                    <goal>helpmojo</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute>
+                                                    <runOnConfiguration>true</runOnConfiguration>
+                                                    <!-- http://stackoverflow.com/questions/25119266/plugin-execution-not-covered-by-lifecycle-configuration-for-maven-plugin-plugin -->
+                                                    <!-- https://github.com/ifedorenko/com.ifedorenko.m2e.mavendev -->
+                                                    <runOnIncremental>false</runOnIncremental>
+                                                </execute>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-dependency-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>properties</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute>
+                                                    <runOnConfiguration>true</runOnConfiguration>
+                                                    <runOnIncremental>false</runOnIncremental>
+                                                </execute>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>io.reformanda.semper</groupId>
+                                                <artifactId>dependencyversion-maven-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>set-version</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute>
+                                                    <runOnConfiguration>true</runOnConfiguration>
+                                                    <runOnIncremental>false</runOnIncremental>
+                                                </execute>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.codehaus.gmavenplus</groupId>
+                                                <artifactId>gmavenplus-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>execute</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.codehaus.mojo</groupId>
+                                                <artifactId>exec-maven-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>exec</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore></ignore>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>com.hubspot.maven.plugins</groupId>
+                                                <artifactId>dependency-scope-maven-plugin</artifactId>
+                                                <versionRange>[0.0,)</versionRange>
+                                                <goals>
+                                                    <goal>check</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+</project>
