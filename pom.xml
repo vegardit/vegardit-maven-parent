@@ -5,7 +5,8 @@
 
     @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -250,7 +251,7 @@
         <downloadUrl>https://dl.bintray.com/vegardit/maven-public-releases</downloadUrl>
         <repository>
             <id>bintray-vegardit-maven-public-releases</id>
-            <url>https://api.bintray.com/maven/vegardit/maven-public/${project.artifactId}/;publish=0</url>
+            <url>https://api.bintray.com/maven/vegardit/maven-public/${project.artifactId}/;publish=1</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
