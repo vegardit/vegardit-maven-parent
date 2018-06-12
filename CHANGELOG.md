@@ -5,8 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com/).
 
 
-## [2.0.0] - 2018.05.xx
+## [Unreleased]
 
+
+## [2.0.0] - 2018-06-12
+
+### Added
 * First public release
 
 
