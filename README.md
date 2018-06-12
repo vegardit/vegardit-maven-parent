@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/vegardit/vegardit-maven-parent.svg?branch=master)](https://travis-ci.org/vegardit/vegardit-maven-parent)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE.txt)
-[![Download](https://api.bintray.com/packages/vegardit/maven-public/vegardit-maven-parent/images/download.svg)](https://bintray.com/vegardit/maven/vegardit-maven-parent/_latestVersion)
+[![Download](https://api.bintray.com/packages/vegardit/maven-public/vegardit-maven-parent/images/download.svg)](https://bintray.com/vegardit/maven-public/vegardit-maven-parent/_latestVersion)
 
 [comment]: # (https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?label=License)
 
