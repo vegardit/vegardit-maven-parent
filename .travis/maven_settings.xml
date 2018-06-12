@@ -4,12 +4,12 @@
 
     <servers>
         <server>
-            <id>bintray-vegardit-maven-public-releases</id>
+            <id>bintray-release-uploads</id>
             <username>${env.BINTRAY_USER}</username>
             <password>${env.BINTRAY_API_KEY}</password>
         </server>
         <server>
-            <id>github.com</id>
+            <id>github-commits</id>
             <username>${env.GITHUB_USER}</username>
             <password>${env.GITHUB_API_KEY}</password>
         </server>

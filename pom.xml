@@ -35,13 +35,12 @@
 
     <properties>
         <!-- 
-            use credentials from settings.xml for server with id "github.com" during maven release
+            use credentials from settings.xml for server with id "github-commits" during maven release
             http://maven.apache.org/maven-release/maven-release-plugin/faq.html#credentials
             https://issues.apache.org/jira/browse/MRELEASE-420
          -->
-        <project.scm.id>github.com</project.scm.id>
-
-        <github.site.server>${project.scm.id}</github.site.server>
+        <project.scm.id>github-commits</project.scm.id>
+        <github.site.server>github-commits</github.site.server>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -77,11 +76,15 @@
 
         <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
         <groovy.script.onInitialize><![CDATA[
-            // workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
+            /*
+             * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
+             */
             session.systemProperties["buildtime.output.log"] = "true"; 
 
             if(project.parent != null) {
-                // workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399
+                /*
+                 * workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399
+                 */
                 log.info("=== PARENT-VERSION-MODIFIER: START ===");
 
                 def projectParentVersionRaw = "${project.parent.version}"
@@ -248,9 +251,9 @@
 
 
     <distributionManagement>
-        <downloadUrl>https://dl.bintray.com/vegardit/maven-public-releases</downloadUrl>
+        <downloadUrl>https://jcenter.bintray.com/</downloadUrl>
         <repository>
-            <id>bintray-vegardit-maven-public-releases</id>
+            <id>bintray-releases</id>
             <url>https://api.bintray.com/maven/vegardit/maven-public/${project.artifactId}/;publish=1</url>
             <releases>
                 <enabled>true</enabled>
