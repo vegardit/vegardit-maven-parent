@@ -8,18 +8,26 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 ## [Unreleased]
 
 
+## [2.0.2] - 2018-06-14
+
+### Fixed
+- Use OS specific classpath entry separator char 
+
+
 ## [2.0.1] - 2018-06-14
-* renamed server-id "github.com" to "github-commits"
-* renamed distribution-repo-id/server-id "bintray-vegardit-maven-public-releases" to "bintray-releases"
-* update Maven SCM to 1.10.0
+
+### Changed
+- renamed server-id "github.com" to "github-commits"
+- renamed distribution-repo-id/server-id "bintray-vegardit-maven-public-releases" to "bintray-releases"
+- update Maven SCM to 1.10.0
 
 
 ## [2.0.0] - 2018-06-12
 
 ### Added
-* First public release
+- First public release
 
 
 ## [1.0.x] 2013-2018
 
-* internal releases
+- internal releases
