@@ -7,9 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 
 ## [Unreleased]
 
-### Changed
+
+## [2.0.1] - 2018-06-14
 * renamed server-id "github.com" to "github-commits"
 * renamed distribution-repo-id/server-id "bintray-vegardit-maven-public-releases" to "bintray-releases"
+* update Maven SCM to 1.10.0
 
 
 ## [2.0.0] - 2018-06-12

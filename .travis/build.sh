@@ -25,7 +25,9 @@ export M2_HOME=$HOME/.m2/bin/apache-maven-$MAVEN_VERSION
 export PATH=$M2_HOME/bin:$PATH
 
 # https://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line
-projectVersion="$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)"
+echo "Determining current Maven project version..."
+projectVersion="$(mvn -s .travis/maven_settings.xml org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)"
+echo "  -> Current Version: $projectVersion"
 
 MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1" # https://zeroturnaround.com/rebellabs/your-maven-build-is-slow-speed-it-up/
 export MAVEN_OPTS="${MAVEN_OPTS} -Xmx1024m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true"
@@ -36,16 +38,15 @@ export MAVEN_OPTS="${MAVEN_OPTS} -Xmx1024m -Djava.awt.headless=true -Djava.net.p
 if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
     # https://stackoverflow.com/questions/8653126/how-to-increment-version-number-in-a-shell-script/21493080#21493080
     nextDevelopmentVersion="$(echo ${POM_RELEASE_VERSION} | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')-SNAPSHOT"
-    
+
     echo "###################################################"
-    echo "# Performing Maven Release...                     #"
+    echo "# Creating Maven Release...                       #"
     echo "###################################################"
-    echo "         Current Version: ${projectVersion}"
-    echo "         Release Version: ${POM_RELEASE_VERSION}"
-    echo "Next Development Version: ${nextDevelopmentVersion}"
-    echo "          Skipping Tests: ${SKIP_TESTS}"
-    echo "              Is Dry-Run: ${DRY_RUN}"
-    
+    echo "  ->          Release Version: ${POM_RELEASE_VERSION}"
+    echo "  -> Next Development Version: ${nextDevelopmentVersion}"
+    echo "  ->           Skipping Tests: ${SKIP_TESTS}"
+    echo "  ->               Is Dry-Run: ${DRY_RUN}"
+
     # workaround for "No toolchain found with specification [version:1.8, vendor:default]" during release builds
     cp -f .travis/maven_settings.xml $HOME/.m2/settings.xml
     cp -f .travis/maven_toolchains.xml $HOME/.m2/toolchains.xml
@@ -59,7 +60,9 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
         help:active-profiles clean release:clean release:prepare release:perform \
         | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
 else
-    echo "Building project version $projectVersion..."
+    echo "###################################################"
+    echo "# Building Maven Project...                       #"
+    echo "###################################################"
     mvn -e -U --batch-mode --show-version \
         -s .travis/maven_settings.xml -t .travis/maven_toolchains.xml \
         help:active-profiles clean deploy \
