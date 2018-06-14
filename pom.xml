@@ -84,28 +84,28 @@
             /*
              * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
              */
-            session.systemProperties["buildtime.output.log"] = "true"; 
+            session.systemProperties["buildtime.output.log"] = "true"
 
             if(project.parent != null) {
                 /*
                  * workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399
                  */
-                log.info("=== PARENT-VERSION-MODIFIER: START ===");
+                log.info("=== PARENT-VERSION-MODIFIER: START ===")
 
                 def projectParentVersionRaw = "${project.parent.version}"
                 def projectParentVersionResolved  = project.parent.version
                 def pomXmlReleaseBackupFile = new File(project.basedir, "pom.xml.releaseBackup")
 
-                log.info("project.basedir:               " + project.basedir);
-                log.info("project.version:               " + project.version);
-                log.info("project.parent.version:        " + projectParentVersionRaw + " (raw) / " + projectParentVersionResolved + " (resolved)");
-                log.info("pom.xml.releaseBackup exists:  " + pomXmlReleaseBackupFile.exists());
+                log.info("project.basedir:               " + project.basedir)
+                log.info("project.version:               " + project.version)
+                log.info("project.parent.version:        " + projectParentVersionRaw + " (raw) / " + projectParentVersionResolved + " (resolved)")
+                log.info("pom.xml.releaseBackup exists:  " + pomXmlReleaseBackupFile.exists())
 
-                def isBeforeReleasePomCommit      = !project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists();
-                def isBeforeNextSnapshotPomCommit =  project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists();
+                def isBeforeReleasePomCommit      = !project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists()
+                def isBeforeNextSnapshotPomCommit =  project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists()
 
-                log.info("isBeforeReleasePomCommit:      " + isBeforeReleasePomCommit);
-                log.info("isBeforeNextSnapshotPomCommit: " + isBeforeNextSnapshotPomCommit);
+                log.info("isBeforeReleasePomCommit:      " + isBeforeReleasePomCommit)
+                log.info("isBeforeNextSnapshotPomCommit: " + isBeforeNextSnapshotPomCommit)
 
                 def newParentVersion = null
 
@@ -130,51 +130,51 @@
                 }
 
                 if(newParentVersion) {
-                    log.info("Action: Changing <parent><version> in pom.xml to: " + newParentVersion);
+                    log.info("Action: Changing <parent><version> in pom.xml to: " + newParentVersion)
                     def pomFile = new File(project.basedir, "pom.xml")
                     def pomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomFile)).documentElement
                     use(groovy.xml.dom.DOMCategory) {
                         pomRoot.parent.version[0].value = newParentVersion
                     }
-                    xmlBadEndings = groovy.xml.XmlUtil.serialize(pomRoot);
+                    xmlBadEndings = groovy.xml.XmlUtil.serialize(pomRoot)
                     xmlLinuxEndings = xmlBadEndings.replaceAll(/\r?\n/,"\n")
                     xml = xmlLinuxEndings.replace("\n", System.getProperty("line.separator"))
                     pomFile.write(xml)
                 } else {
-                    log.info("Action: none");
+                    log.info("Action: none")
                 }
 
-                log.info("=== PARENT-VERSION-MODIFIER: END ===");
+                log.info("=== PARENT-VERSION-MODIFIER: END ===")
             } else {
-                log.debug("=== PARENT-VERSION-MODIFIER: SKIPPED ===");
+                log.debug("=== PARENT-VERSION-MODIFIER: SKIPPED ===")
             }
 
 
             def setProjectProp = { String name, String value -> 
                 project.properties[name] = value
-                log.info("Set project property [$name] '${project.properties[name]}'");
+                log.info("Set project property [$name] '${project.properties[name]}'")
             }
 
 
             /*
              * determine if the artefact contains Java sources
              */
-            setProjectProp("custom.noJavaArtefact", project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"] ? "false" : "true");
+            setProjectProp("custom.noJavaArtefact", project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"] ? "false" : "true")
 
 
             /*
              * loading/locating eclipse Java compiler artifact
              */
-            def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver");
-            def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory");
-            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt.core.compiler", "ecj", "4.6.1", "jar", null);
+            def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver")
+            def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory")
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt.core.compiler", "ecj", "4.6.1", "jar", null)
             def ecjArtifact = artifactResolver.resolve(
                 new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                 .setArtifact(ecjArtifactMeta)
                 .setLocalRepository(session.localRepository)
                 .setRemoteRepositories(project.remoteArtifactRepositories)
-            ).artifacts[0];
-            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
+            ).artifacts[0]
+            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath)
 
 
             /*
@@ -183,13 +183,17 @@
             def compileJDKSpec = [
                 "version": project.properties["java.version"], 
                 "vendor": project.properties["java.vendor"]
-            ];
+            ]
             // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain
-            def jdkToolchains = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec);
+            def jdkToolchains = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec)
             if(!jdkToolchains)
-                throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
-            def compileJDK = jdkToolchains[0];
-            setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jre/lib/rt.jar;${compileJDK.javaHome}/jre/lib/jce.jar;${compileJDK.javaHome}/jre/lib/jsse.jar");
+                throw new RuntimeException("No toolchain found with specification $compileJDKSpec")
+            def compileJDK = jdkToolchains[0]
+            setProjectProp("custom.compileBootClasspath", [
+                "${compileJDK.javaHome}/jre/lib/rt.jar", 
+                "${compileJDK.javaHome}/jre/lib/jce.jar", 
+                "${compileJDK.javaHome}/jre/lib/jsse.jar"
+            ].join(File.pathSeparator))
 
 
             /*
@@ -198,48 +202,52 @@
             def testCompileJDKSpec = [
                 "version": project.properties["java.version.unit-tests"], 
                 "vendor": project.properties["java.vendor.unit-tests"]
-            ];
-            jdkToolchains = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec);
+            ]
+            jdkToolchains = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec)
             if(!jdkToolchains)
-                throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
-            def testCompileJDK=jdkToolchains[0];
-            setProjectProp("custom.testCompileBootClasspath", "${testCompileJDK.javaHome}/jre/lib/rt.jar;${testCompileJDK.javaHome}/jre/lib/jce.jar;${testCompileJDK.javaHome}/jre/lib/jsse.jar");
+                throw new RuntimeException("No toolchain found with specification $compileJDKSpec")
+            def testCompileJDK=jdkToolchains[0]
+            setProjectProp("custom.testCompileBootClasspath", [
+                "${testCompileJDK.javaHome}/jre/lib/rt.jar",
+                "${testCompileJDK.javaHome}/jre/lib/jce.jar",
+                "${testCompileJDK.javaHome}/jre/lib/jsse.jar"
+            ].join(File.pathSeparator))
 
 
             /*
              * configure javadoc command, https://stackoverflow.com/questions/27728733/javadoc-error-invalid-flag-xdoclintnone-when-i-use-java-7-but-it-works-i
              * since it is toolchain aware and executed after the integration tests we check the integration test JDK if it supports "-Xdoclint:none"
              */
-            def stdOut = new StringBuilder();
-            def proc = (testCompileJDK.javaHome + "/bin/javadoc -X").execute();
-            proc.consumeProcessOutput(stdOut, null);
-            proc.waitForOrKill(2000);
-            setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "");
-            setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "");
+            def stdOut = new StringBuilder()
+            def proc = (testCompileJDK.javaHome + "/bin/javadoc -X").execute()
+            proc.consumeProcessOutput(stdOut, null)
+            proc.waitForOrKill(2000)
+            setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "")
+            setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "")
             
             if(project.properties.get("custom.noJavaArtefact") == "true" || project.version.endsWith("-SNAPSHOT")) {
-                setProjectProp("maven.javadoc.skip", "true");
+                setProjectProp("maven.javadoc.skip", "true")
             }
 
             /*
              * set compile/test classpath elements as maven properties
              */
-            def compileClasspath = new LinkedHashSet<String>();
-            compileClasspath.addAll(project.compileClasspathElements);
-            compileClasspath.addAll(project.runtimeClasspathElements);
-            setProjectProp("custom.compileClasspathElements",  org.apache.commons.lang3.StringUtils.join(compileClasspath, ";"));
+            def compileClasspath = new LinkedHashSet<String>()
+            compileClasspath.addAll(project.compileClasspathElements)
+            compileClasspath.addAll(project.runtimeClasspathElements)
+            setProjectProp("custom.compileClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
 
-            compileClasspath.addAll(project.testClasspathElements);
-            setProjectProp("custom.testClasspathElements",  org.apache.commons.lang3.StringUtils.join(compileClasspath, ";"));
+            compileClasspath.addAll(project.testClasspathElements)
+            setProjectProp("custom.testClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
 
             /*
              * Manifest template location, used by maven-bundle-plugin
              */
              if (!project.properties.containsKey("custom.manifestTemplateFile")) {
                  if(new File("src/main/resources/META-INF/MANIFEST.MF").exists())
-                     setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF");
+                     setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF")
                  else if(new File("src/main/java/META-INF/MANIFEST.MF").exists())
-                     setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF");
+                     setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF")
              }
         ]]></groovy.script.onInitialize>
     </properties>
