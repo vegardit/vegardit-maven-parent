@@ -9,12 +9,12 @@
 set -e # abort script at first error
 set -o pipefail # causes a pipeline to return the exit status of the last command in the pipe that returned a non-zero return value
 
-if [[ -f ./release-trigger.sh ]]; then
+if [[ -f ./.travis/release-trigger.sh ]]; then
     echo "Sourcing [./release-trigger.sh]..." 
-    source ./release-trigger.sh
+    source ./.travis/release-trigger.sh
 fi
 
-MAVEN_VERSION=3.5.3
+MAVEN_VERSION=3.5.4
 if [[ ! -e $HOME/.m2/bin/apache-maven-$MAVEN_VERSION ]]; then
     echo "Installing Maven version $MAVEN_VERSION..."
     mkdir -p $HOME/.m2/bin/
