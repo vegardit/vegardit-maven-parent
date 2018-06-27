@@ -7,6 +7,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 
 ## [Unreleased]
 
+### Added
+
+- maven-checkstyle-plugin config
+- src/etc/checkstyle.xml
+- src/etc/eclipse-formatter.xml
+
+### Changed
+- upgrade to maven-surefire-plugin 2.22.0
+- upgrade to maven-failsafe-plugin 2.22.0
+- upgrade to maven-enforcer-plugin 3.0-M2
 
 ## [2.0.2] - 2018-06-14
 

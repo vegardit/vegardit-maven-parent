@@ -54,6 +54,11 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   - `**/*.yaml`
   - `**/*.yml`
 - Configures the [maven-enforcer-plugin](https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html) to help maintaining Maven best practices.
+- Configures the [maven-checkstyle-plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/) to be executed in the package phase. 
+  By default it will use [this](src/etc/checkstyle.xml) checkstyle configuration. To use another configuration set one of the following project properties:
+  - `checkstyle.config.path`: path to a config file on your local filesystem.
+  - `checkstyle.config.artifact`: Maven artifact coordinates to a config file available in a configured Maven repository. \
+    The format is `<groupId>:<artifactId>:<version>:<type>[:<classifier>]`, e.g. `com.vegardit.maven:vegardit-maven-parent:2.1.0:xml:checkstyle`.
 - Configures the [jacoco-maven-plugin](https://www.eclemma.org/jacoco/trunk/doc/maven.html) for [test coverage](https://en.wikipedia.org/wiki/Code_coverage).
 - Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](http://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](http://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
@@ -92,7 +97,7 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
      ```
   1. The [maven-dependency-plugin](https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html) sets a property pointing to the artifact file for each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier]}`, e.g. `${com.google.guava:guava:jar}`.\
      See ["Stackoverflow: Can I use the path to a Maven dependency as a property?"](https://stackoverflow.com/a/2359947)
-  1. The [dependencyversion-maven-plugin](https://github.com/semper-reformanda/dependencyversion-maven-plugin) sets a property containing the version of each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier].version}`, e.g. `${com.google.guava:guava:jar.version}`.\
+  1. The [dependencyversion-maven-plugin](https://gitlab.com/josh.cain/dependencyversion-maven-plugin) sets a property containing the version of each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier].version}`, e.g. `${com.google.guava:guava:jar.version}`.\
 - Maven Site improvements:
   1. Webdav and SFTP protocols enabled for [maven site deployment](https://maven.apache.org/plugins/maven-site-plugin/examples/adding-deploy-protocol.html).
   1. Markdown rendering support is enabled by default via [doxia-module-markdown](https://mvnrepository.com/artifact/org.apache.maven.doxia/doxia-module-markdown)
