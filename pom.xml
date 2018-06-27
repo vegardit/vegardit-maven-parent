@@ -463,7 +463,8 @@
          <plugin>
              <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.0.0-M2</version>
+            <!-- don't use 3.0.0-M2 because of https://issues.apache.org/jira/projects/MENFORCER/issues/MENFORCER-306 -->
+            <version>3.0.0-M1</version>
             <executions>
                <execution>
                   <id>basic-checks@validate</id>

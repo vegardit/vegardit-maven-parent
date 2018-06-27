@@ -8,6 +8,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 ## [Unreleased]
 
 
+## [2.1.1] - 2018-06-27
+
+### Fixed
+- downgrade to maven-enforcer-plugin 3.0-M1 because of [MENFORCER-306](https://issues.apache.org/jira/projects/MENFORCER/issues/MENFORCER-306)
+
+
 ## [2.1.0] - 2018-06-27
 
 ### Added
