@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 
 ## [Unreleased]
 
+
+## [2.1.0] - 2018-06-27
+
 ### Added
 
 - maven-checkstyle-plugin config
@@ -17,6 +20,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 - upgrade to maven-surefire-plugin 2.22.0
 - upgrade to maven-failsafe-plugin 2.22.0
 - upgrade to maven-enforcer-plugin 3.0-M2
+
 
 ## [2.0.2] - 2018-06-14
 
