@@ -63,8 +63,13 @@ else
     echo "###################################################"
     echo "# Building Maven Project...                       #"
     echo "###################################################"
+   if [[ ${TRAVIS_BRANCH} == "master" ]]; then
+        mavenGoal="deploy"
+    else
+        mavenGoal="verify"
+    fi
     mvn -e -U --batch-mode --show-version \
         -s .travis/maven_settings.xml -t .travis/maven_toolchains.xml \
-        help:active-profiles clean deploy \
+        help:active-profiles clean $mavenGoal \
         | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
 fi
