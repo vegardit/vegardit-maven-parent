@@ -4,7 +4,8 @@
    SPDX-License-Identifier: Apache-2.0
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -788,7 +789,6 @@
                   <id>generate-and-attach-javadoc</id>
                   <phase>verify</phase> <!-- only execute after successful integration tests -->
                   <goals>
-                     <goal>javadoc-no-fork</goal>
                      <goal>jar</goal>
                   </goals>
                </execution>
@@ -1084,6 +1084,9 @@
 
                   <!-- the release profile will be removed from future versions of the super POM so better not rely on it -->
                   <useReleaseProfile>false</useReleaseProfile>
+
+                  <!-- workaround for https://issues.apache.org/jira/browse/MRELEASE-271 -->
+                  <preparationGoals>clean install</preparationGoals>
 
                   <!-- workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399 "org.codehaus.gmavenplus:gmavenplus-plugin:execute" -->
                   <!-- run groovy to restore keyword RELEASE after release build -->
