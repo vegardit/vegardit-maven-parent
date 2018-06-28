@@ -1084,12 +1084,12 @@
                   <!-- the release profile will be removed from future versions of the super POM so better not rely on it -->
                   <useReleaseProfile>false</useReleaseProfile>
 
-                  <!-- workaround for https://issues.apache.org/jira/browse/MRELEASE-271 -->
-                  <preparationGoals>clean install</preparationGoals>
-
                   <!-- workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399 "org.codehaus.gmavenplus:gmavenplus-plugin:execute" -->
                   <!-- run groovy to restore keyword RELEASE after release build -->
-                  <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
+                  <!-- "install -DskipTests=true" as workaround for https://issues.apache.org/jira/browse/MRELEASE-271 -->
+                  <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute install -DskipTests=true</completionGoals>
+
+                  <preparationGoals>clean install</preparationGoals>
 
                   <tagNameFormat>@{project.version}</tagNameFormat>
                </configuration>
