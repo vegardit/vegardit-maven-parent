@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- checkstyle ignore filters for binary files
+
+### Changed
+- upgrade checkstyle to 8.11
+- upgrade extra-enforcer-rules to 1.0-beta-9
+- upgrade gmavenplus-plugin to 1.6.1
+- upgrade maven-ear-plugin to 3.0.1
+- upgrade maven-project-info-reports-plugin to 3.0.0
+- upgrade maven-javadoc-plugin to 3.0.1
+- upgrade maven-surefire-report-plugin to 2.22.0
+
+### Removed
+- checkstyle rule `UncommentedMain`
+
 
 ## [2.1.3] - 2018-06-28
 - setting completionGoals `clean install -DskipTests=true` to workaround still present multi-module release issue [MRELEASE-271](https://issues.apache.org/jira/browse/MRELEASE-271)
@@ -41,7 +56,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.0.2] - 2018-06-14
 
 ### Fixed
-- Use OS specific classpath entry separator char 
+- Use OS specific classpath entry separator char
 
 
 ## [2.0.1] - 2018-06-14
