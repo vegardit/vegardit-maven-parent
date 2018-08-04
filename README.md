@@ -37,12 +37,12 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
 - Configures the [Eclipse Java Compiler](https://mvnrepository.com/artifact/org.eclipse.jdt.core.compiler/ecj) instead of javac:
   - to avoid the notorious `schema change not supported` error message when remote debugging via Eclipse.
   - to avoid javac bugs when targeting older JDKs, such as ["JDK Bug 6302954: Type parameters of <T>T cannot be determined; no unique maximal instance exists for type variable T with upper bounds U,X"](https://bugs.java.com/view_bug.do?bug_id=6302954) which was only fixed 6 years after being reported.\
-  The Eclipse compiler is configured via a Groovy script in a [toolchains](https://maven.apache.org/guides/mini/guide-using-toolchains.html)-aware way - which is currently not possible when 
-  using [plexus-compiler-eclipse](https://codehaus-plexus.github.io/plexus-compiler/plexus-compilers/plexus-compiler-eclipse/) 
+  The Eclipse compiler is configured via a Groovy script in a [toolchains](https://maven.apache.org/guides/mini/guide-using-toolchains.html)-aware way - which is currently not possible when
+  using [plexus-compiler-eclipse](https://codehaus-plexus.github.io/plexus-compiler/plexus-compilers/plexus-compiler-eclipse/)
   or [tycho-compiler-jdt](https://wiki.eclipse.org/Tycho/FAQ#Can_I_use_the_Tycho_compiler_support_in_non-OSGi_projects.2C_too.3F).
 - Allows you to use `RELEASE` as parent version value while maintaining reproducible builds of your released artifacts using this approach [MRELEASE-399](https://issues.apache.org/jira/browse/MRELEASE-399?focusedCommentId=14445455&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-14445455).
 - Performs Maven project property resolution/replacement in resource files under `src/main/resources` whose names match:
-  - `META-INF/MANIFEST.MF` 
+  - `META-INF/MANIFEST.MF`
   - `**/*.cfg`
   - `**/*.ini`
   - `**/*.html`
@@ -54,11 +54,13 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   - `**/*.yaml`
   - `**/*.yml`
 - Configures the [maven-enforcer-plugin](https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html) to help maintaining Maven best practices.
-- Configures the [maven-checkstyle-plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/) to be executed in the package phase. 
-  By default it will use [this](src/etc/checkstyle.xml) checkstyle configuration. To use another configuration set one of the following project properties:
+- Configures the [maven-checkstyle-plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/) to be executed in the [lifecycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference) `package`.\
+  If the file `src/etc/checkstyle.xml` exists in the project being build, then this file will used automatically to perform checkstyle checks.\
+  If it does not exist then by default this [checkstyle configuration file](src/etc/checkstyle.xml) will be used.\
+  To use a different configuration file set one of the following project properties:
   - `checkstyle.config.path`: path to a config file on your local filesystem.
   - `checkstyle.config.artifact`: Maven artifact coordinates to a config file available in a configured Maven repository. \
-    The format is `<groupId>:<artifactId>:<version>:<type>[:<classifier>]`, e.g. `com.vegardit.maven:vegardit-maven-parent:2.1.0:xml:checkstyle`.
+    The format is `<groupId>:<artifactId>:<version>:<type>[:<classifier>]`, e.g. `com.vegardit.maven:vegardit-maven-parent:2.1.3:xml:checkstyle`.
 - Configures the [jacoco-maven-plugin](https://www.eclemma.org/jacoco/trunk/doc/maven.html) for [test coverage](https://en.wikipedia.org/wiki/Code_coverage).
 - Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](http://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](http://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
@@ -92,7 +94,7 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
          <groupId>io.netty</groupId>
          <artifactId>netty-tcnative</artifactId>
          <version>2.0.8.Final</version>
-         <classifier>${os.detected.classifier}</classifier> <!-- property "os.detected.classifier" is provided by os-maven-plugin --> 
+         <classifier>${os.detected.classifier}</classifier> <!-- property "os.detected.classifier" is provided by os-maven-plugin -->
      </dependency>
      ```
   1. The [maven-dependency-plugin](https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html) sets a property pointing to the artifact file for each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier]}`, e.g. `${com.google.guava:guava:jar}`.\
@@ -163,9 +165,9 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
     <parent>
         <groupId>com.vegardit.maven</groupId>
         <artifactId>vegardit-maven-parent</artifactId>
-        <version>RELEASE</version> 
+        <version>RELEASE</version>
     </parent>
-    
+
     <groupId><!-- your groupId here --></groupId>
     <artifactId><!-- your artifactId here --></artifactId>
     <version><!-- your version here --></version>
@@ -218,9 +220,9 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
     <parent>
         <groupId>com.vegardit.maven</groupId>
         <artifactId>vegardit-maven-parent</artifactId>
-        <version>LATEST</version> 
+        <version>LATEST</version>
     </parent>
-    
+
     <groupId><!-- your groupId here --></groupId>
     <artifactId><!-- your artifactId here --></artifactId>
     <version><!-- your version here --></version>
@@ -232,7 +234,7 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
 
 ## <a name="changelog"></a>Changelog / Version History
 
-This project maintains a [changelog](CHANGELOG.md) and adheres to [Semantic Versioning](https://semver.org) and [Keep a CHANGELOG](https://keepachangelog.com) 
+This project maintains a [changelog](CHANGELOG.md) and adheres to [Semantic Versioning](https://semver.org) and [Keep a CHANGELOG](https://keepachangelog.com)
 
 
 ## <a name="license"></a>License
