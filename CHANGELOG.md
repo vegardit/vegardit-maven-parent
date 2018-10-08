@@ -10,25 +10,39 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - checkstyle ignore filters for binary files
+- configured [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
 
 ### Changed
-- upgrade checkstyle to 8.11
-- upgrade extra-enforcer-rules to 1.0-beta-9
-- upgrade gmavenplus-plugin to 1.6.1
-- upgrade maven-ear-plugin to 3.0.1
-- upgrade maven-project-info-reports-plugin to 3.0.0
-- upgrade maven-javadoc-plugin to 3.0.1
-- upgrade maven-surefire-report-plugin to 2.22.0
+- minimum required Maven version is now 3.3.9
+- Maven plugin upgrades:
+ - checkstyle 8.13
+ - extra-enforcer-rules 1.0-beta-9
+ - gmavenplus-plugin 1.6.1
+ - jacoco-maven-plugin 0.8.2
+ - maven-bundle-plugin 4.0.0
+ - maven-compiler-plugin 3.8.0
+ - maven-ear-plugin 3.0.1
+ - maven-project-info-reports-plugin 3.0.0
+ - maven-javadoc-plugin 3.0.1
+ - maven-scm-plugin 1.11.1
+ - maven-shade-plugin 3.2.0
+ - maven-surefire-report-plugin 2.22.0
+ - maven-wagon 3.2.0
+
 
 ### Removed
 - checkstyle rule `UncommentedMain`
 
 
 ## [2.1.3] - 2018-06-28
+
+### Fixed
 - setting completionGoals `clean install -DskipTests=true` to workaround still present multi-module release issue [MRELEASE-271](https://issues.apache.org/jira/browse/MRELEASE-271)
 
 
 ## [2.1.2] - 2018-06-28
+
+### Fixed
 - remove maven-javadoc-plugin:javadoc-no-fork build goal to prevent javadoc running twice (which is als executed by `jar` goal)
 - setting preparationGoals `clean install` to workaround still present multi-module release issue [MRELEASE-271](https://issues.apache.org/jira/browse/MRELEASE-271)
 
@@ -42,7 +56,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.1.0] - 2018-06-27
 
 ### Added
-
 - maven-checkstyle-plugin config
 - src/etc/checkstyle.xml
 - src/etc/eclipse-formatter.xml

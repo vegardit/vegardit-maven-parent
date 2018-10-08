@@ -61,6 +61,7 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   - `checkstyle.config.path`: path to a config file on your local filesystem.
   - `checkstyle.config.artifact`: Maven artifact coordinates to a config file available in a configured Maven repository. \
     The format is `<groupId>:<artifactId>:<version>:<type>[:<classifier>]`, e.g. `com.vegardit.maven:vegardit-maven-parent:2.1.3:xml:checkstyle`.
+- Configures the [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
 - Configures the [jacoco-maven-plugin](https://www.eclemma.org/jacoco/trunk/doc/maven.html) for [test coverage](https://en.wikipedia.org/wiki/Code_coverage).
 - Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](http://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](http://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
