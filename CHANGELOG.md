@@ -32,8 +32,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - maven-surefire-report-plugin 2.22.1
   - maven-wagon 3.2.0
   - versions-maven-plugin 2.7
-- maven-deploy-plugin: deployAtEnd=true
-- maven-install-plugin: installAtEnd=true
 - maven-failesafe/surefire-plugin: runOrder=alphabetical, -Dcom.ibm.jsse2.overrideDefaultTLS=true
 - maven-project-info-reports-plugin: extended reports list
 
