@@ -5,7 +5,7 @@
 
    check for new dependency/plugin updates using:
       mvn -U versions:display-dependency-updates versions:display-plugin-updates
-   plugin announcments: https://blogs.apache.org/maven/
+   plugin announcements: https://blogs.apache.org/maven/
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
@@ -986,6 +986,12 @@
             </plugin>
 
             <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>versions-maven-plugin</artifactId>
+               <version>2.7</version>
+            </plugin>
+
+            <plugin>
                <artifactId>maven-jar-plugin</artifactId>
                <version>3.1.0</version>
                <configuration>
@@ -1058,11 +1064,17 @@
             <plugin>
                <artifactId>maven-install-plugin</artifactId>
                <version>2.5.2</version>
+               <configuration>
+                  <installAtEnd>true</installAtEnd>
+               </configuration>
             </plugin>
 
             <plugin>
                <artifactId>maven-deploy-plugin</artifactId>
                <version>2.8.2</version>
+               <configuration>
+                  <deployAtEnd>true</deployAtEnd>
+               </configuration>
             </plugin>
 
             <plugin>
@@ -1187,8 +1199,11 @@
                <artifactId>maven-surefire-plugin</artifactId>
                <version>${maven.surefire.version}</version>
                <configuration>
-                  <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Duser.language=en -Duser.region=US -noverify
-                     ${jacoco.surefireAgent}</argLine>
+                  <runOrder>alphabetical</runOrder>
+                  <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dcom.ibm.jsse2.overrideDefaultTLS=true -Duser.language=en
+                     -Duser.region=US -noverify -Djdk.net.URLClassPath.disableClassPathURLCheck=true ${jacoco.surefireAgent}</argLine>
+                  <!-- -Djdk.net.URLClassPath.disableClassPathURLCheck see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 -->
+                  <!-- -Dcom.ibm.jsse2.overrideDefaultTLS=true see: https://www.ibm.com/support/knowledgecenter/SSYKE2_8.0.0/com.ibm.java.security.component.80.doc/security-component/jsse2Docs/matchsslcontext_tls.html#matchsslcontext_tls -->
                   <excludes>
                      <exclude>**/Abstract*</exclude>
                      <exclude>**/*ITest.java</exclude>
@@ -1200,8 +1215,9 @@
                <artifactId>maven-failsafe-plugin</artifactId>
                <version>${maven.surefire.version}</version>
                <configuration>
-                  <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Duser.language=en -Duser.region=US -noverify
-                     ${jacoco.failsafeAgent}</argLine>
+                  <runOrder>alphabetical</runOrder>
+                  <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dcom.ibm.jsse2.overrideDefaultTLS=true -Duser.language=en
+                     -Duser.region=US -noverify -Djdk.net.URLClassPath.disableClassPathURLCheck=true ${jacoco.failsafeAgent}</argLine>
                   <excludes>
                      <exclude>**/Abstract*</exclude>
                   </excludes>
@@ -1222,7 +1238,7 @@
             <plugin>
                <!-- This plugin provides the capability to package the artifact in an uber-jar -->
                <artifactId>maven-shade-plugin</artifactId>
-               <version>3.2.0</version>
+               <version>3.2.1</version>
             </plugin>
 
             <plugin>
@@ -1441,9 +1457,14 @@
             <reportSets>
                <reportSet>
                   <reports>
-                     <report>dependencies</report>
-                     <report>project-team</report>
+                     <report>index</report>
                      <report>summary</report>
+                     <report>team</report>
+                     <report>issue-management</report>
+                     <report>licenses</report>
+                     <report>scm</report>
+                     <report>dependencies</report>
+                     <report>dependency-management</report>
                   </reports>
                </reportSet>
             </reportSets>

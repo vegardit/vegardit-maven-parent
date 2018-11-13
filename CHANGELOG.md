@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+* Surefire tests may fail on Jenkins containers with latest OpenJDK8, see https://github.developer.allianz.io/azd/jenkins-slave-maven/issues/70
+
 ### Added
 - checkstyle ignore filters for binary files
 - configured [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
@@ -15,20 +18,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - minimum required Maven version is now 3.3.9
 - Maven plugin upgrades:
- - checkstyle 8.14
- - extra-enforcer-rules 1.0-beta-9
- - gmavenplus-plugin 1.6.2
- - jacoco-maven-plugin 0.8.2
- - maven-bundle-plugin 4.0.0
- - maven-compiler-plugin 3.8.0
- - maven-ear-plugin 3.0.1
- - maven-project-info-reports-plugin 3.0.0
- - maven-javadoc-plugin 3.0.1
- - maven-scm-plugin 1.11.1
- - maven-shade-plugin 3.2.0
- - maven-surefire-report-plugin 2.22.1
- - maven-wagon 3.2.0
-
+  - checkstyle 8.14
+  - extra-enforcer-rules 1.0-beta-9
+  - gmavenplus-plugin 1.6.2
+  - jacoco-maven-plugin 0.8.2
+  - maven-bundle-plugin 4.0.0
+  - maven-compiler-plugin 3.8.0
+  - maven-ear-plugin 3.0.1
+  - maven-project-info-reports-plugin 3.0.0
+  - maven-javadoc-plugin 3.0.1
+  - maven-scm-plugin 1.11.1
+  - maven-shade-plugin 3.2.1
+  - maven-surefire-report-plugin 2.22.1
+  - maven-wagon 3.2.0
+  - versions-maven-plugin 2.7
+- maven-deploy-plugin: deployAtEnd=true
+- maven-install-plugin: installAtEnd=true
+- maven-failesafe/surefire-plugin: runOrder=alphabetical, -Dcom.ibm.jsse2.overrideDefaultTLS=true
+- maven-project-info-reports-plugin: extended reports list
 
 ### Removed
 - checkstyle rule `UncommentedMain`
