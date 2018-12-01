@@ -79,7 +79,7 @@
       <checkstyle.version>8.14</checkstyle.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
-      <custom.niceManifest>true</custom.niceManifest>
+      <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
@@ -87,6 +87,7 @@
           * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
           */
          session.systemProperties["buildtime.output.log"] = "true"
+
 
          def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver")
          def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory")
@@ -323,7 +324,7 @@
 
    <build>
       <resources>
-          <!-- https://stackoverflow.com/questions/34749819/maven-resource-filtering-exclude/34750851#34750851 -->
+         <!-- https://stackoverflow.com/questions/34749819/maven-resource-filtering-exclude/34750851#34750851 -->
          <resource>
             <directory>src/main/resources</directory>
             <includes>
@@ -459,7 +460,7 @@
          </plugin>
 
          <plugin>
-             <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
+            <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
             <!-- don't use 3.0.0-M2 because of https://issues.apache.org/jira/projects/MENFORCER/issues/MENFORCER-306 -->
             <version>3.0.0-M1</version>
@@ -749,7 +750,7 @@
                         <Private-Package>*.internal.*</Private-Package>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                      </instructions>
-                     <niceManifest>${custom.niceManifest}</niceManifest>
+                     <niceManifest>${maven-bundle-plugin.niceManifest}</niceManifest>
                      <obrRepository>NONE</obrRepository>
                      <excludeDependencies>true</excludeDependencies>
                   </configuration>
