@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - minimum required Maven version is now 3.3.9
 - Maven plugin upgrades:
   - checkstyle 8.14
-  - extra-enforcer-rules 1.0-beta-9
+  - extra-enforcer-rules 1.1
   - gmavenplus-plugin 1.6.2
   - jacoco-maven-plugin 0.8.2
   - maven-bundle-plugin 4.0.0
