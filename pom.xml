@@ -17,7 +17,7 @@
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
    <version>2.2.0-SNAPSHOT</version>
-   <packaging>pom</packaging>
+   <packaging>jar</packaging>
 
 
    <url>https://vegardit.com/</url>
@@ -556,6 +556,11 @@
                      <skip>${skip.enforcer.ban-duplicate-classes}</skip>
                      <rules>
                         <banDuplicateClasses>
+                           <scopes>
+                              <scope>compile</scope>
+                              <scope>provided</scope>
+                              <scope>runtime</scope>
+                           </scopes>
                            <findAllDuplicates>true</findAllDuplicates>
                         </banDuplicateClasses>
                      </rules>
