@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - extra-enforcer-rules 1.1
   - gmavenplus-plugin 1.6.2
   - jacoco-maven-plugin 0.8.2
-  - maven-bundle-plugin 4.0.0
+  - maven-bundle-plugin 4.1.0
   - maven-compiler-plugin 3.8.0
   - maven-ear-plugin 3.0.1
   - maven-project-info-reports-plugin 3.0.0
