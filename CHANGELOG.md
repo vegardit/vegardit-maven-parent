@@ -18,21 +18,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - minimum required Maven version is now 3.3.9
 - Maven plugin upgrades:
-  - checkstyle 8.14
-  - extra-enforcer-rules 1.1
-  - gmavenplus-plugin 1.6.2
-  - jacoco-maven-plugin 0.8.2
+  - checkstyle 8.19
+  - extra-enforcer-rules 1.2
+  - gmavenplus-plugin 1.6.3
+  - jacoco-maven-plugin 0.8.3
+  - jrebel-maven-plugin 1.1.9
+  - maven-assembly-plugin 3.1.1
   - maven-bundle-plugin 4.1.0
   - maven-compiler-plugin 3.8.0
   - maven-ear-plugin 3.0.1
+  - maven-jar-plugin 3.1.1
   - maven-project-info-reports-plugin 3.0.0
-  - maven-javadoc-plugin 3.0.1
-  - maven-scm-plugin 1.11.1
+  - maven-javadoc-plugin 3.1.0
+  - maven-scm-plugin 1.11.2
   - maven-shade-plugin 3.2.1
   - maven-surefire-report-plugin 2.22.1
   - maven-wagon 3.2.0
   - versions-maven-plugin 2.7
-- maven-failesafe/surefire-plugin: runOrder=alphabetical, -Dcom.ibm.jsse2.overrideDefaultTLS=true
+- maven-enforcer-plugin: enforceBytecodeVersion.ignoreOptionals=true
+- maven-failesafe/surefire-plugin: runOrder=alphabetical, -Dcom.ibm.jsse2.overrideDefaultTLS=true, trimStackTrace=false
 - maven-project-info-reports-plugin: extended reports list
 
 ### Removed

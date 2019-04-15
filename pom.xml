@@ -62,7 +62,7 @@
       <!-- requiring 3.3.9+ because of org.jacoco:jacoco-maven-plugin -->
       <maven.minimum.version>3.3.9</maven.minimum.version>
 
-      <maven.scm.version>1.11.1</maven.scm.version>
+      <maven.scm.version>1.11.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
       <maven.wagon.version>3.2.0</maven.wagon.version>
 
@@ -76,13 +76,32 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>8.14</checkstyle.version>
+      <checkstyle.version>8.19</checkstyle.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
 
+      <skip.maven-dependency-plugin.properties>false</skip.maven-dependency-plugin.properties>
+      <skip.enforcer.enforce-bytecode-version>false</skip.enforcer.enforce-bytecode-version>
+      <skip.enforcer.ban-duplicate-classes>false</skip.enforcer.ban-duplicate-classes>
+      <skip.enforcer.dependency-convergence>false</skip.enforcer.dependency-convergence>
+      <skip.dependency-scope-maven-plugin.check>false</skip.dependency-scope-maven-plugin.check>
+      <skip.japicmp.cmp>false</skip.japicmp.cmp>
+
+      <skip.report.maven-javadoc-plugin>false</skip.report.maven-javadoc-plugin>
+      <skip.report.maven-surefire-report-plugin>false</skip.report.maven-surefire-report-plugin>
+      <skip.report.maven-project-info-reports-plugin>false</skip.report.maven-project-info-reports-plugin>
+      <skip.report.jacoco-maven-plugin>false</skip.report.jacoco-maven-plugin>
+      <skip.report.japicmp>false</skip.report.japicmp>
+
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
+         /*
+          * skip this script if run via m2eclipse
+          */
+         if(System.getProperty("eclipse.application") != null)
+            return;
+
          /*
           * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
           */
@@ -278,7 +297,9 @@
                   .setLocalRepository(session.localRepository)
                   .setRemoteRepositories(project.remoteArtifactRepositories)
                ).artifacts[0]
-               setProjectProp("checkstyle.config.path", checkstyleArtifact.file.absolutePath)
+               if(checkstyleArtifact != null) {
+                 setProjectProp("checkstyle.config.path", checkstyleArtifact.file.absolutePath)
+               }
             }
          }
       ]]></groovy.script.onInitialize>
@@ -407,7 +428,7 @@
             <!-- http://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>1.6.2</version>
+            <version>1.6.3</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
@@ -444,7 +465,7 @@
                <dependency>
                   <groupId>org.codehaus.groovy</groupId>
                   <artifactId>groovy-ant</artifactId>
-                  <version>2.5.4</version>
+                  <version>2.5.6</version>
                </dependency>
                <dependency>
                   <groupId>org.apache.commons</groupId>
@@ -533,9 +554,7 @@
                      <rules>
                         <enforceBytecodeVersion>
                            <maxJdkVersion>${java.version}</maxJdkVersion>
-                           <!-- TODO requires https://github.com/mojohaus/extra-enforcer-rules/issues/52
                            <ignoreOptionals>true</ignoreOptionals>
-                           -->
                            <ignoredScopes>
                               <ignoredScope>provided</ignoredScope>
                               <ignoredScope>runtime</ignoredScope>
@@ -556,12 +575,12 @@
                      <skip>${skip.enforcer.ban-duplicate-classes}</skip>
                      <rules>
                         <banDuplicateClasses>
+                           <findAllDuplicates>true</findAllDuplicates>
                            <scopes>
                               <scope>compile</scope>
                               <scope>provided</scope>
                               <scope>runtime</scope>
                            </scopes>
-                           <findAllDuplicates>true</findAllDuplicates>
                         </banDuplicateClasses>
                      </rules>
                      <fail>true</fail>
@@ -588,7 +607,7 @@
                   <!-- http://www.mojohaus.org/extra-enforcer-rules/ -->
                   <groupId>org.codehaus.mojo</groupId>
                   <artifactId>extra-enforcer-rules</artifactId>
-                  <version>1.1</version>
+                  <version>1.2</version>
                </dependency>
             </dependencies>
          </plugin>
@@ -606,7 +625,7 @@
                   </goals>
                   <phase>validate</phase>
                   <configuration>
-                     <skip>${skip.dependency-scope-maven-plugin}</skip>
+                     <skip>${skip.dependency-scope-maven-plugin.check}</skip>
                      <fail>true</fail>
                   </configuration>
                </execution>
@@ -804,7 +823,7 @@
             <!-- enable code coverage -->
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.2</version>
+            <version>0.8.3</version>
             <executions>
                <execution>
                   <id>pre-unit-test</id>
@@ -895,6 +914,9 @@
                   <goals>
                      <goal>cmp</goal>
                   </goals>
+                  <configuration>
+                     <skip>${skip.japicmp.cmp}</skip>
+                  </configuration>
                </execution>
             </executions>
          </plugin>
@@ -999,7 +1021,7 @@
 
             <plugin>
                <artifactId>maven-jar-plugin</artifactId>
-               <version>3.1.0</version>
+               <version>3.1.1</version>
                <configuration>
                   <archive>
                      <!-- generated by maven-bundle-plugin: -->
@@ -1187,7 +1209,7 @@
 
             <plugin>
                <artifactId>maven-assembly-plugin</artifactId>
-               <version>3.1.0</version>
+               <version>3.1.1</version>
                <configuration>
                   <!-- faster builds -->
                   <recompressZippedFiles>false</recompressZippedFiles>
@@ -1200,6 +1222,7 @@
                <version>${maven.surefire.version}</version>
                <configuration>
                   <runOrder>alphabetical</runOrder>
+                  <trimStackTrace>false</trimStackTrace>
                   <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dcom.ibm.jsse2.overrideDefaultTLS=true -Duser.language=en
                      -Duser.region=US -noverify -Djdk.net.URLClassPath.disableClassPathURLCheck=true ${jacoco.surefireAgent}</argLine>
                   <!-- -Djdk.net.URLClassPath.disableClassPathURLCheck see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 -->
@@ -1216,6 +1239,7 @@
                <version>${maven.surefire.version}</version>
                <configuration>
                   <runOrder>alphabetical</runOrder>
+                  <trimStackTrace>false</trimStackTrace>
                   <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dcom.ibm.jsse2.overrideDefaultTLS=true -Duser.language=en
                      -Duser.region=US -noverify -Djdk.net.URLClassPath.disableClassPathURLCheck=true ${jacoco.failsafeAgent}</argLine>
                   <excludes>
@@ -1246,7 +1270,7 @@
                <!-- http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
                <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#Where_in_the_pom.xml_do_I_configure_the_Javadoc_Plugin -->
                <artifactId>maven-javadoc-plugin</artifactId>
-               <version>3.0.1</version>
+               <version>3.1.0</version>
                <configuration>
                   <skip>${maven.javadoc.skip}</skip>
                   <!-- exclude internal package and java.*, javax.* stubs -->
@@ -1266,7 +1290,7 @@
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <groupId>com.github.siom79.japicmp</groupId>
                <artifactId>japicmp-maven-plugin</artifactId>
-               <version>0.13.0</version>
+               <version>0.13.1</version>
                <configuration>
                   <skip>${skip.japicmp.cmp}</skip>
                   <parameter>
@@ -1277,13 +1301,18 @@
                      <excludes>
                         <exclude>*.internal.*</exclude>
                      </excludes>
+
+                     <accessModifier>public</accessModifier>
                      <ignoreMissingClasses>true</ignoreMissingClasses>
+                     <ignoreMissingOldVersion>true</ignoreMissingOldVersion>
 
                      <onlyModified>true</onlyModified><!-- output only modified classes/methods -->
                      <onlyBinaryIncompatible>true</onlyBinaryIncompatible><!-- output only binary incompatible changes -->
 
                      <breakBuildBasedOnSemanticVersioning>true</breakBuildBasedOnSemanticVersioning>
-                     <breakBuildOnBinaryIncompatibleModifications>true</breakBuildOnBinaryIncompatibleModifications>
+
+                     <reportOnlyFilename>true</reportOnlyFilename>
+                     <skipDiffReport>true</skipDiffReport>
                   </parameter>
                </configuration>
             </plugin>
@@ -1391,6 +1420,11 @@
          <plugin>
             <groupId>com.github.siom79.japicmp</groupId>
             <artifactId>japicmp-maven-plugin</artifactId>
+            <configuration>
+               <configuration>
+                  <skip>${skip.report.japicmp}</skip>
+               </configuration>
+            </configuration>
             <reportSets>
                <reportSet>
                   <reports>
@@ -1646,7 +1680,7 @@
                <plugin>
                   <groupId>org.zeroturnaround</groupId>
                   <artifactId>jrebel-maven-plugin</artifactId>
-                  <version>1.1.8</version>
+                  <version>1.1.9</version>
                   <executions>
                      <execution>
                         <id>generate-rebel-xml</id>
@@ -1928,4 +1962,5 @@
          </build>
       </profile>
    </profiles>
+
 </project>
