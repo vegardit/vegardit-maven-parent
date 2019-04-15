@@ -17,7 +17,7 @@
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
    <version>2.2.0-SNAPSHOT</version>
-   <packaging>jar</packaging>
+   <packaging>pom</packaging>
 
 
    <url>https://vegardit.com/</url>
@@ -60,11 +60,12 @@
       <!-- requiring 3.2.2+ because of https://issues.apache.org/jira/browse/MNG-4565 -->
       <!-- requiring 3.3.0+ because of https://issues.apache.org/jira/browse/MNG-5755 -->
       <!-- requiring 3.3.9+ because of org.jacoco:jacoco-maven-plugin -->
-      <maven.minimum.version>3.3.9</maven.minimum.version>
+      <!-- requiring 3.5+ because of maven-enforcer-plugin/org.apache.felix:maven-bundle-plugin -->
+      <maven.minimum.version>3.5</maven.minimum.version>
 
       <maven.scm.version>1.11.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
-      <maven.wagon.version>3.2.0</maven.wagon.version>
+      <maven.wagon.version>3.3.2</maven.wagon.version>
 
       <maven.surefire.version>2.22.1</maven.surefire.version>
 
@@ -471,7 +472,7 @@
                   <groupId>org.apache.commons</groupId>
                   <artifactId>commons-lang3</artifactId>
                   <!-- min 3.7 because of https://issues.apache.org/jira/browse/LANG-1365 -->
-                  <version>3.8.1</version>
+                  <version>3.9</version>
                </dependency>
             </dependencies>
          </plugin>
@@ -753,7 +754,7 @@
             <!-- http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>4.1.0</version>
+            <version>4.2.0</version>
             <extensions>true</extensions>
             <executions>
                <execution>
@@ -928,7 +929,8 @@
             <executions>
                <execution>
                   <id>check@package</id>
-                  <phase>package</phase>
+                  <!-- cannot use phase validate as it needs to be executed after gmavenplus-plugin -->
+                  <phase>process-sources</phase>
                   <goals>
                      <goal>check</goal>
                   </goals>
@@ -1290,7 +1292,7 @@
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <groupId>com.github.siom79.japicmp</groupId>
                <artifactId>japicmp-maven-plugin</artifactId>
-               <version>0.13.1</version>
+               <version>0.14.0</version>
                <configuration>
                   <skip>${skip.japicmp.cmp}</skip>
                   <parameter>

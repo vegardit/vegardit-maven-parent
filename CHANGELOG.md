@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - configured [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
 
 ### Changed
-- minimum required Maven version is now 3.3.9
+- minimum required Maven version is now 3.5.0
 - Maven plugin upgrades:
   - checkstyle 8.19
   - extra-enforcer-rules 1.2
@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - maven-scm-plugin 1.11.2
   - maven-shade-plugin 3.2.1
   - maven-surefire-report-plugin 2.22.1
-  - maven-wagon 3.2.0
+  - maven-wagon 3.3.2
   - versions-maven-plugin 2.7
 - maven-enforcer-plugin: enforceBytecodeVersion.ignoreOptionals=true
 - maven-failesafe/surefire-plugin: runOrder=alphabetical, -Dcom.ibm.jsse2.overrideDefaultTLS=true, trimStackTrace=false
