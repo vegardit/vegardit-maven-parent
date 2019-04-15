@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+## [2.2.0] - 2019-04-15
+
 ### Fixed
 * Surefire tests may fail on Jenkins containers with latest OpenJDK8, see https://github.developer.allianz.io/azd/jenkins-slave-maven/issues/70
 
