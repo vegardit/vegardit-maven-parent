@@ -2,7 +2,7 @@
 #
 # Copyright 2015-2018 by Vegard IT GmbH, Germany, https://vegardit.com
 # SPDX-License-Identifier: Apache-2.0
-# 
+#
 # @author Sebastian Thomschke, Vegard IT GmbH
 # @author Patrick Spielmann, Vegard IT GmbH
 
@@ -10,11 +10,11 @@ set -e # abort script at first error
 set -o pipefail # causes a pipeline to return the exit status of the last command in the pipe that returned a non-zero return value
 
 if [[ -f ./.travis/release-trigger.sh ]]; then
-    echo "Sourcing [./.travis/release-trigger.sh]..." 
+    echo "Sourcing [./.travis/release-trigger.sh]..."
     source ./.travis/release-trigger.sh
 fi
 
-MAVEN_VERSION=3.5.4
+MAVEN_VERSION=3.6.1
 if [[ ! -e $HOME/.m2/bin/apache-maven-$MAVEN_VERSION ]]; then
     echo "Installing Maven version $MAVEN_VERSION..."
     mkdir -p $HOME/.m2/bin/

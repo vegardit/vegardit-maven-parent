@@ -1,12 +1,17 @@
-dist: trusty
+dist: xenial
 
 language: java
   
 os:
   - linux
-  
+
+addons:
+  apt:
+    packages:
+      - openjdk-8-jdk-headless
+
 jdk:
-  - oraclejdk8 # used by maven runtime
+  - openjdk8 # used by maven runtime
 
 cache:
   directories:
