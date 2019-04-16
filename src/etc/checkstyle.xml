@@ -4,7 +4,7 @@
    SPDX-License-Identifier: Apache-2.0
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://checkstyle.sourceforge.net/dtds/configuration_1_3.dtd">
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/com/puppycrawl/tools/checkstyle/configuration_1_3.dtd">
 <!--
     Checkstyle-Configuration: vegardit.com Checks
     Description: none
