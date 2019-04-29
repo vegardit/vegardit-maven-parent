@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [2.2.1] - 2019-04-29
+
+### Changed
+- use "groovy-all" instead of "groovy-ant" plugin dependency for gmavenplus plugin
+- Maven plugin upgrades:
+  - checkstyle 8.20
+
+
 ## [2.2.0] - 2019-04-15
 
 ### Fixed
