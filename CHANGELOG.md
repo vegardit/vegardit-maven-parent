@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.2.2] - 2019-05-01
+
+### Changed
+- upgrade to Eclipse Compiler 3.17.0
+- add exclusion for maven-checkstyle-plugin to org.eclipse.m2e:lifecycle-mapping
+
 
 ## [2.2.1] - 2019-04-29
 
