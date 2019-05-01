@@ -15,6 +15,7 @@ if [[ -f ./.travis/release-trigger.sh ]]; then
 fi
 
 MAVEN_VERSION=3.6.1
+MAVEN_HELP_PLUGIN_VERSION=3.2.0
 if [[ ! -e $HOME/.m2/bin/apache-maven-$MAVEN_VERSION ]]; then
     echo "Installing Maven version $MAVEN_VERSION..."
     mkdir -p $HOME/.m2/bin/
@@ -26,7 +27,7 @@ export PATH=$M2_HOME/bin:$PATH
 
 # https://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line
 echo "Determining current Maven project version..."
-projectVersion="$(mvn -s .travis/maven_settings.xml org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression=project.version -q -DforceStdout)"
+projectVersion="$(mvn -s .travis/maven_settings.xml org.apache.maven.plugins:maven-help-plugin:$MAVEN_HELP_PLUGIN_VERSION:evaluate -Dexpression=project.version -q -DforceStdout)"
 echo "  -> Current Version: $projectVersion"
 
 MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1" # https://zeroturnaround.com/rebellabs/your-maven-build-is-slow-speed-it-up/
@@ -63,7 +64,7 @@ else
     echo "###################################################"
     echo "# Building Maven Project...                       #"
     echo "###################################################"
-   if [[ ${TRAVIS_BRANCH} == "master" ]]; then
+    if [[ ${TRAVIS_BRANCH} == "master" ]]; then
         mavenGoal="deploy"
     else
         mavenGoal="verify"

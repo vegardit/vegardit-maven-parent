@@ -17,11 +17,12 @@ cache:
   directories:
   - $HOME/.m2/bin
   - $HOME/.m2/repository
-
 before_cache:
   - rm -rf $HOME/.m2/repository/com/vegardit
 
 install:
+  - which java
+  - echo JAVA_HOME=$JAVA_HOME
   - ls -l /usr/lib/jvm/
 
 before_script:
