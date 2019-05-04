@@ -54,8 +54,8 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   - `**/*.yaml`
   - `**/*.yml`
 - Configures the [maven-enforcer-plugin](https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html) to help maintaining Maven best practices.
-- Configures the [maven-checkstyle-plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/) to be executed in the [lifecycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference) `package`.\
-  If the file `src/etc/checkstyle.xml` exists in the project being build, then this file will used automatically to perform checkstyle checks.\
+- Configures the [maven-checkstyle-plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/) (including extra rules from the [sevntu.checkstyle](https://github.com/sevntu-checkstyle/sevntu.checkstyle) project) to be executed in the [lifecycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference) `process-sources`.\
+  If the file `src/etc/checkstyle.xml` exists in the project being build, then this file will be the effective ruleset to checks against.\
   If it does not exist then by default this [checkstyle configuration file](src/etc/checkstyle.xml) will be used.\
   To use a different configuration file set one of the following project properties:
   - `checkstyle.config.path`: path to a config file on your local filesystem.
