@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -25,7 +26,6 @@
       <url>https://vegardit.com/</url>
    </organization>
    <inceptionYear>2013</inceptionYear>
-
    <licenses>
       <license>
          <name>Apache License 2.0</name>
@@ -185,81 +185,97 @@
          /*
           * determine if the artefact contains Java sources
           */
-         setProjectProp("custom.noJavaArtefact", project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"] ? "false" : "true")
+         def isJavaCompilable = project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"]
+         setProjectProp("custom.noJavaArtefact", isCompilable ? "false" : "true")
+
+         if(isJavaCompilable) {
+
+            /*
+             * loading/locating eclipse Java compiler artifact
+             */
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", project.properties["eclipse-java-compiler.version"], "jar", null)
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+               .setArtifact(ecjArtifactMeta)
+               .setLocalRepository(session.localRepository)
+               .setRemoteRepositories(project.remoteArtifactRepositories)
+            ).artifacts[0]
+            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath)
 
 
-         /*
-          * loading/locating eclipse Java compiler artifact
-          */
-         def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", project.properties["eclipse-java-compiler.version"], "jar", null)
-         def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
-            .setArtifact(ecjArtifactMeta)
-            .setLocalRepository(session.localRepository)
-            .setRemoteRepositories(project.remoteArtifactRepositories)
-         ).artifacts[0]
-         setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath)
+            /*
+             * determine bootclasspath for compilation of src/main/java
+             */
+            def compileJDKSpec = [
+               "version": project.properties["java.version"],
+               "vendor": project.properties["java.vendor"]
+            ]
+            // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain
+            def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec)
+            if(!compileJDKs)
+                throw new RuntimeException("No toolchain found with specification $compileJDKSpec")
+            def compileJDK = compileJDKs[0]
+            setProjectProp("custom.compileBootClasspath", [
+               "${compileJDK.javaHome}/jre/lib/rt.jar",
+               "${compileJDK.javaHome}/jre/lib/jce.jar",
+               "${compileJDK.javaHome}/jre/lib/jsse.jar"
+            ].join(File.pathSeparator))
+
+            def compileClasspath = new LinkedHashSet<String>()
+            compileClasspath.addAll(project.compileClasspathElements)
+            compileClasspath.addAll(project.runtimeClasspathElements)
+            setProjectProp("custom.compileClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
 
 
-         /*
-          * determine bootclasspath for compilation of src/main/java
-          */
-         def compileJDKSpec = [
-            "version": project.properties["java.version"],
-            "vendor": project.properties["java.vendor"]
-         ]
-         // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain
-         def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec)
-         if(!compileJDKs)
-             throw new RuntimeException("No toolchain found with specification $compileJDKSpec")
-         def compileJDK = compileJDKs[0]
-         setProjectProp("custom.compileBootClasspath", [
-            "${compileJDK.javaHome}/jre/lib/rt.jar",
-            "${compileJDK.javaHome}/jre/lib/jce.jar",
-            "${compileJDK.javaHome}/jre/lib/jsse.jar"
-         ].join(File.pathSeparator))
+            /*
+             * determine bootclasspath for compilation of src/test/java
+             */
+            def testCompileJDKSpec = [
+               "version": project.properties["java.version.unit-tests"],
+               "vendor": project.properties["java.vendor.unit-tests"]
+            ]
+            testCompileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec)
+            if(!testCompileJDKs)
+                throw new RuntimeException("No toolchain found with specification $testCompileJDKSpec")
+            def testCompileJDK=testCompileJDKs[0]
+            setProjectProp("custom.testCompileBootClasspath", [
+               "${testCompileJDK.javaHome}/jre/lib/rt.jar",
+               "${testCompileJDK.javaHome}/jre/lib/jce.jar",
+               "${testCompileJDK.javaHome}/jre/lib/jsse.jar"
+            ].join(File.pathSeparator))
 
 
-         /*
-          * determine bootclasspath for compilation of src/test/java
-          */
-         def testCompileJDKSpec = [
-            "version": project.properties["java.version.unit-tests"],
-            "vendor": project.properties["java.vendor.unit-tests"]
-         ]
-         testCompileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec)
-         if(!testCompileJDKs)
-             throw new RuntimeException("No toolchain found with specification $testCompileJDKSpec")
-         def testCompileJDK=testCompileJDKs[0]
-         setProjectProp("custom.testCompileBootClasspath", [
-            "${testCompileJDK.javaHome}/jre/lib/rt.jar",
-            "${testCompileJDK.javaHome}/jre/lib/jce.jar",
-            "${testCompileJDK.javaHome}/jre/lib/jsse.jar"
-         ].join(File.pathSeparator))
+            /*
+             * configure javadoc command, https://stackoverflow.com/questions/27728733/javadoc-error-invalid-flag-xdoclintnone-when-i-use-java-7-but-it-works-i
+             * since it is toolchain aware and executed after the integration tests we check the integration test JDK if it supports "-Xdoclint:none"
+             */
+            def stdOut = ["${testCompileJDK.javaHome}/bin/javadoc", "-X"].execute().text
+            setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "")
+            setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "")
+
+            if(project.properties.get("custom.noJavaArtefact") == "true" || project.version.endsWith("-SNAPSHOT")) {
+               setProjectProp("maven.javadoc.skip", "true")
+            }
 
 
-         /*
-          * configure javadoc command, https://stackoverflow.com/questions/27728733/javadoc-error-invalid-flag-xdoclintnone-when-i-use-java-7-but-it-works-i
-          * since it is toolchain aware and executed after the integration tests we check the integration test JDK if it supports "-Xdoclint:none"
-          */
-         def stdOut = ["${testCompileJDK.javaHome}/bin/javadoc", "-X"].execute().text
-         setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "")
-         setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "")
+            /*
+             * determine if the artefact contains Java test sources
+             */
+            def isTestable = false
+            new File(project.build.testSourceDirectory).traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it ->
+                isTestable = true
+            }
 
-         if(project.properties.get("custom.noJavaArtefact") == "true" || project.version.endsWith("-SNAPSHOT")) {
+            if (isTestable) {
+               setProjectProp("custom.noJavaTests", "false")
+
+               compileClasspath.addAll(project.testClasspathElements)
+               setProjectProp("custom.testClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
+            } else {
+               setProjectProp("custom.noJavaTests", "true")
+            }
+
+         } else // isJavaCompilable
             setProjectProp("maven.javadoc.skip", "true")
-         }
-
-
-         /*
-          * set compile/test classpath elements as maven properties
-          */
-         def compileClasspath = new LinkedHashSet<String>()
-         compileClasspath.addAll(project.compileClasspathElements)
-         compileClasspath.addAll(project.runtimeClasspathElements)
-         setProjectProp("custom.compileClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
-
-         compileClasspath.addAll(project.testClasspathElements)
-         setProjectProp("custom.testClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
 
 
          /*
@@ -430,7 +446,7 @@
             <!-- http://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>1.6.3</version>
+            <version>1.7.0</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
@@ -642,7 +658,7 @@
          -->
          <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.0</version>
+            <version>3.8.1</version>
             <executions>
                <!-- this plugin's default phases are disabled in the 'outside-eclipse-profile' since we use the exec-maven-plugin to execute ecj -->
             </executions>
@@ -668,7 +684,7 @@
                      <executable>java</executable>
                      <classpathScope>compile</classpathScope>
                      <arguments>
-                         <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
+                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                         <argument>-jar</argument>
                         <argument>${custom.ecjJarPath}</argument>
                         <argument>-bootclasspath</argument>
@@ -676,8 +692,8 @@
                         <argument>-encoding</argument>
                         <argument>${project.build.sourceEncoding}</argument>
                         <argument>-g</argument> <!-- include debug info -->
-                        <argument>-parameters</argument> <!-- preserve information about the formal parameters -->
-                        <argument>-O</argument> <!-- optimize for execution time -->
+                        <argument>-parameters</argument> <!-- generate method parameters attribute -->
+                        <argument>-genericsignature</argument> <!-- generate generic signature for lambda expressions -->
                         <argument>-time</argument> <!-- display speed information. -->
                         <argument>-showversion</argument> <!-- display the build number of the compiler -->
                         <argument>-d</argument>
@@ -699,7 +715,7 @@
                   </goals>
                   <phase>test-compile</phase>
                   <configuration>
-                     <skip>${custom.noJavaArtefact}</skip>
+                     <skip>${custom.noJavaTests}</skip>
                      <executable>java</executable>
                      <classpathScope>test</classpathScope>
                      <arguments>
@@ -711,8 +727,8 @@
                         <argument>-encoding</argument>
                         <argument>${project.build.sourceEncoding}</argument>
                         <argument>-g</argument> <!-- include debug info -->
-                        <argument>-parameters</argument> <!-- preserve information about the formal parameters -->
-                        <argument>-O</argument> <!-- optimize for execution time -->
+                        <argument>-parameters</argument> <!-- generate method parameters attribute -->
+                        <argument>-genericsignature</argument> <!-- generate generic signature for lambda expressions -->
                         <argument>-time</argument> <!-- display speed information. -->
                         <argument>-showversion</argument> <!-- display the build number of the compiler -->
                         <argument>-d</argument>
@@ -753,7 +769,7 @@
          </plugin>
 
          <plugin>
-            <!-- http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
+            <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
             <version>4.2.0</version>
@@ -787,7 +803,7 @@
 
          <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.1.0</version>
             <executions>
                <execution>
                   <id>attach-sources-no-fork</id>
@@ -826,7 +842,7 @@
             <!-- enable code coverage -->
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.3</version>
+            <version>0.8.4</version>
             <executions>
                <execution>
                   <id>pre-unit-test</id>
@@ -927,7 +943,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
             <executions>
                <execution>
                   <id>check@process-sources</id>
@@ -1024,13 +1040,41 @@
 
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
+               <artifactId>flatten-maven-plugin</artifactId>
+               <version>1.1.0</version>
+               <configuration>
+                  <embedBuildProfileDependencies>false</embedBuildProfileDependencies>
+                  <lineLength>160</lineLength>
+                  <flattenedPomFilename>target/pom-flattened.xml</flattenedPomFilename>
+                  <flattenMode>ossrh</flattenMode>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>flatten.clean@clean</id>
+                     <phase>clean</phase>
+                     <goals>
+                        <goal>clean</goal>
+                     </goals>
+                  </execution>
+                  <execution>
+                     <id>flatten@process-resources</id>
+                     <phase>process-resources</phase>
+                     <goals>
+                        <goal>flatten</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
                <artifactId>versions-maven-plugin</artifactId>
                <version>2.7</version>
             </plugin>
 
             <plugin>
                <artifactId>maven-jar-plugin</artifactId>
-               <version>3.1.1</version>
+               <version>3.1.2</version>
                <configuration>
                   <archive>
                      <!-- generated by maven-bundle-plugin: -->
@@ -1322,6 +1366,18 @@
 
                      <reportOnlyFilename>true</reportOnlyFilename>
                      <skipDiffReport>true</skipDiffReport>
+
+                     <overrideCompatibilityChangeParameters>
+                        <!-- https://github.com/siom79/japicmp/issues/201 -->
+                        <overrideCompatibilityChangeParameter>
+                           <compatibilityChange>METHOD_NEW_DEFAULT</compatibilityChange>
+                           <binaryCompatible>true</binaryCompatible>
+                        </overrideCompatibilityChangeParameter>
+                        <overrideCompatibilityChangeParameter>
+                           <compatibilityChange>METHOD_ABSTRACT_NOW_DEFAULT</compatibilityChange>
+                           <binaryCompatible>true</binaryCompatible>
+                        </overrideCompatibilityChangeParameter>
+                     </overrideCompatibilityChangeParameters>
                   </parameter>
                </configuration>
             </plugin>
@@ -1347,7 +1403,7 @@
             <!-- https://github.com/trustin/os-maven-plugin -->
             <groupId>kr.motd.maven</groupId>
             <artifactId>os-maven-plugin</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.2</version>
          </extension>
 
          <extension>
@@ -1412,7 +1468,7 @@
          <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.2</version>
+            <version>0.8.3</version>
             <configuration>
                <skip>${skip.report.jacoco-maven-plugin}</skip>
             </configuration>
@@ -1969,6 +2025,19 @@
                                     <versionRange>[0.0,)</versionRange>
                                     <goals>
                                        <goal>check</goal>
+                                    </goals>
+                                 </pluginExecutionFilter>
+                                 <action>
+                                    <ignore />
+                                 </action>
+                              </pluginExecution>
+                              <pluginExecution>
+                                 <pluginExecutionFilter>
+                                    <groupId>org.codehaus.mojo</groupId>
+                                    <artifactId>flatten-maven-plugin</artifactId>
+                                    <versionRange>[0.0,)</versionRange>
+                                    <goals>
+                                       <goal>flatten</goal>
                                     </goals>
                                  </pluginExecutionFilter>
                                  <action>

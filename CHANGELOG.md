@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- default config for flatten-maven-plugin
+
+### Changed
+- relax AvoidConditionInversionCheck and NewlineAtEndOfFile checkstyle rules
+- Maven plugin upgrades:
+  - checkstyle 8.20
+  - gmavenplus-plugin 1.7.0
+  - jacoco-maven-plugin 0.8.4
+  - maven-checkstyle-plugin 3.1.0
+  - maven-jar-plugin 3.1.2
+  - maven-source-plugin 3.1.0
+  - os-maven-plugin 1.6.2
+
+### Fixed
+- build fails if artifact has no test classes
+- japicmp flags new default interface methods as binary incompatible change
+
 
 ## [2.3.0] - 2019-05-04
 

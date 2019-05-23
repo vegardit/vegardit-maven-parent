@@ -158,6 +158,12 @@
       </module>
       <module name="RedundantModifier" />
       <module name="RedundantImport" />
+      <module name="RegexpSinglelineJava">
+         <property name="format" value="@author" />
+         <property name="minimum" value="1" />
+         <property name="maximum" value="99" />
+         <message key="regexp.minimum" value="Java file is missing @author tag." />
+      </module>
       <module name="RightCurly" />
       <module name="SeparatorWrap">
          <metadata name="net.sf.eclipsecs.core.comment" value="Dot on new line" />
@@ -227,7 +233,9 @@
       </module>
 
       <!-- sevntu rules https://github.com/sevntu-checkstyle/sevntu.checkstyle -->
-      <module name="AvoidConditionInversionCheck" />
+      <module name="AvoidConditionInversionCheck">
+         <property name="applyOnlyToRelationalOperands" value="true" />
+      </module>
       <module name="AvoidConstantAsFirstOperandInConditionCheck">
          <property name="targetConstantTypes" value="LITERAL_NULL,LITERAL_TRUE,LITERAL_FALSE,NUM_INT,NUM_DOUBLE,NUM_LONG,NUM_FLOAT" />
       </module>
@@ -283,14 +291,18 @@
       <metadata name="net.sf.eclipsecs.core.comment" value="Ignore auto-generated source files" />
       <property name="fileNamePattern" value="[\\/]generated-sources[\\/].*$" />
    </module>
-   <module name="FileTabCharacter" />
+   <module name="FileTabCharacter">
+      <property name="fileExtensions" value="cfg, groovy, java, js, json, md, properties, py, sh, yml, yaml, xml, xsd" />
+   </module>
    <module name="NewlineAtEndOfFile">
       <property name="lineSeparator" value="lf_cr_crlf" />
+      <property name="fileExtensions" value="cfg, groovy, java, js, json, md, properties, py, sh, yml, yaml, xml, xsd" />
    </module>
    <module name="RegexpSingleline">
       <metadata name="net.sf.eclipsecs.core.comment" value="No trailing white spaces" />
       <property name="format" value="\s*[^*]\s$" />
       <property name="message" value="Line has trailing white spaces." />
+      <property name="fileExtensions" value="cfg, groovy, java, js, json, md, properties, py, sh, yml, yaml, xml, xsd" />
    </module>
    <module name="Translation" />
    <module name="UniqueProperties" />
