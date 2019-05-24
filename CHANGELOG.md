@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - checkstyle 8.20
   - gmavenplus-plugin 1.7.0
   - jacoco-maven-plugin 0.8.4
+  - japicmp-maven-plugin 0.14.1
   - maven-checkstyle-plugin 3.1.0
   - maven-jar-plugin 3.1.2
   - maven-source-plugin 3.1.0
