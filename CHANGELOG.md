@@ -8,8 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+## [2.4.1] - 2019-05-29
+
 ### Fixed
-- build fails src/test/java does not exist
+- build fails if src/test/java does not exist
+- checkstyle fails with IncompatibleClassChangeError - downgrading to checkstyle 8.20 because of https://github.com/sevntu-checkstyle/sevntu.checkstyle/issues/745
 
 
 ## [2.4.0] - 2019-05-29
