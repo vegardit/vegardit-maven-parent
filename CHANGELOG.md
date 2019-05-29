@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - relax AvoidConditionInversionCheck and NewlineAtEndOfFile checkstyle rules
 - Maven plugin upgrades:
-  - checkstyle 8.20
+  - checkstyle 8.21
   - gmavenplus-plugin 1.7.0
   - jacoco-maven-plugin 0.8.4
   - japicmp-maven-plugin 0.14.1
