@@ -260,9 +260,10 @@
              * determine if the artefact contains Java test sources
              */
             def isTestable = false
-            new File(project.build.testSourceDirectory).traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it ->
-                isTestable = true
-            }
+            if(new File(project.build.testSourceDirectory).exists())
+               new File(project.build.testSourceDirectory).traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it ->
+                  isTestable = true
+               }
 
             if (isTestable) {
                setProjectProp("custom.noJavaTests", "false")
