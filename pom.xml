@@ -186,7 +186,7 @@
           * determine if the artefact contains Java sources
           */
          def isJavaCompilable = project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"]
-         setProjectProp("custom.noJavaArtefact", isCompilable ? "false" : "true")
+         setProjectProp("custom.noJavaArtefact", isJavaCompilable ? "false" : "true")
 
          if(isJavaCompilable) {
 
@@ -274,8 +274,10 @@
                setProjectProp("custom.noJavaTests", "true")
             }
 
-         } else // isJavaCompilable
+         } else {
+            setProjectProp("custom.noJavaTests", "true")
             setProjectProp("maven.javadoc.skip", "true")
+         } // isJavaCompilable
 
 
          /*
