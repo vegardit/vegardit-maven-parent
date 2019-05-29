@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.0] - 2019-05-29
+
 ### Added
 - default config for flatten-maven-plugin
 
@@ -20,7 +22,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - japicmp-maven-plugin 0.14.1
   - maven-checkstyle-plugin 3.1.0
   - maven-jar-plugin 3.1.2
+  - maven-failsafe-plugin 2.22.2
+  - maven-surefire-plugin 2.22.2
   - maven-source-plugin 3.1.0
+  - maven-war-plugin 3.2.3
   - os-maven-plugin 1.6.2
 
 ### Fixed
