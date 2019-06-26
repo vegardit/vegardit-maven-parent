@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Maven plugin upgrades:
+  - gmavenplus-plugin 1.7.1
+  - maven-toolchains-plugin 3.0.0
+  - maven-wagon 3.3.3
+  - sevntu-checkstyle 1.34.1
+
 
 ## [2.4.1] - 2019-05-29
 
