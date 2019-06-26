@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.3] - 2019-06-26
+
+### Fixed
+-  maven-bundle-plugin fails with `Exception: java.lang.IllegalArgumentException: invalid signature: * at aQute.bnd.signatures.Signatures.parseReferenceTypeSignature(Signatures.java:63)`
+   - downgrading maven-bundle-plugin to 4.0.0
+
+
 ## [2.4.2] - 2019-06-26
 
 ### Changed
@@ -74,7 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.2.0] - 2019-04-15
 
 ### Fixed
-* Surefire tests may fail on Jenkins containers with latest OpenJDK8, see https://github.developer.allianz.io/azd/jenkins-slave-maven/issues/70
+- Surefire tests may fail on Jenkins containers with latest OpenJDK8, see https://github.developer.allianz.io/azd/jenkins-slave-maven/issues/70
 
 ### Added
 - checkstyle ignore filters for binary files

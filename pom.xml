@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -411,7 +412,7 @@
          -->
          <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.1</version> <!--$NO-MVN-MAN-VER$-->
             <executions>
                <execution>
                   <!-- Add maven project properties containing the path to artifact in the local repo for all dependencies to see https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html -->
@@ -750,7 +751,7 @@
 
          <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.8</version>
+            <version>1.8</version> <!--$NO-MVN-MAN-VER$-->
             <executions>
                <execution>
                   <id>delete-java-stubs@process-classes</id>
@@ -774,7 +775,8 @@
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>4.2.0</version>
+            <!-- don't upgrade to 4.1.0 or 4.2.0, builds will fail with Exception: java.lang.IllegalArgumentException: invalid signature: * at aQute.bnd.signatures.Signatures.parseReferenceTypeSignature(Signatures.java:63) -->
+            <version>4.0.0</version>
             <extensions>true</extensions>
             <executions>
                <execution>
