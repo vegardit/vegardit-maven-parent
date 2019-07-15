@@ -57,6 +57,7 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
 
     mvn -e -U --batch-mode --show-version \
         -s .travis/maven_settings.xml -t .travis/maven_toolchains.xml \
+        -DskipTests=${SKIP_TESTS} -DskipITs=${SKIP_TESTS} \
         -DdryRun=${DRY_RUN} -Dresume=false "-Darguments=-DskipTests=${SKIP_TESTS} -DskipITs=${SKIP_TESTS}" -DreleaseVersion=${POM_RELEASE_VERSION} -DdevelopmentVersion=${nextDevelopmentVersion} \
         help:active-profiles clean release:clean release:prepare release:perform \
         | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
