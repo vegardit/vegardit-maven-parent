@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+## [2.4.4] - 2019-07-15
+
+### Changed
+- Maven plugin upgrades:
+  - jacoco-maven-plugin 0.8.4
+  - maven-javadoc-plugin 3.1.1
+
+
 ## [2.4.3] - 2019-06-26
 
 ### Fixed
@@ -42,7 +51,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Maven plugin upgrades:
   - checkstyle 8.21
   - gmavenplus-plugin 1.7.0
-  - jacoco-maven-plugin 0.8.4
   - japicmp-maven-plugin 0.14.1
   - maven-checkstyle-plugin 3.1.0
   - maven-jar-plugin 3.1.2
