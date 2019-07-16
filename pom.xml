@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -695,7 +696,10 @@
                         <argument>${project.build.sourceEncoding}</argument>
                         <argument>-g</argument> <!-- include debug info -->
                         <argument>-parameters</argument> <!-- generate method parameters attribute -->
-                        <argument>-genericsignature</argument> <!-- generate generic signature for lambda expressions -->
+                        <!-- enabling this option breaks
+                           1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
+                           2) javac/javadoc with "undeclared type variable: K" when referencing classes with generics of other artifacts compiled with EJC
+                        <argument>-genericsignature</argument> generate generic signature for lambda expressions -->
                         <argument>-time</argument> <!-- display speed information. -->
                         <argument>-showversion</argument> <!-- display the build number of the compiler -->
                         <argument>-d</argument>
@@ -774,8 +778,7 @@
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <!-- don't upgrade to 4.1.0 or 4.2.0, builds will fail with Exception: java.lang.IllegalArgumentException: invalid signature: * at aQute.bnd.signatures.Signatures.parseReferenceTypeSignature(Signatures.java:63) -->
-            <version>4.0.0</version>
+            <version>4.2.0</version>
             <extensions>true</extensions>
             <executions>
                <execution>
