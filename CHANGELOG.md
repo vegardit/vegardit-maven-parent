@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.4.5] - 2019-07-16
+
+### Changed
+- upgrade to Eclipse Compiler 3.18.0
+
 
 ## [2.4.4] - 2019-07-15
 

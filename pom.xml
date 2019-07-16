@@ -48,7 +48,7 @@
 
       <java.version>1.8</java.version>
       <java.vendor>default</java.vendor>
-      <eclipse-java-compiler.version>3.17.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.18.0</eclipse-java-compiler.version>
 
       <java.version.unit-tests>${java.version}</java.version.unit-tests>
       <java.vendor.unit-tests>${java.vendor}</java.vendor.unit-tests>
