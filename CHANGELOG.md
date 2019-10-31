@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+### Changed
+- Maven plugin upgrades:
+  - maven-site-plugin 3.8.2
+  - rebel-maven-plugin 1.1.10
+  - maven-bundle-plugin 4.2.1
+  - sevntu-checkstyle-maven-plugin 1.35.0
+
+
 ## [2.4.6] - 2019-07-17
 
 ### Changed
