@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [2.4.7] - 2019-11-01
+
 ### Changed
 - Maven plugin upgrades:
   - maven-site-plugin 3.8.2
