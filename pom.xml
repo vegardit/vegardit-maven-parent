@@ -449,7 +449,7 @@
             <!-- http://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>1.7.1</version>
+            <version>1.8.0</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
