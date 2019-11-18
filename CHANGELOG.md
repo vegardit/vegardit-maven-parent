@@ -12,10 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - upgrade to Eclipse Compiler 3.19.0
 - Maven plugin upgrades:
-  - gmavenplus-plugin from 1.7.1 to 1.8.0
-  - maven-assembly-plugin from 3.1.1 to 3.2.0
-  - maven-jar-plugin from 3.1.2 to 3.2.0
+  - gmavenplus-plugin from 1.7.1 to 1.8.1
   - jacoco-maven-plugin from 0.8.4 to 0.8.5
+  - maven-assembly-plugin from 3.1.1 to 3.2.0
+  - maven-ear-plugin from 3.0.1 to 3.0.2
+  - maven-jar-plugin from 3.1.2 to 3.2.0
+  - maven-source-plugin from 3.1.0 to 3.2.0
 
 
 ## [2.4.7] - 2019-11-01
