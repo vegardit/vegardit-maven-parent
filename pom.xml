@@ -78,7 +78,7 @@
       <buildtime.output.log>true</buildtime.output.log>
 
       <!-- TODO cannot upgrade checkstyle version until https://github.com/sevntu-checkstyle/sevntu.checkstyle/issues/745 is resolved -->
-      <checkstyle.version>8.20</checkstyle.version>
+      <checkstyle.version>8.25</checkstyle.version>
       <checkstyle.sevntu-plugin.version>1.35.0</checkstyle.sevntu-plugin.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
