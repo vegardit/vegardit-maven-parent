@@ -506,7 +506,6 @@
          <plugin>
             <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
-            <!-- don't use 3.0.0-M2 because of https://issues.apache.org/jira/projects/MENFORCER/issues/MENFORCER-306 -->
             <version>3.0.0-M3</version>
             <executions>
                <execution>

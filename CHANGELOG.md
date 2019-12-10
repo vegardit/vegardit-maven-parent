@@ -14,10 +14,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Maven plugin upgrades:
   - gmavenplus-plugin from 1.7.1 to 1.8.1
   - jacoco-maven-plugin from 0.8.4 to 0.8.5
+  - japicmp-maven-plugin 0.14.2
   - maven-assembly-plugin from 3.1.1 to 3.2.0
   - maven-ear-plugin from 3.0.1 to 3.0.2
+  - maven-enforcer-plugin 3.0-M3
   - maven-jar-plugin from 3.1.2 to 3.2.0
   - maven-source-plugin from 3.1.0 to 3.2.0
+  - maven-wagon 3.3.4
 
 
 ## [2.4.7] - 2019-11-01
