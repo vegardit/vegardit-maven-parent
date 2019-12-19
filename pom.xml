@@ -1282,8 +1282,16 @@
                <configuration>
                   <runOrder>alphabetical</runOrder>
                   <trimStackTrace>false</trimStackTrace>
-                  <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dcom.ibm.jsse2.overrideDefaultTLS=true -Duser.language=en
-                     -Duser.region=US -noverify -Djdk.net.URLClassPath.disableClassPathURLCheck=true ${jacoco.surefireAgent}</argLine>
+                  <argLine>
+                     -Xmx768m
+                     -Duser.language=en -Duser.region=US
+                     -noverify -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true
+                     -Dcom.ibm.jsse2.overrideDefaultTLS=true
+                     -Djava.rmi.server.hostname=localhost
+                     -Djdk.net.URLClassPath.disableClassPathURLCheck=true
+                     ${jacoco.surefireAgent}
+                  </argLine>
+                  <!-- -Djava.rmi.server.hostname=localhost see: https://stackoverflow.com/questions/10494095/java-visualvm-hangs-connecting-to-locally-process-launched-from-eclipse#36192913 -->
                   <!-- -Djdk.net.URLClassPath.disableClassPathURLCheck see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 -->
                   <!-- -Dcom.ibm.jsse2.overrideDefaultTLS=true see: https://www.ibm.com/support/knowledgecenter/SSYKE2_8.0.0/com.ibm.java.security.component.80.doc/security-component/jsse2Docs/matchsslcontext_tls.html#matchsslcontext_tls -->
                   <excludes>
@@ -1299,8 +1307,15 @@
                <configuration>
                   <runOrder>alphabetical</runOrder>
                   <trimStackTrace>false</trimStackTrace>
-                  <argLine>-Xmx768m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dcom.ibm.jsse2.overrideDefaultTLS=true -Duser.language=en
-                     -Duser.region=US -noverify -Djdk.net.URLClassPath.disableClassPathURLCheck=true ${jacoco.failsafeAgent}</argLine>
+                  <argLine>
+                     -Xmx768m
+                     -Duser.language=en -Duser.region=US
+                     -noverify -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true
+                     -Dcom.ibm.jsse2.overrideDefaultTLS=true
+                     -Djava.rmi.server.hostname=localhost
+                     -Djdk.net.URLClassPath.disableClassPathURLCheck=true
+                     ${jacoco.surefireAgent}
+                  </argLine>
                   <excludes>
                      <exclude>**/Abstract*</exclude>
                   </excludes>

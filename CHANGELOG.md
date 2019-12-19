@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ### Changed
+- add `-Djava.rmi.server.hostname=localhost` to surefire-plugin config
 - upgrade to Eclipse Compiler 3.19.0
 - Maven plugin upgrades:
   - gmavenplus-plugin from 1.7.1 to 1.8.1
