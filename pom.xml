@@ -49,7 +49,7 @@
       <java.version>1.8</java.version>
       <java.vendor>default</java.vendor>
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
-      <eclipse-java-compiler.version>3.19.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.20.0</eclipse-java-compiler.version>
 
       <java.version.unit-tests>${java.version}</java.version.unit-tests>
       <java.vendor.unit-tests>${java.vendor}</java.vendor.unit-tests>
