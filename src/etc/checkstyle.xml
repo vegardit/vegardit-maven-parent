@@ -14,7 +14,7 @@
    <module name="LineLength">
       <!-- https://checkstyle.sourceforge.io/apidocs/com/puppycrawl/tools/checkstyle/checks/sizes/LineLengthCheck.html -->
       <property name="max" value="160" />
-      <property name="fileExtensions" value="java js xml"/>
+      <property name="fileExtensions" value="java, js, xml"/>
    </module>
    <module name="TreeWalker">
       <module name="AbbreviationAsWordInName">
