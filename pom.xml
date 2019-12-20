@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -77,9 +78,8 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <!-- TODO cannot upgrade checkstyle version until https://github.com/sevntu-checkstyle/sevntu.checkstyle/issues/745 is resolved -->
-      <checkstyle.version>8.20</checkstyle.version>
-      <checkstyle.sevntu-plugin.version>1.35.0</checkstyle.sevntu-plugin.version>
+      <checkstyle.version>8.27</checkstyle.version>
+      <checkstyle.sevntu-checks.version>1.36.0</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
@@ -949,7 +949,6 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.1.0</version>
             <executions>
                <execution>
                   <id>check@process-sources</id>
@@ -958,14 +957,6 @@
                   <goals>
                      <goal>check</goal>
                   </goals>
-                  <configuration>
-                     <configLocation>${checkstyle.config.path}</configLocation>
-                     <consoleOutput>true</consoleOutput>
-                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                     <failOnViolation>true</failOnViolation>
-                     <logViolationsToConsole>true</logViolationsToConsole>
-                     <violationSeverity>${checkstyle.violation-severity}</violationSeverity>
-                  </configuration>
                </execution>
             </executions>
             <dependencies>
@@ -976,8 +967,8 @@
                </dependency>
                <dependency>
                   <groupId>com.github.sevntu-checkstyle</groupId>
-                  <artifactId>sevntu-checkstyle-maven-plugin</artifactId>
-                  <version>${checkstyle.sevntu-plugin.version}</version>
+                  <artifactId>sevntu-checks</artifactId>
+                  <version>${checkstyle.sevntu-checks.version}</version>
                </dependency>
             </dependencies>
          </plugin>
@@ -1402,6 +1393,21 @@
                   </parameter>
                </configuration>
             </plugin>
+
+            <plugin>
+               <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-checkstyle-plugin</artifactId>
+               <version>3.1.0</version>
+               <configuration>
+                  <configLocation>${checkstyle.config.path}</configLocation>
+                  <consoleOutput>true</consoleOutput>
+                  <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                  <failOnViolation>true</failOnViolation>
+                  <logViolationsToConsole>true</logViolationsToConsole>
+                  <violationSeverity>${checkstyle.violation-severity}</violationSeverity>
+               </configuration>
+            </plugin>
          </plugins>
       </pluginManagement>
 
@@ -1508,7 +1514,7 @@
             <artifactId>japicmp-maven-plugin</artifactId>
             <configuration>
                <configuration>
-                  <skip>${skip.report.japicmp}</skip>
+                  <skip>${skip.report.japicmp-maven-plugin}</skip>
                </configuration>
             </configuration>
             <reportSets>
@@ -1521,11 +1527,31 @@
          </plugin>
 
          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <configuration>
+               <configuration>
+                  <skip>${skip.report.maven-checkstyle-plugin}</skip>
+               </configuration>
+            </configuration>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>checkstyle</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+
+         <plugin>
             <!-- TODO, @todo list report -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>taglist-maven-plugin</artifactId>
             <version>2.4</version>
             <configuration>
+               <configuration>
+                  <skip>${skip.report.taglist-maven-plugin}</skip>
+               </configuration>
                <tagListOptions>
                   <tagClasses>
                      <tagClass>
@@ -1598,13 +1624,14 @@
             <!-- <groupId>org.codehaus.mojo</groupId>
             <artifactId>dashboard-maven-plugin</artifactId>
             <version>1.0.0-beta-1</version>-->
-            <configuration>
-               <skip>${skip.report.dashboard-maven-plugin}</skip>
-            </configuration>
 
             <groupId>com.thesett</groupId>
             <artifactId>dashboard-maven-plugin</artifactId>
             <version>0.8.22</version>
+
+            <configuration>
+               <skip>${skip.report.dashboard-maven-plugin}</skip>
+            </configuration>
          </plugin>
       </plugins>
    </reporting>
