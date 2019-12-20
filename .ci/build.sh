@@ -14,7 +14,7 @@ if [[ -f .ci/release-trigger.sh ]]; then
     source .ci/release-trigger.sh
 fi
 
-MAVEN_VERSION=3.6.2
+MAVEN_VERSION=3.6.3
 MAVEN_HELP_PLUGIN_VERSION=3.2.0
 if [[ ! -e $HOME/.m2/bin/apache-maven-$MAVEN_VERSION ]]; then
     echo "Installing Maven version $MAVEN_VERSION..."
