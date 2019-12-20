@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## [2.4.9] - 2019-12-20
+
+### Changed
+- apply checkstyle LineLengthCheck only to java,js,xml files
+
+
 ## [2.4.8] - 2019-12-20
 
 ### Changed
