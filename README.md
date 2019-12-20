@@ -1,6 +1,6 @@
 # vegardit-maven-parent - the Mother of all Maven parent POMs
 
-[![Build Status](https://travis-ci.org/vegardit/vegardit-maven-parent.svg?branch=master)](https://travis-ci.org/vegardit/vegardit-maven-parent)
+[![Build Status](https://travis-ci.com/vegardit/vegardit-maven-parent.svg?branch=master)](https://travis-ci.com/vegardit/vegardit-maven-parent)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE.txt)
 [![Download](https://api.bintray.com/packages/vegardit/maven-public/vegardit-maven-parent/images/download.svg)](https://bintray.com/vegardit/maven-public/vegardit-maven-parent/_latestVersion)
 
