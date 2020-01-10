@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -77,7 +78,7 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>8.27</checkstyle.version>
+      <checkstyle.version>8.28</checkstyle.version>
       <checkstyle.sevntu-checks.version>1.37.0</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
