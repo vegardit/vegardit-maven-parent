@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Maven plugin upgrades:
   - checkstyle 8.27 to 8.28
+  - japicmp-maven-plugin 0.14.3
   - maven-source-plugin from 3.2.0 to 3.2.1
   - sevntu-checks from 1.36.0 to 1.37.0
 
