@@ -93,9 +93,12 @@
 
       <skip.report.maven-javadoc-plugin>false</skip.report.maven-javadoc-plugin>
       <skip.report.maven-surefire-report-plugin>false</skip.report.maven-surefire-report-plugin>
-      <skip.report.maven-project-info-reports-plugin>false</skip.report.maven-project-info-reports-plugin>
       <skip.report.jacoco-maven-plugin>false</skip.report.jacoco-maven-plugin>
-      <skip.report.japicmp>false</skip.report.japicmp>
+      <skip.report.japicmp-maven-plugin>false</skip.report.japicmp-maven-plugin>
+      <skip.report.maven-checkstyle-plugin>false</skip.report.maven-checkstyle-plugin>
+      <skip.report.taglist-maven-plugin>false</skip.report.taglist-maven-plugin>
+      <skip.report.maven-project-info-reports-plugin>false</skip.report.maven-project-info-reports-plugin>
+      <skip.report.dashboard-maven-plugin>false</skip.report.dashboard-maven-plugin>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
