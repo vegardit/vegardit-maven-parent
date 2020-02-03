@@ -79,7 +79,7 @@
       <buildtime.output.log>true</buildtime.output.log>
 
       <checkstyle.version>8.29</checkstyle.version>
-      <checkstyle.sevntu-checks.version>1.37.0</checkstyle.sevntu-checks.version>
+      <checkstyle.sevntu-checks.version>1.37.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
