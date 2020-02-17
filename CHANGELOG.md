@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - dependency-scope-maven-plugin 0.10
   - flatten-maven-plugin 1.2.1
   - japicmp-maven-plugin 0.14.3
+  - maven-checkstyle-plugin from 3.1.0 to 3.1.1
+  - maven-shade-plugin from 3.2.1 to 3.2.2
   - maven-source-plugin from 3.2.0 to 3.2.1
   - sevntu-checks from 1.36.0 to 1.37.1
 
