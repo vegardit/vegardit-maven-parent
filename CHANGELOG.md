@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - checkstyle 8.27 to 8.29
+  - checkstyle 8.27 to 8.30
   - dependency-scope-maven-plugin 0.10
   - flatten-maven-plugin 1.2.1
   - japicmp-maven-plugin 0.14.3
