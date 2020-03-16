@@ -1338,7 +1338,7 @@
                <!-- http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
                <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#Where_in_the_pom.xml_do_I_configure_the_Javadoc_Plugin -->
                <artifactId>maven-javadoc-plugin</artifactId>
-               <version>3.1.1</version>
+               <version>3.2.0</version>
                <configuration>
                   <skip>${maven.javadoc.skip}</skip>
                   <!-- exclude internal package and java.*, javax.* stubs -->
