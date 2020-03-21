@@ -9,16 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.13] - 2020-03-21
+
 ### Changed
 - Maven plugin upgrades:
+  - build-helper-maven-plugin from 3.0.0 to 3.1.0
   - checkstyle 8.27 to 8.30
   - dependency-scope-maven-plugin 0.10
   - flatten-maven-plugin 1.2.1
   - japicmp-maven-plugin 0.14.3
   - maven-checkstyle-plugin from 3.1.0 to 3.1.1
+  - maven-dependency-plugin from 3.1.1 to 3.1.2
+  - maven-javadoc-plugin from 3.1.1 to 3.2.0
   - maven-shade-plugin from 3.2.1 to 3.2.2
+  - maven-site-plugin from 3.8.2 to 3.9.0
   - maven-source-plugin from 3.2.0 to 3.2.1
   - sevntu-checks from 1.36.0 to 1.37.1
+- removed deprecated checkstyle rules JavadocMethod.allowMissingThrowsTags/allowUndeclaredRTE/allowThrowsTagsForSubclasses/suppressLoadErrors, see https://github.com/checkstyle/checkstyle/issues/7329
 
 
 ## [2.4.10] - 2019-12-20
