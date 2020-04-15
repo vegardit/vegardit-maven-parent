@@ -1,4 +1,4 @@
-# from https://github.com/alexkaratarakis/gitattributes/blob/master/Java.gitattributes
+# based on https://github.com/alexkaratarakis/gitattributes/blob/master/Java.gitattributes
 
 # Handle line endings automatically for files detected as text
 # and leave all files detected as binary untouched.
@@ -8,11 +8,13 @@
 # The above will handle all files NOT found below
 #
 # These files are text and should be normalized (Convert crlf => lf)
-*.css           text
+*.css           text diff=css
 *.df            text
-*.htm           text
-*.html          text
-*.java          text
+*.htm           text diff=html
+*.html          text diff=html
+*.gradle        text diff=java
+*.gradle.kts    text diff=java
+*.java          text diff=java
 *.js            text
 *.json          text
 *.jsp           text
@@ -25,19 +27,23 @@
 *.tag           text
 *.tagx          text
 *.xml           text
+*.yaml          text
 *.yml           text
 
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
-*.class         binary
-*.dll           binary
-*.ear           binary
+*.bat           binary
+*.cmd           binary
 *.gif           binary
 *.ico           binary
-*.jar           binary
-*.jpg           binary
 *.jpeg          binary
+*.jpg           binary
 *.png           binary
+*.dll           binary
 *.so            binary
+*.class         binary
+*.jar           binary
 *.war           binary
-
+*.ear           binary
+*.zip           binary
+*.pak           binary
