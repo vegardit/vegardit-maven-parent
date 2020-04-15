@@ -1,7 +1,7 @@
 dist: xenial # bionic doesn't have JDK 8
 
 language: java
-  
+
 os:
   - linux
 
@@ -10,17 +10,22 @@ addons:
     packages:
       - openjdk-8-jdk-headless
 
-jdk:
-  - openjdk8 # used by maven runtime
+git:
+  depth: 10
 
 cache:
   directories:
   - $HOME/.m2/bin
   - $HOME/.m2/repository
+  - $HOME/.xshare
 before_cache:
   - rm -rf $HOME/.m2/repository/com/vegardit
 
+jdk:
+  - openjdk8 # used by maven runtime
+
 install:
+  - printenv | sort
   - which java
   - echo JAVA_HOME=$JAVA_HOME
   - ls -l /usr/lib/jvm/
