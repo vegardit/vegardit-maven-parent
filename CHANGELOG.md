@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.14] - 2020-04-15
+
+### Changed
+- set maven-install-plugin `installAtEnd` to `true`
+- set maven-deploy-plugin `deployAtEnd` to `true`
+- Maven plugin upgrades:
+  - maven-shade-plugin 3.2.2 to 3.2.3
+  - gmavenplus-plugin from 1.8.1 to 1.9.0
+  - flatten-maven-plugin 1.2.1 to 1.2.2
+
+
 ## [2.4.13] - 2020-03-21
 
 ### Changed
