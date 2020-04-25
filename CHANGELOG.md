@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- upgrade to Eclipse Java Compiler 3.21.0
+- Maven plugin upgrades:
+  - maven-antrun-plugin 1.8 to 3.0.0
+
 
 ## [2.4.14] - 2020-04-15
 
