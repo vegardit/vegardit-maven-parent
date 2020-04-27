@@ -18,6 +18,7 @@
    <version>2.4.15-SNAPSHOT</version>
    <packaging>pom</packaging>
 
+   <description>Maven parent project with Maven best practices configuration and sensible defaults.</description>
 
    <url>https://vegardit.com/</url>
    <organization>
