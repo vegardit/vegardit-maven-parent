@@ -14,7 +14,7 @@
    <module name="LineLength">
       <!-- https://checkstyle.sourceforge.io/apidocs/com/puppycrawl/tools/checkstyle/checks/sizes/LineLengthCheck.html -->
       <property name="max" value="160" />
-      <property name="fileExtensions" value="java, js, xml"/>
+      <property name="fileExtensions" value="js, xml"/>
    </module>
    <module name="TreeWalker">
       <module name="AbbreviationAsWordInName">
@@ -245,6 +245,9 @@
       <module name="ForbidReturnInFinallyBlockCheck" />
       <module name="ForbidThrowAnonymousExceptionsCheck" />
       <module name="LogicConditionNeedOptimizationCheck" />
+      <module name="LineLengthExtendedCheck">
+         <property name="max" value="160" />
+      </module>
       <module name="MapIterationInForEachLoopCheck">
          <property name="proposeKeySetUsage" value="true" />
          <property name="proposeEntrySetUsage" value="true" />
