@@ -49,7 +49,7 @@ export PATH=$M2_HOME/bin:$PATH
 
 echo
 echo "###################################################"
-echo "# Configure JDK Class Data Sharing...             #"
+echo "# Configuring JDK Class Data Sharing...           #"
 echo "###################################################"
 # https://docs.oracle.com/javase/8/docs/technotes/guides/vm/class-data-sharing.html
 jdk_version_checksum=$(java -version 2>&1 | md5sum | cut -f1 -d" ")
@@ -65,7 +65,7 @@ export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Xshare:on -XX:+UnlockDiagnosti
 
 echo
 echo "###################################################"
-echo "# Configure MAVEN_OPTS...                         #"
+echo "# Configuring MAVEN_OPTS...                       #"
 echo "###################################################"
 MAVEN_OPTS="${MAVEN_OPTS:-}"
 MAVEN_OPTS="$MAVEN_OPTS -XX:+TieredCompilation -XX:TieredStopAtLevel=1" # https://zeroturnaround.com/rebellabs/your-maven-build-is-slow-speed-it-up/

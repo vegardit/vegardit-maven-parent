@@ -1,17 +1,12 @@
-dist: xenial # bionic doesn't have JDK 8
+dist: bionic
 
 language: java
 
 os:
   - linux
 
-addons:
-  apt:
-    packages:
-      - openjdk-8-jdk-headless
-
 git:
-  depth: 10
+  depth: 2
 
 cache:
   directories:
@@ -29,6 +24,8 @@ install:
   - which java
   - echo JAVA_HOME=$JAVA_HOME
   - ls -l /usr/lib/jvm/
+  - ls -l /usr/local/lib/jvm/
+  - ls -l $HOME/.m2
 
 before_script:
   - unset _JAVA_OPTIONS # https://github.com/travis-ci/travis-ci/issues/8408

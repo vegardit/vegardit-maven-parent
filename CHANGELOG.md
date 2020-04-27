@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.4.15] - 2020-04-27
+
 ### Changed
 - use Sevntu's [LineLengthExtendedCheck](https://github.com/sevntu-checkstyle/sevntu.checkstyle/blob/master/sevntu-checks/src/main/java/com/github/sevntu/checkstyle/checks/sizes/LineLengthExtendedCheck.java) instead of Checkstyle's [LineLengthCheck](https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/LineLengthCheck.java) for Java source code to workaround [Checkstyle issue #7460](https://github.com/checkstyle/checkstyle/issues/7460)
 - upgrade to Eclipse Java Compiler 3.21.0
