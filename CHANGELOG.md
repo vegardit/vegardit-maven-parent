@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Changed
+- checkstyle 8.30 to 8.31
+
+
 ## [2.4.15] - 2020-04-27
 
 ### Changed
