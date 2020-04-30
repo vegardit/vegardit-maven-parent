@@ -216,6 +216,9 @@
          <property name="format" value="^[A-Z][_a-zA-Z0-9]*$" />
       </module>
       <module name="UnnecessaryParentheses" />
+      <module name="UnnecessarySemicolonAfterOuterTypeDeclaration" />
+      <module name="UnnecessarySemicolonAfterTypeMemberDeclaration" />
+      <module name="UnnecessarySemicolonInTryWithResources" />
       <module name="UnusedImports" />
       <module name="UpperEll" />
       <module name="WhitespaceAfter" />
