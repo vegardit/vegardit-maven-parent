@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -1174,6 +1175,11 @@
                <artifactId>maven-release-plugin</artifactId>
                <version>2.5.3</version>
                <configuration>
+                  <checkModificationExcludes>
+                     <!-- workaround for https://stackoverflow.com/questions/16199154/maven-releaseprepare-cannot-prepare-the-release -->
+                     <checkModificationExclude>pom.xml</checkModificationExclude>
+                  </checkModificationExcludes>
+
                   <providerImplementations>
                      <!-- use a pure Java based SVN implementation to allow easy cross platform builds -->
                      <svn>javasvn</svn>
@@ -1262,7 +1268,7 @@
 
             <plugin>
                <artifactId>maven-assembly-plugin</artifactId>
-               <version>3.2.0</version>
+               <version>3.3.0</version>
                <configuration>
                   <!-- faster builds -->
                   <recompressZippedFiles>false</recompressZippedFiles>
