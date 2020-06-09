@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Maven plugin upgrades:
+  - exec-maven-plugin from 1.6.0 to 3.0.0
+  - maven-project-info-reports-plugin from 3.0 to 3.1.0
+  - maven-shade-plugin from 3.2.3 to 3.2.4
+
 
 ## [2.4.16] - 2020-05-11
 
