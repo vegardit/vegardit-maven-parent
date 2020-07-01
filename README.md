@@ -42,17 +42,19 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   or [tycho-compiler-jdt](https://wiki.eclipse.org/Tycho/FAQ#Can_I_use_the_Tycho_compiler_support_in_non-OSGi_projects.2C_too.3F).
 - Allows you to use `RELEASE` as parent version value while maintaining reproducible builds of your released artifacts using this approach [MRELEASE-399](https://issues.apache.org/jira/browse/MRELEASE-399?focusedCommentId=14445455&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-14445455).
 - Performs Maven project property resolution/replacement in resource files under `src/main/resources` whose names match:
-  - `META-INF/MANIFEST.MF`
-  - `**/*.cfg`
-  - `**/*.ini`
-  - `**/*.html`
-  - `**/*.md`
-  - `**/*.props`
-  - `**/*.properties`
-  - `**/*.txt`
-  - `**/*.xml`
-  - `**/*.yaml`
-  - `**/*.yml`
+  ```bash
+  - META-INF/MANIFEST.MF
+  - **/*.cfg
+  - **/*.ini
+  - **/*.html
+  - **/*.md
+  - **/*.props
+  - **/*.properties
+  - **/*.txt
+  - **/*.xml
+  - **/*.yaml
+  - **/*.yml
+  ```
 - Configures the [maven-enforcer-plugin](https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html) to help maintaining Maven best practices.
 - Configures the [maven-checkstyle-plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/) (including extra rules from the [sevntu.checkstyle](https://github.com/sevntu-checkstyle/sevntu.checkstyle) project) to be executed in the [lifecycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference) `process-sources`.\
   If the file `src/etc/checkstyle.xml` exists in the project being build, then this file will be the effective ruleset to checks against.\
