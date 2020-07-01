@@ -16,8 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maven plugin upgrades:
   - build-helper-maven-plugin from 3.1.0 to 3.2.0
   - exec-maven-plugin from 1.6.0 to 3.0.0
+  - flatten-maven-plugin from 1.2.2 to 1.2.4
+  - maven-assembly-plugin from 3.2.0 to 3.3.0
+  - maven-ejb-plugin from 3.0.1 to 3.1.0
   - maven-project-info-reports-plugin from 3.0 to 3.1.0
   - maven-shade-plugin from 3.2.3 to 3.2.4
+  - maven-site-plugin from 3.9.0 to 3.9.1
+  - maven-war-plugin from 3.2.3 to 3.3.0
 - upgrade to Eclipse Java Compiler 3.22.0
 
 
@@ -27,7 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - set maven-release-plugin `<checkModificationExclude>pom.xml</checkModificationExclude>`
 - Maven plugin upgrades:
   - checkstyle 8.30 to 8.31
-  - maven-assembly-plugin 3.2.0 to 3.3.0
 
 
 ## [2.4.15] - 2020-04-27
