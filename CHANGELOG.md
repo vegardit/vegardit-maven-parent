@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+### Added
+- fast-build profile that skips checks and tests
+
 ### Changed
 - Maven plugin upgrades:
+  - build-helper-maven-plugin from 3.1.0 to 3.2.0
   - exec-maven-plugin from 1.6.0 to 3.0.0
   - maven-project-info-reports-plugin from 3.0 to 3.1.0
   - maven-shade-plugin from 3.2.3 to 3.2.4
+- upgrade to Eclipse Java Compiler 3.22.0
 
 
 ## [2.4.16] - 2020-05-11

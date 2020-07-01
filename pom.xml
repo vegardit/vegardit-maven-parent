@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -49,8 +50,11 @@
 
       <java.version>1.8</java.version>
       <java.vendor>default</java.vendor>
+
+      <groovy.version>3.0.4</groovy.version>
+
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
-      <eclipse-java-compiler.version>3.21.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.22.0</eclipse-java-compiler.version>
 
       <java.version.unit-tests>${java.version}</java.version.unit-tests>
       <java.vendor.unit-tests>${java.vendor}</java.vendor.unit-tests>
@@ -78,13 +82,14 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>8.31</checkstyle.version>
+      <checkstyle.version>8.32</checkstyle.version>
       <checkstyle.sevntu-checks.version>1.37.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
 
       <skip.maven-dependency-plugin.properties>false</skip.maven-dependency-plugin.properties>
+      <skip.enforcer.basic-checks>false</skip.enforcer.basic-checks>
       <skip.enforcer.enforce-bytecode-version>false</skip.enforcer.enforce-bytecode-version>
       <skip.enforcer.ban-duplicate-classes>false</skip.enforcer.ban-duplicate-classes>
       <skip.enforcer.dependency-convergence>false</skip.enforcer.dependency-convergence>
@@ -106,7 +111,7 @@
           * skip this script if run via m2eclipse
           */
          if(System.getProperty("eclipse.application") != null)
-            return;
+            return
 
          /*
           * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
@@ -301,29 +306,62 @@
           */
          if(!project.properties.containsKey("checkstyle.config.path")) {
             if(new File("src/etc/checkstyle.xml").exists()) {
-               setProjectProp("custom.checkstyleXmlPath", "src/etc/checkstyle.xml")
+               setProjectProp("checkstyle.config.path", "src/etc/checkstyle.xml")
             } else {
-               def checkstyleArtifactMeta = null
+               def checkstyleConfigArtifactMeta = null
                if(project.properties.containsKey("checkstyle.config.artifact")) {
                  def chunks = project.properties["checkstyle.config.artifact"].split(":")
                  if(chunks.length == 4)
-                   checkstyleArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3])
+                   checkstyleConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3])
                  else
-                   checkstyleArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4])
+                   checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4])
                } else {
-                 def root = project;
+                 def root = project
                  while(root.artifactId != "vegardit-maven-parent") {
                    root = root.parent
                  }
-                 checkstyleArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "checkstyle")
+                 checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "checkstyle")
                }
-               def checkstyleArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
-                  .setArtifact(checkstyleArtifactMeta)
+               def checkstyleConfigArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                  .setArtifact(checkstyleConfigArtifactMeta)
                   .setLocalRepository(session.localRepository)
                   .setRemoteRepositories(project.remoteArtifactRepositories)
                ).artifacts[0]
-               if(checkstyleArtifact != null) {
-                 setProjectProp("checkstyle.config.path", checkstyleArtifact.file.absolutePath)
+               if(checkstyleConfigArtifact != null) {
+                 setProjectProp("checkstyle.config.path", checkstyleConfigArtifact.file.absolutePath)
+               }
+            }
+         }
+
+
+         /*
+          * loading eclipse formatter config
+          */
+         if(!project.properties.containsKey("eclipse-formatter.config.path")) {
+            if(new File("src/etc/eclipse-formatter.xml").exists()) {
+               setProjectProp("eclipse-formatter.config.path", "src/etc/eclipse-formatter.xml")
+            } else {
+               def eclipseFormatterConfigArtifactMeta = null
+               if(project.properties.containsKey("eclipse-formatter.config.artifact")) {
+                 def chunks = project.properties["eclipse-formatter.config.artifact"].split(":")
+                 if(chunks.length == 4)
+                   eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3])
+                 else
+                   eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4])
+               } else {
+                 def root = project
+                 while(root.artifactId != "vegardit-maven-parent") {
+                   root = root.parent
+                 }
+                 eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "eclipse-formatter")
+               }
+               def eclipseFormatterConfigArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                  .setArtifact(eclipseFormatterConfigArtifactMeta)
+                  .setLocalRepository(session.localRepository)
+                  .setRemoteRepositories(project.remoteArtifactRepositories)
+               ).artifacts[0]
+               if(eclipseFormatterConfigArtifact != null) {
+                 setProjectProp("eclipse-formatter.config.path", eclipseFormatterConfigArtifact.file.absolutePath)
                }
             }
          }
@@ -366,6 +404,19 @@
       <system>github.com</system>
       <url>https://github.com/vegardit/vegardit-maven-parent/issues</url>
    </issueManagement>
+
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-bom</artifactId>
+            <version>${groovy.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
 
 
    <build>
@@ -439,7 +490,7 @@
             <version>1.0.1</version>
             <executions>
                <execution>
-                  <!-- Add maven project properties containing the versions of all dependencies to see https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html -->
+                  <!-- Add maven project properties containing the version string for all dependencies -->
                   <id>set-version@initialize</id>
                   <phase>initialize</phase>
                   <goals>
@@ -490,7 +541,7 @@
                <dependency>
                   <groupId>org.codehaus.groovy</groupId>
                   <artifactId>groovy-all</artifactId>
-                  <version>2.5.9</version>
+                  <version>${groovy.version}</version>
                   <type>pom</type>
                </dependency>
                <dependency>
@@ -518,6 +569,7 @@
                   </goals>
                   <phase>validate</phase>
                   <configuration>
+                     <skip>${skip.enforcer.basic-checks}</skip>
                      <rules>
                         <banCircularDependencies />
                         <banDuplicatePomDependencyVersions />
@@ -905,7 +957,7 @@
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.0</version>
             <executions>
                <execution>
                   <inherited>false</inherited>
@@ -1416,6 +1468,15 @@
                   <violationSeverity>${checkstyle.violation-severity}</violationSeverity>
                </configuration>
             </plugin>
+
+            <plugin>
+               <groupId>net.revelc.code.formatter</groupId>
+               <artifactId>formatter-maven-plugin</artifactId>
+               <version>2.11.0</version>
+               <configuration>
+                  <configFile>${eclipse-formatter.config.path}</configFile>
+               </configuration>
+            </plugin>
          </plugins>
       </pluginManagement>
 
@@ -1646,6 +1707,26 @@
 
 
    <profiles>
+
+      <profile>
+         <id>fast-build</id>
+         <activation>
+            <property>
+               <name>fastBuild</name>
+            </property>
+         </activation>
+         <properties>
+            <skipTests>true</skipTests>
+            <skip.enforcer.basic-checks>true</skip.enforcer.basic-checks>
+            <skip.enforcer.enforce-bytecode-version>true</skip.enforcer.enforce-bytecode-version>
+            <skip.enforcer.ban-duplicate-classes>true</skip.enforcer.ban-duplicate-classes>
+            <skip.enforcer.dependency-convergence>true</skip.enforcer.dependency-convergence>
+            <skip.dependency-scope-maven-plugin.check>true</skip.dependency-scope-maven-plugin.check>
+            <skip.japicmp.cmp>true</skip.japicmp.cmp>
+            <checkstyle.skip>true</checkstyle.skip>
+         </properties>
+      </profile>
+
 
       <profile>
          <id>travis-ci-deploy-snapshots-to-github</id>
