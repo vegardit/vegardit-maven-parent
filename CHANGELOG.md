@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
+  - checkstyle 8.32 to 8.33
   - build-helper-maven-plugin from 3.1.0 to 3.2.0
   - exec-maven-plugin from 1.6.0 to 3.0.0
   - flatten-maven-plugin from 1.2.2 to 1.2.4
