@@ -51,7 +51,7 @@
       <java.version>1.8</java.version>
       <java.vendor>default</java.vendor>
 
-      <groovy.version>3.0.4</groovy.version>
+      <groovy.version>3.0.5</groovy.version>
 
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
       <eclipse-java-compiler.version>3.22.0</eclipse-java-compiler.version>
