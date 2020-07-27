@@ -504,7 +504,7 @@
             <!-- http://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>1.9.0</version>
+            <version>1.9.1</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
