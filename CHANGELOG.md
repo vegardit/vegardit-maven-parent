@@ -14,10 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - checkstyle 8.32 to 8.33
+  - checkstyle 8.32 to 8.34
   - build-helper-maven-plugin from 3.1.0 to 3.2.0
   - exec-maven-plugin from 1.6.0 to 3.0.0
+  - extra-enforcer-rules from 1.2 to 1.3
   - flatten-maven-plugin from 1.2.2 to 1.2.4
+  - formatter-maven-plugin from 2.11.0 to 2.12.1
+  - gmavenplus-plugin from 1.8.1 to 1.9.1
   - maven-assembly-plugin from 3.2.0 to 3.3.0
   - maven-ejb-plugin from 3.0.1 to 3.1.0
   - maven-project-info-reports-plugin from 3.0 to 3.1.0
@@ -25,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-site-plugin from 3.9.0 to 3.9.1
   - maven-war-plugin from 3.2.3 to 3.3.0
 - upgrade to Eclipse Java Compiler 3.22.0
-- upgrading gmavenplus-plugin's groovy to 3.0.4
+- upgrading gmavenplus-plugin's groovy to 3.0.5
 
 
 ## [2.4.16] - 2020-05-11
