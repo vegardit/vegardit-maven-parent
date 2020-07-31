@@ -22,11 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - formatter-maven-plugin from 2.11.0 to 2.12.1
   - gmavenplus-plugin from 1.8.1 to 1.9.1
   - maven-assembly-plugin from 3.2.0 to 3.3.0
+  - maven-bundle-plugin from 4.2.1 to 5.1.1
   - maven-ejb-plugin from 3.0.1 to 3.1.0
   - maven-project-info-reports-plugin from 3.0 to 3.1.0
   - maven-shade-plugin from 3.2.3 to 3.2.4
   - maven-site-plugin from 3.9.0 to 3.9.1
   - maven-war-plugin from 3.2.3 to 3.3.1
+  - maven-wagon from 3.4.0 to 3.4.1
 - upgrade to Eclipse Java Compiler 3.22.0
 - upgrading gmavenplus-plugin's groovy to 3.0.5
 
