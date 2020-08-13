@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - fast-build profile that skips checks and tests
+- maven property `project.build.outputTimestamp` to set the modification timestamp of all classes in the final jar match the build timestamp
 
 ### Changed
 - Maven plugin upgrades:
@@ -20,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - extra-enforcer-rules from 1.2 to 1.3
   - flatten-maven-plugin from 1.2.2 to 1.2.4
   - formatter-maven-plugin from 2.11.0 to 2.12.1
-  - gmavenplus-plugin from 1.8.1 to 1.9.1
+  - gmavenplus-plugin from 1.8.1 to 1.10.0
   - maven-assembly-plugin from 3.2.0 to 3.3.0
   - maven-bundle-plugin from 4.2.1 to 5.1.1
   - maven-ejb-plugin from 3.0.1 to 3.1.0
