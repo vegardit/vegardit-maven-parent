@@ -1101,7 +1101,7 @@
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
                <artifactId>flatten-maven-plugin</artifactId>
-               <version>1.2.4</version>
+               <version>1.2.5</version>
                <configuration>
                   <embedBuildProfileDependencies>false</embedBuildProfileDependencies>
                   <lineLength>160</lineLength>
