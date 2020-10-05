@@ -66,7 +66,7 @@
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
       <eclipse-java-compiler.version>3.22.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.5</groovy.version>
+      <groovy.version>3.0.6</groovy.version>
 
       <!-- requiring 3.2.2+ because of https://issues.apache.org/jira/browse/MNG-4565 -->
       <!-- requiring 3.3.0+ because of https://issues.apache.org/jira/browse/MNG-5755 -->
