@@ -88,7 +88,7 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>8.35</checkstyle.version>
+      <checkstyle.version>8.36.2</checkstyle.version>
       <checkstyle.sevntu-checks.version>1.37.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
