@@ -511,7 +511,7 @@
             <!-- http://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>1.10.1</version>
+            <version>1.11.0</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
