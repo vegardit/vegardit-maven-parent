@@ -1431,7 +1431,7 @@
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <groupId>com.github.siom79.japicmp</groupId>
                <artifactId>japicmp-maven-plugin</artifactId>
-               <version>0.14.3</version>
+               <version>0.14.4</version>
                <configuration>
                   <skip>${skip.japicmp.cmp}</skip>
                   <parameter>
