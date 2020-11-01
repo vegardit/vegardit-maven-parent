@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.17] - 2020-11-01
+
 ### Added
 - fast-build profile that skips checks and tests
 - maven property `project.build.outputTimestamp` to set the modification timestamp of all classes in the final jar match the build timestamp
