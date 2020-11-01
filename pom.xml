@@ -1198,7 +1198,8 @@
 
             <plugin>
                <artifactId>maven-resources-plugin</artifactId>
-               <version>3.2.0</version>
+               <!-- TODO don't upgrade to 3.2.0 see https://issues.apache.org/jira/browse/MRESOURCES-268 -->
+               <version>3.1.0</version>
             </plugin>
 
             <plugin>

@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.18] - 2020-11-01
+
+### Changed
+- downgrading maven-resources-plugin from 3.2.0 to 3.1.0 as new version is broken
+
+
 ## [2.4.17] - 2020-11-01
 
 ### Added
@@ -23,8 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - extra-enforcer-rules from 1.2 to 1.3
   - flatten-maven-plugin from 1.2.2 to 1.2.4
   - formatter-maven-plugin from 2.11.0 to 2.13.0
-  - gmavenplus-plugin from 1.8.1 to 1.10.1
+  - gmavenplus-plugin from 1.8.1 to 1.11.0
   - jacoco-maven-plugin from 0.8.5 to 0.8.6
+  - japicmp-maven-plugin from 0.14.3 to 0.14.4
   - maven-assembly-plugin from 3.2.0 to 3.3.0
   - maven-bundle-plugin from 4.2.1 to 5.1.1
   - maven-ear-plugin from 3.0.2 to 3.1.0
