@@ -63,7 +63,7 @@
       <java.vendor.integration-tests>${java.vendor}</java.vendor.integration-tests>
 
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
-      <eclipse-java-compiler.version>3.22.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.23.0</eclipse-java-compiler.version>
 
       <groovy.version>3.0.6</groovy.version>
 
