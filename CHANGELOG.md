@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.19] - 2020-11-05
+
+### Changed
+- migrate from Travis CI to GitHub Actions
+- Maven plugin upgrades:
+  - sevntu-checks from 1.37.1 to 1.38.0
+
+
 ## [2.4.18] - 2020-11-01
 
 ### Changed

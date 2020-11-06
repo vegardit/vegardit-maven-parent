@@ -401,8 +401,8 @@
 
 
    <ciManagement>
-      <system>travis-ci.org</system>
-      <url>https://travis-ci.org/vegardit/vegardit-maven-parent</url>
+      <system>github.com</system>
+      <url>https://github.com/vegardit/vegardit-maven-parent/actions</url>
    </ciManagement>
 
 
@@ -1745,12 +1745,15 @@
 
 
       <profile>
-         <id>travis-ci-deploy-snapshots-to-github</id>
+         <id>ci-deploy-snapshots-to-github</id>
 
          <activation>
             <property>
-               <!-- https://docs.travis-ci.com/user/environment-variables/ -->
-               <name>env.TRAVIS</name>
+               <!--
+                 https://docs.travis-ci.com/user/environment-variables/
+                 https://docs.github.com/en/free-pro-team@latest/actions/reference/environment-variables#default-environment-variables
+               -->
+               <name>env.DEPLOY_SNAPSHOTS_TO_GITHUB_BRANCH</name>
                <value>true</value>
             </property>
          </activation>
@@ -1802,13 +1805,27 @@
                                  setProjectProp("github.site.skip", "true")
                               else {
                                  def env = System.getenv()
-                                 def repoSlug = env["TRAVIS_REPO_SLUG"]
-                                 if(!project.properties.containsKey("github.site.repositoryOwner"))
-                                    setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")))
-                                 if(!project.properties.containsKey("github.site.repositoryName"))
-                                    setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1))
-                                 if(!project.properties.containsKey("github.site.branch"))
-                                    setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo")
+                                 def repoSlug = ''
+                                 if(env["TRAVIS"]) {
+                                    repoSlug = env["TRAVIS_REPO_SLUG"]
+                                    setProjectProp("ci.name", "Travis CI")
+                                    setProjectProp("ci.build_number", env.TRAVIS_JOB_NUMBER)
+                                 } else if(env["GITHUB_ACTIONS"]) {
+                                    repoSlug = env["GITHUB_REPOSITORY"]
+                                    setProjectProp("ci.name", "GitHub Actions")
+                                    setProjectProp("ci.build_number", env.GITHUB_RUN_ID + "#" + env.GITHUB_RUN_NUMBER)
+                                 }
+
+                                 if(repoSlug) {
+                                    if(!project.properties.containsKey("github.site.repositoryOwner"))
+                                       setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")))
+                                    if(!project.properties.containsKey("github.site.repositoryName"))
+                                       setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1))
+                                    if(!project.properties.containsKey("github.site.branch"))
+                                       setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo")
+                                 } else {
+                                    setProjectProp("github.site.skip", "true")
+                                 }
                                }
                               ]]></script>
                            </scripts>
@@ -1831,7 +1848,7 @@
                         <phase>deploy</phase>
                         <configuration>
                            <skip>${github.site.skip}</skip>
-                           <message>Maven artifacts for ${project.version} (Travis CI build ${env.TRAVIS_JOB_NUMBER})</message>
+                           <message>Maven artifacts for ${project.version} (${ci.name} build ${ci.build_number})</message>
                            <noJekyll>true</noJekyll>
                            <outputDirectory>${project.build.directory}/mvn-snapshots-repo</outputDirectory>
                            <branch>${github.site.branch}</branch>
@@ -1846,7 +1863,7 @@
 
                            <server>${github.site.server}</server>
                            <!--
-                              if a access token is used it needs repo.repo_public and user.user:email permissions otherwise
+                              if an access token is used it needs repo.repo_public and user.user:email permissions otherwise
                               "Error retrieving user info: Not Found (404)" occurs, see https://github.com/github/maven-plugins/issues/100
                            -->
                         </configuration>

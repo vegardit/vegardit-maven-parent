@@ -1,10 +1,8 @@
 # vegardit-maven-parent - the Mother of all Maven parent POMs
 
-[![Build Status](https://travis-ci.com/vegardit/vegardit-maven-parent.svg?branch=master)](https://travis-ci.com/vegardit/vegardit-maven-parent)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE.txt)
-[![Download](https://api.bintray.com/packages/vegardit/maven-public/vegardit-maven-parent/images/download.svg)](https://bintray.com/vegardit/maven-public/vegardit-maven-parent/_latestVersion)
-
-[comment]: # (https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?label=License)
+[![Build Status](https://img.shields.io/github/workflow/status/vegardit/vegardit-maven-parent/Maven%20Publish)](https://github.com/vegardit/vegardit-maven-parent/actions?query=workflow%3A%22Maven+Publish%22)
+[![License](https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?color=blue)](LICENSE.txt)
+[![Bintray](https://img.shields.io/bintray/v/vegardit/maven-public/vegardit-maven-parent?label=jcenter.bintray)](https://bintray.com/vegardit/maven-public/vegardit-maven-parent/_latestVersion)
 
 1. [What is it?](#what-is-it)
 1. [How to use](#how-to-use)
