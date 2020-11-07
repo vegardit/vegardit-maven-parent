@@ -229,16 +229,25 @@
             if(!compileJDKs)
                 throw new RuntimeException("No toolchain found with specification $compileJDKSpec")
             def compileJDK = compileJDKs[0]
-            setProjectProp("custom.compileBootClasspath", [
-               "${compileJDK.javaHome}/jre/lib/rt.jar",
-               "${compileJDK.javaHome}/jre/lib/jce.jar",
-               "${compileJDK.javaHome}/jre/lib/jsse.jar"
-            ].join(File.pathSeparator))
-
+            if(new File("${compileJDK.javaHome}/jmods").exists()) {
+              setProjectProp("custom.compileBootClasspathOption", "--module-path")
+              setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jmods")
+            } else {
+               setProjectProp("custom.compileBootClasspathOption", "-bootclasspath")
+               setProjectProp("custom.compileBootClasspath", [
+                  "${compileJDK.javaHome}/jre/lib/resources.jar",
+                  "${compileJDK.javaHome}/jre/lib/rt.jar",
+                  "${compileJDK.javaHome}/jre/lib/jsse.jar",
+                  "${compileJDK.javaHome}/jre/lib/jce.jar",
+                  "${compileJDK.javaHome}/jre/lib/charsets.jar",
+                  "${compileJDK.javaHome}/jre/lib/jfr.jar",
+                  "${compileJDK.javaHome}/jre/lib/classes"
+               ].join(File.pathSeparator))
+            }
             def compileClasspath = new LinkedHashSet<String>()
             compileClasspath.addAll(project.compileClasspathElements)
             compileClasspath.addAll(project.runtimeClasspathElements)
-            setProjectProp("custom.compileClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
+            setProjectProp("custom.compileClasspathElements", compileClasspath.join(File.pathSeparator))
 
 
             /*
@@ -251,12 +260,21 @@
             testCompileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec)
             if(!testCompileJDKs)
                 throw new RuntimeException("No toolchain found with specification $testCompileJDKSpec")
-            def testCompileJDK=testCompileJDKs[0]
-            setProjectProp("custom.testCompileBootClasspath", [
-               "${testCompileJDK.javaHome}/jre/lib/rt.jar",
-               "${testCompileJDK.javaHome}/jre/lib/jce.jar",
-               "${testCompileJDK.javaHome}/jre/lib/jsse.jar"
-            ].join(File.pathSeparator))
+            def testCompileJDK =testCompileJDKs[0]
+            if(new File("${testCompileJDK.javaHome}/jmods").exists()) {
+               setProjectProp("custom.testCompileBootClasspathOption", "--module-path")
+               setProjectProp("custom.testCompileBootClasspath", "${testCompileJDK.javaHome}/jmods")
+            } else {
+               setProjectProp("custom.testCompileBootClasspath", [
+                  "${testCompileJDK.javaHome}/jre/lib/resources.jar",
+                  "${testCompileJDK.javaHome}/jre/lib/rt.jar",
+                  "${testCompileJDK.javaHome}/jre/lib/jsse.jar",
+                  "${testCompileJDK.javaHome}/jre/lib/jce.jar",
+                  "${testCompileJDK.javaHome}/jre/lib/charsets.jar",
+                  "${testCompileJDK.javaHome}/jre/lib/jfr.jar",
+                  "${testCompileJDK.javaHome}/jre/lib/classes"
+               ].join(File.pathSeparator))
+            }
 
 
             /*
@@ -285,7 +303,7 @@
                setProjectProp("custom.noJavaTests", "false")
 
                compileClasspath.addAll(project.testClasspathElements)
-               setProjectProp("custom.testClasspathElements", org.apache.commons.lang3.StringUtils.join(compileClasspath, File.pathSeparator))
+               setProjectProp("custom.testClasspathElements", compileClasspath.join(File.pathSeparator))
             } else {
                setProjectProp("custom.noJavaTests", "true")
             }
@@ -550,12 +568,6 @@
                   <version>${groovy.version}</version>
                   <type>pom</type>
                </dependency>
-               <dependency>
-                  <groupId>org.apache.commons</groupId>
-                  <artifactId>commons-lang3</artifactId>
-                  <!-- min 3.7 because of https://issues.apache.org/jira/browse/LANG-1365 -->
-                  <version>3.11</version>
-               </dependency>
             </dependencies>
          </plugin>
 
@@ -748,16 +760,17 @@
                      <executable>java</executable>
                      <classpathScope>compile</classpathScope>
                      <arguments>
-                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                         <argument>-jar</argument>
                         <argument>${custom.ecjJarPath}</argument>
-                        <argument>-bootclasspath</argument>
-                        <argument>${custom.compileBootClasspath}</argument>
+
+                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                         <argument>-encoding</argument>
                         <argument>${project.build.sourceEncoding}</argument>
+                        <argument>${custom.compileBootClasspathOption}</argument>
+                        <argument>${custom.compileBootClasspath}</argument>
                         <argument>-g</argument> <!-- include debug info -->
                         <argument>-parameters</argument> <!-- generate method parameters attribute -->
-                        <!-- enabling this option breaks
+                        <!-- TODO enabling this option breaks
                            1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
                            2) javac/javadoc with "undeclared type variable: K" when referencing classes with generics of other artifacts compiled with ECJ
                         <argument>-genericsignature</argument> generate generic signature for lambda expressions -->
@@ -786,10 +799,11 @@
                      <executable>java</executable>
                      <classpathScope>test</classpathScope>
                      <arguments>
-                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                         <argument>-jar</argument>
                         <argument>${custom.ecjJarPath}</argument>
-                        <arguemt>-bootclasspath</arguemt>
+
+                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
+                        <argument>${custom.testCompileBootClasspathOption}</argument>
                         <argument>${custom.testCompileBootClasspath}</argument>
                         <argument>-encoding</argument>
                         <argument>${project.build.sourceEncoding}</argument>
@@ -881,7 +895,7 @@
                </execution>
             </executions>
             <configuration>
-               <skip>${custom.noJavaArtefact}</skip>
+               <skipSource>${custom.noJavaArtefact}</skipSource>
                <excludes>
                   <!-- exclude java.*, javax.* stubs -->
                   <exclude>java/**/*</exclude>

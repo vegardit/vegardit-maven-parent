@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.20] - 2020-11-07
+
 ### Changed
 - upgrade to Eclipse Java Compiler 3.23.0
+- support toolchain aware compilation of Java 9+ Maven projects with Eclipse Java Compiler
 
 
-## [2.4.19] - 2020-11-05
+## [2.4.19] - 2020-11-06
 
 ### Changed
 - migrate from Travis CI to GitHub Actions
