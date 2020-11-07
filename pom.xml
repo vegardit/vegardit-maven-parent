@@ -265,6 +265,7 @@
                setProjectProp("custom.testCompileBootClasspathOption", "--module-path")
                setProjectProp("custom.testCompileBootClasspath", "${testCompileJDK.javaHome}/jmods")
             } else {
+               setProjectProp("custom.testCompileBootClasspathOption", "-bootclasspath")
                setProjectProp("custom.testCompileBootClasspath", [
                   "${testCompileJDK.javaHome}/jre/lib/resources.jar",
                   "${testCompileJDK.javaHome}/jre/lib/rt.jar",
