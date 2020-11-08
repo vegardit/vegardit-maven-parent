@@ -15,7 +15,7 @@
 Opinionated best practices [Maven](https://maven.apache.org) parent project with the following 'features':
 
 - Configures UTF-8 as default encoding of source files and generated reports.
-- Configures the [maven-toolchains-plugin](http://maven.apache.org/plugins/maven-toolchains-plugin/) to enable reproducible builds by decoupling the JDK used by Maven from the JDK(s) used for compilation, unit- and integration-testing.\
+- Configures the [maven-toolchains-plugin](https://maven.apache.org/plugins/maven-toolchains-plugin/) to enable reproducible builds by decoupling the JDK used by Maven from the JDK(s) used for compilation, unit- and integration-testing.\
   Different JDKs - as defined in the local [toolchains.xml](https://maven.apache.org/ref/3.5.3/maven-core/toolchains.html) - for the different build steps can be used via [project properties](https://maven.apache.org/pom.html#Properties) like so:
     ```xml
     <properties>
@@ -63,7 +63,7 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
     The format is `<groupId>:<artifactId>:<version>:<type>[:<classifier>]`, e.g. `com.vegardit.maven:vegardit-maven-parent:2.1.3:xml:checkstyle`.
 - Configures the [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
 - Configures the [jacoco-maven-plugin](https://www.eclemma.org/jacoco/trunk/doc/maven.html) for [test coverage](https://en.wikipedia.org/wiki/Code_coverage).
-- Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](http://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](http://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
+- Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
   ```
   [INFO] ------------------------------------------------------------------------
@@ -123,7 +123,7 @@ Ensure your `~/.m2/settings.xml` contains the [Bintray's JCenter](https://bintra
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 https://maven.apache.org/xsd/settings-1.1.0.xsd">
     <profiles>
         <profile>
             <id>bintray</id>
@@ -131,7 +131,7 @@ Ensure your `~/.m2/settings.xml` contains the [Bintray's JCenter](https://bintra
                 <repository>
                     <id>central</id>
                     <name>jcenter-bintray</name>
-                    <url>http://jcenter.bintray.com</url>
+                    <url>https://jcenter.bintray.com</url>
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
@@ -141,7 +141,7 @@ Ensure your `~/.m2/settings.xml` contains the [Bintray's JCenter](https://bintra
                 <pluginRepository>
                     <id>central</id>
                     <name>jcenter-bintray-plugins</name>
-                    <url>http://jcenter.bintray.com</url>
+                    <url>https://jcenter.bintray.com</url>
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
@@ -159,7 +159,7 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -186,7 +186,7 @@ Ensure your `~/.m2/settings.xml` contains the project's snapshots repository, e.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 https://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <profiles>
         <profile>
             <id>vegardit-maven-parent-snapshots</id>
