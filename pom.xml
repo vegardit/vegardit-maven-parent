@@ -405,7 +405,7 @@
 
 
    <distributionManagement>
-      <downloadUrl>https://repo.maven.apache.org/</downloadUrl>
+      <downloadUrl>https://jcenter.bintray.com/</downloadUrl>
       <repository>
          <id>bintray-release-uploads</id>
          <url>https://api.bintray.com/maven/vegardit/maven-public/${project.artifactId}/;publish=1</url>
