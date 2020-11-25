@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- run **maven-toolchains-plugin:toolchain** goal in validate phase
+
 
 ## [2.4.21] - 2020-11-07
 

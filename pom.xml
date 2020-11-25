@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -1064,6 +1065,21 @@
                <artifactId>maven-toolchains-plugin</artifactId>
                <version>3.0.0</version>
                <executions>
+                  <execution>
+                     <id>toolchain@validate</id>
+                     <phase>validate</phase>
+                     <goals>
+                        <goal>toolchain</goal>
+                     </goals>
+                     <configuration>
+                        <toolchains>
+                           <jdk>
+                              <version>${java.version}</version>
+                              <vendor>${java.vendor}</vendor>
+                           </jdk>
+                        </toolchains>
+                     </configuration>
+                  </execution>
                   <execution>
                      <id>toolchain@process-test-classes (i.e. pre-unit-tests)</id>
                      <phase>process-test-classes</phase>
