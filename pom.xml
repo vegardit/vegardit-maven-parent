@@ -76,7 +76,7 @@
 
       <maven.scm.version>1.11.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
-      <maven.wagon.version>3.4.1</maven.wagon.version>
+      <maven.wagon.version>3.4.2</maven.wagon.version>
 
       <maven.surefire.version>2.22.2</maven.surefire.version>
 
