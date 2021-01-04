@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - run **maven-toolchains-plugin:toolchain** goal in validate phase
+- Maven plugin upgrades:
+  - gmavenplus-plugin from 1.11.0 to 1.12.1
+  - japicmp-maven-plugin from 0.14.4 to 0.15.1
+  - maven-ear-plugin from 3.1.0 to 3.2.0
+  - maven-wagon from 3.4.1 to 3.4.2
+- upgrading gmavenplus-plugin's groovy to 3.0.7
 
 
 ## [2.4.21] - 2020-11-07
