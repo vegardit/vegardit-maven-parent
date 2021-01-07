@@ -94,6 +94,7 @@
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
 
       <skip.maven-dependency-plugin.properties>false</skip.maven-dependency-plugin.properties>
+      <skip.license.check-thirdparty-licenses>false</skip.license.check-thirdparty-licenses>
       <skip.enforcer.basic-checks>false</skip.enforcer.basic-checks>
       <skip.enforcer.enforce-bytecode-version>false</skip.enforcer.enforce-bytecode-version>
       <skip.enforcer.ban-duplicate-classes>false</skip.enforcer.ban-duplicate-classes>
@@ -574,6 +575,35 @@
 
          <plugin>
             <artifactId>maven-toolchains-plugin</artifactId>
+         </plugin>
+
+         <plugin>
+            <!-- https://www.mojohaus.org/license-maven-plugin/usage.html -->
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <version>2.0.0</version>
+            <executions>
+               <execution>
+                  <id>check-thirdparty-licenses</id>
+                  <phase>validate</phase>
+                  <goals>
+                     <goal>add-third-party</goal>
+                  </goals>
+                  <configuration>
+                     <skipAddThirdParty>${skip.license.check-thirdparty-licenses}</skipAddThirdParty>
+                     <failOnBlacklist>true</failOnBlacklist>
+                     <excludedLicenses>
+                        <excludedLicense>GPL-1.0</excludedLicense>
+                        <excludedLicense>GPL-2.0</excludedLicense>
+                        <excludedLicense>GPL-3.0</excludedLicense>
+                        <excludedLicense>AGPL-3.0</excludedLicense>
+                        <excludedLicense>GNU General Public License (GPL) 1.0</excludedLicense>
+                        <excludedLicense>GNU General Public License (GPL) 2.0</excludedLicense>
+                        <excludedLicense>GNU General Public License (GPL) 3.0</excludedLicense>
+                     </excludedLicenses>
+                  </configuration>
+               </execution>
+            </executions>
          </plugin>
 
          <plugin>
