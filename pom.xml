@@ -92,6 +92,7 @@
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
+      <maven-resources-plugin.propertiesEncoding>${project.build.sourceEncoding}</maven-resources-plugin.propertiesEncoding>
 
       <skip.maven-dependency-plugin.properties>false</skip.maven-dependency-plugin.properties>
       <skip.license.check-thirdparty-licenses>false</skip.license.check-thirdparty-licenses>
@@ -1258,8 +1259,12 @@
 
             <plugin>
                <artifactId>maven-resources-plugin</artifactId>
-               <!-- TODO don't upgrade to 3.2.0 see https://issues.apache.org/jira/browse/MRESOURCES-268 -->
-               <version>3.1.0</version>
+               <version>3.2.0</version>
+               <configuration>
+                 <!-- see https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html#Filtering_Properties_Files -->
+                 <encoding>${project.build.sourceEncoding}</encoding>
+                 <propertiesEncoding>${maven-resources-plugin.propertiesEncoding}</propertiesEncoding>
+               </configuration>
             </plugin>
 
             <plugin>
