@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - check to prevent dependencies licensed under GPL
 
 ### Changed
+- upgrade to Eclipse Java Compiler 3.24.0
 - Maven plugin upgrades:
+  - japicmp-maven-plugin from 0.15.1 to 0.15.2
   - maven-resources-plugin from 3.1.0 to 3.2.0
 
 
