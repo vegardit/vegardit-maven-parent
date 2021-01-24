@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Fixed
+- "Error assembling JAR: Manifest file: target/classes/META-INF/MANIFEST.MF does not exist." when building Maven plugins.
+
 ### Added
 - check to prevent dependencies licensed under GPL
 

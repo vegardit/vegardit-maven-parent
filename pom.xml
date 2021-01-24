@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -898,8 +899,9 @@
                      <skip>${custom.noJavaArtefact}</skip>
                      <supportedProjectTypes>
                         <supportedProjectType>jar</supportedProjectType>
-                        <supportedProjectType>bundle</supportedProjectType>
                         <supportedProjectType>war</supportedProjectType>
+                        <supportedProjectType>bundle</supportedProjectType>
+                        <supportedProjectType>maven-plugin</supportedProjectType>
                      </supportedProjectTypes>
                      <instructions>
                         <_include>${custom.manifestTemplateFile}</_include>
@@ -1262,8 +1264,8 @@
                <version>3.2.0</version>
                <configuration>
                  <!-- see https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html#Filtering_Properties_Files -->
-                 <encoding>${project.build.sourceEncoding}</encoding>
-                 <propertiesEncoding>${maven-resources-plugin.propertiesEncoding}</propertiesEncoding>
+                  <encoding>${project.build.sourceEncoding}</encoding>
+                  <propertiesEncoding>${maven-resources-plugin.propertiesEncoding}</propertiesEncoding>
                </configuration>
             </plugin>
 
