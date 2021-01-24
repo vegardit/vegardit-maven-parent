@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - check to prevent dependencies licensed under GPL
 
 ### Changed
+- minimum required Maven version is now 3.5.4
 - upgrade to Eclipse Java Compiler 3.24.0
 - Maven plugin upgrades:
   - japicmp-maven-plugin from 0.15.1 to 0.15.2

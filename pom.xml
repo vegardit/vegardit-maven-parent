@@ -68,11 +68,7 @@
 
       <groovy.version>3.0.7</groovy.version>
 
-      <!-- requiring 3.2.2+ because of https://issues.apache.org/jira/browse/MNG-4565 -->
-      <!-- requiring 3.3.0+ because of https://issues.apache.org/jira/browse/MNG-5755 -->
-      <!-- requiring 3.3.9+ because of org.jacoco:jacoco-maven-plugin -->
-      <!-- requiring 3.5+ because of maven-enforcer-plugin/org.apache.felix:maven-bundle-plugin -->
-      <maven.minimum.version>3.5.0</maven.minimum.version>
+      <maven.minimum.version>3.5.4</maven.minimum.version>
 
       <maven.scm.version>1.11.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
