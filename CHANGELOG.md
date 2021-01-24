@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.23] - 2021-01-24
+
 ### Fixed
 - "Error assembling JAR: Manifest file: target/classes/META-INF/MANIFEST.MF does not exist." when building Maven plugins.
 
@@ -23,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-resources-plugin from 3.1.0 to 3.2.0
 
 
-## [2.4.22] - 2020-01-05
+## [2.4.22] - 2021-01-05
 
 ### Added
 - run **maven-toolchains-plugin:toolchain** goal in validate phase
