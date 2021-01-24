@@ -46,6 +46,7 @@
 
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+      <maven-resources-plugin.propertiesEncoding>ISO-8859-1</maven-resources-plugin.propertiesEncoding>
 
       <!--
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
@@ -88,7 +89,6 @@
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
-      <maven-resources-plugin.propertiesEncoding>${project.build.sourceEncoding}</maven-resources-plugin.propertiesEncoding>
 
       <skip.maven-dependency-plugin.properties>false</skip.maven-dependency-plugin.properties>
       <skip.license.check-thirdparty-licenses>false</skip.license.check-thirdparty-licenses>
