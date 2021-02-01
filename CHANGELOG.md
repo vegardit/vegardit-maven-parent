@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 8.35 to 8.36.1
+  - maven-checkstyle-plugin from 3.1.1 to 3.1.2
+
 
 ## [2.4.24] - 2021-01-24
 
