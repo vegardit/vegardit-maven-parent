@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -160,7 +161,7 @@
                if(projectParentVersionRaw in ["RELEASE", "LATEST"]) {
                   newParentVersion = projectParentVersionResolved
                }
-            } else if (isBeforeNextSnapshotPomCommit) {
+            } else if(isBeforeNextSnapshotPomCommit) {
                // this code block is for invocation via <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
                // --> we are working on the next development snapshot POM before commit
                log.info("Processing next snapshot pom commit...")
@@ -213,7 +214,6 @@
                .setRemoteRepositories(project.remoteArtifactRepositories)
             ).artifacts[0]
             setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath)
-
 
             /*
              * determine bootclasspath for compilation of src/main/java
@@ -298,7 +298,7 @@
                   isTestable = true
                }
 
-            if (isTestable) {
+            if(isTestable) {
                setProjectProp("custom.noJavaTests", "false")
 
                compileClasspath.addAll(project.testClasspathElements)
@@ -389,6 +389,20 @@
             }
          }
       ]]></groovy.script.onInitialize>
+
+      <groovy.script.onProcessResources><![CDATA[
+         if(project.properties["custom.noJavaArtefact"] != "false") 
+            return;
+
+         def setProjectProp = { String name, String value ->
+            project.properties[name] = value
+            log.info("Set project property [$name] '${project.properties[name]}'")
+         }
+
+         // determine source directories, not doing this in onInitialize more source roots may have been registerd by other plugins
+         setProjectProp("custom.ecjSourcePaths", '"' + project.compileSourceRoots.join('" "') + '"')
+         setProjectProp("custom.ecjTestSourcePaths", '"' + project.testCompileSourceRoots.join('" "') + '"')
+      ]]></groovy.script.onProcessResources>
    </properties>
 
 
@@ -538,6 +552,18 @@
                   <configuration>
                      <scripts>
                         <script>${groovy.script.onInitialize}</script>
+                     </scripts>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>groovy.script.onProcessResources@process-resources</id>
+                  <phase>process-resources</phase>
+                  <goals>
+                     <goal>execute</goal>
+                  </goals>
+                  <configuration>
+                     <scripts>
+                        <script>${groovy.script.onProcessResources}</script>
                      </scripts>
                   </configuration>
                </execution>
@@ -787,33 +813,26 @@
                      <skip>${custom.noJavaArtefact}</skip>
                      <executable>java</executable>
                      <classpathScope>compile</classpathScope>
-                     <arguments>
-                        <argument>-jar</argument>
-                        <argument>${custom.ecjJarPath}</argument>
+                     <commandlineArgs>
+                        -jar "${custom.ecjJarPath}"
 
                         <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
-                        <argument>-encoding</argument>
-                        <argument>${project.build.sourceEncoding}</argument>
-                        <argument>${custom.compileBootClasspathOption}</argument>
-                        <argument>${custom.compileBootClasspath}</argument>
-                        <argument>-g</argument> <!-- include debug info -->
-                        <argument>-parameters</argument> <!-- generate method parameters attribute -->
+                        -encoding ${project.build.sourceEncoding}
+                        ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
+                        -g <!-- include debug info -->
+                        -parameters <!-- generate method parameters attribute -->
                         <!-- TODO enabling this option breaks
-                           1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
-                           2) javac/javadoc with "undeclared type variable: K" when referencing classes with generics of other artifacts compiled with ECJ
-                        <argument>-genericsignature</argument> generate generic signature for lambda expressions -->
-                        <argument>-time</argument> <!-- display speed information. -->
-                        <argument>-showversion</argument> <!-- display the build number of the compiler -->
-                        <argument>-d</argument>
-                        <argument>${project.build.outputDirectory}</argument>
-                        <argument>-source</argument>
-                        <argument>${java.version}</argument>
-                        <argument>-target</argument>
-                        <argument>${java.version}</argument>
-                        <argument>-cp</argument>
-                        <argument>${custom.compileClasspathElements}</argument> <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
-                        <argument>${project.build.sourceDirectory}</argument>
-                     </arguments>
+                          1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
+                          2) javac/javadoc with "undeclared type variable: K" when referencing classes with generics of other artifacts compiled with ECJ
+                        -genericsignature generate generic signature for lambda expressions -->
+                        -time <!-- display speed information. -->
+                        -showversion <!-- display the build number of the compiler -->
+                        -d "${project.build.outputDirectory}"
+                        -source ${java.version}
+                        -target ${java.version}
+                        -cp "${custom.compileClasspathElements}" <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                        ${custom.ecjSourcePaths}
+                     </commandlineArgs>
                   </configuration>
                </execution>
                <execution>
@@ -826,30 +845,23 @@
                      <skip>${custom.noJavaTests}</skip>
                      <executable>java</executable>
                      <classpathScope>test</classpathScope>
-                     <arguments>
-                        <argument>-jar</argument>
-                        <argument>${custom.ecjJarPath}</argument>
+                     <commandlineArgs>
+                        -jar "${custom.ecjJarPath}"
 
                         <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
-                        <argument>${custom.testCompileBootClasspathOption}</argument>
-                        <argument>${custom.testCompileBootClasspath}</argument>
-                        <argument>-encoding</argument>
-                        <argument>${project.build.sourceEncoding}</argument>
-                        <argument>-g</argument> <!-- include debug info -->
-                        <argument>-parameters</argument> <!-- generate method parameters attribute -->
-                        <argument>-genericsignature</argument> <!-- generate generic signature for lambda expressions -->
-                        <argument>-time</argument> <!-- display speed information. -->
-                        <argument>-showversion</argument> <!-- display the build number of the compiler -->
-                        <argument>-d</argument>
-                        <argument>${project.build.testOutputDirectory}</argument>
-                        <argument>-source</argument>
-                        <argument>${java.version.unit-tests}</argument>
-                        <argument>-target</argument>
-                        <argument>${java.version.unit-tests}</argument>
-                        <argument>-cp</argument>
-                        <argument>${custom.testClasspathElements}</argument> <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
-                        <argument>${project.build.testSourceDirectory}</argument>
-                     </arguments>
+                        ${custom.testCompileBootClasspathOption} "${custom.testCompileBootClasspath}"
+                        -encoding ${project.build.sourceEncoding}
+                        -g <!-- include debug info -->
+                        -parameters <!-- generate method parameters attribute -->
+                        -genericsignature <!-- generate generic signature for lambda expressions -->
+                        -time <!-- display speed information. -->
+                        -showversion <!-- display the build number of the compiler -->
+                        -d "${project.build.testOutputDirectory}"
+                        -source ${java.version.unit-tests}
+                        -target ${java.version.unit-tests}
+                        -cp "${custom.testClasspathElements}" <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                        ${custom.ecjTestSourcePaths}
+                     </commandlineArgs>
                   </configuration>
                </execution>
             </executions>

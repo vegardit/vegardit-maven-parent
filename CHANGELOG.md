@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- additional source paths are ignored during compilation
+
 ### Changed
 - Maven plugin upgrades:
   - checkstyle 8.35 to 8.36.1
