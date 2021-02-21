@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/github/workflow/status/vegardit/vegardit-maven-parent/Build)](https://github.com/vegardit/vegardit-maven-parent/actions?query=workflow%3A%22Build%22)
 [![License](https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?color=blue)](LICENSE.txt)
-[![Bintray](https://img.shields.io/bintray/v/vegardit/maven-public/vegardit-maven-parent?label=jcenter.bintray)](https://bintray.com/vegardit/maven-public/vegardit-maven-parent/_latestVersion)
+![Maven Central](https://img.shields.io/maven-central/v/com.vegardit.maven/vegardit-maven-parent)
 
 1. [What is it?](#what-is-it)
 1. [How to use](#how-to-use)
@@ -15,21 +15,21 @@
 Opinionated best practices [Maven](https://maven.apache.org) parent project with the following 'features':
 
 - Configures UTF-8 as default encoding of source files and generated reports.
-- Configures the [maven-toolchains-plugin](https://maven.apache.org/plugins/maven-toolchains-plugin/) to enable reproducible builds by decoupling the JDK used by Maven from the JDK(s) used for compilation, unit- and integration-testing.\
-  Different JDKs - as defined in the local [toolchains.xml](https://maven.apache.org/ref/3.5.3/maven-core/toolchains.html) - for the different build steps can be used via [project properties](https://maven.apache.org/pom.html#Properties) like so:
+- Configures the [maven-toolchains-plugin](https://maven.apache.org/plugins/maven-toolchains-plugin/) to enable reproducible builds by decoupling the JDK used to run Maven and it's plugins from the JDK(s) used to compile, unit- and integration-test code.\
+  Different JDKs - as defined in the local [toolchains.xml](https://maven.apache.org/ref/3.5.3/maven-core/toolchains.html) - can be selected for the different build steps via [Maven project properties](https://maven.apache.org/pom.html#Properties) like so:
     ```xml
     <properties>
-        <!-- use Sun JDK 1.6 for compilation -->
-        <java.version>1.6</java.version>
-        <java.vendor>sun</java.vendor>
+       <!-- use Oracle JDK 8 for compilation -->
+       <java.version>8</java.version>
+       <java.vendor>oracle</java.vendor>
 
-        <!-- use Open JDK 1.7 for test classes compilation and unit testing -->
-        <java.version.unit-tests>1.7</java.version.unit-tests>
-        <java.vendor.unit-tests>openjdk</java.vendor.unit-tests>
+       <!-- use Open JDK 11 for test classes compilation and unit testing -->
+       <java.version.unit-tests>11</java.version.unit-tests>
+       <java.vendor.unit-tests>openjdk</java.vendor.unit-tests>
 
-        <!-- use Open JDK 1.8 for integration testing -->
-        <java.version.integration-tests>1.8</java.version.integration-tests>
-        <java.vendor.integration-tests>openjdk</java.vendor.integration-tests>
+       <!-- use Open JDK 15 for integration testing -->
+       <java.version.integration-tests>15</java.version.integration-tests>
+       <java.vendor.integration-tests>openjdk</java.vendor.integration-tests>
     </properties>
     ```
 - Configures the [Eclipse Java Compiler](https://mvnrepository.com/artifact/org.eclipse.jdt.core.compiler/ecj) instead of javac:
@@ -62,6 +62,7 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   - `checkstyle.config.artifact`: Maven artifact coordinates to a config file available in a configured Maven repository. \
     The format is `<groupId>:<artifactId>:<version>:<type>[:<classifier>]`, e.g. `com.vegardit.maven:vegardit-maven-parent:2.1.3:xml:checkstyle`.
 - Configures the [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
+- Configures the [license-maven-plugin](https://www.mojohaus.org/license-maven-plugin/) to block dependencies licensed under GPL/AGPL.
 - Configures the [jacoco-maven-plugin](https://www.eclemma.org/jacoco/trunk/doc/maven.html) for [test coverage](https://en.wikipedia.org/wiki/Code_coverage).
 - Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
@@ -88,25 +89,25 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   [INFO] ------------------------------------------------------------------------
   ```
 - The [jrebel-maven-plugin](https://manuals.zeroturnaround.com/jrebel/standalone/maven.html) will be enabled automatically if the file `src/main/resources/rebel-remote.xml` is present in a project.
-- Additional Maven project properties are referencable without any further configuration:
+- Additional Maven project properties are referenceable without any further configuration:
   1. The [os-maven-plugin](https://github.com/trustin/os-maven-plugin) is configured to provide platform-specific project properties that allows easy inclusion of native dependencies, e.g.
      ```xml
      <dependency>
-         <groupId>io.netty</groupId>
-         <artifactId>netty-tcnative</artifactId>
-         <version>2.0.8.Final</version>
-         <classifier>${os.detected.classifier}</classifier> <!-- property "os.detected.classifier" is provided by os-maven-plugin -->
+        <groupId>io.netty</groupId>
+        <artifactId>netty-tcnative</artifactId>
+        <version>2.0.36</version>
+        <classifier>${os.detected.classifier}</classifier> <!-- property "os.detected.classifier" is provided by os-maven-plugin -->
      </dependency>
      ```
   1. The [maven-dependency-plugin](https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html) sets a property pointing to the artifact file for each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier]}`, e.g. `${com.google.guava:guava:jar}`.\
      See ["Stackoverflow: Can I use the path to a Maven dependency as a property?"](https://stackoverflow.com/a/2359947)
   1. The [dependencyversion-maven-plugin](https://gitlab.com/josh.cain/dependencyversion-maven-plugin) sets a property containing the version of each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier].version}`, e.g. `${com.google.guava:guava:jar.version}`.\
 - Maven Site improvements:
-  1. Webdav and SFTP protocols enabled for [maven site deployment](https://maven.apache.org/plugins/maven-site-plugin/examples/adding-deploy-protocol.html).
+  1. WebDAV and SFTP protocols enabled for [Maven site deployment](https://maven.apache.org/plugins/maven-site-plugin/examples/adding-deploy-protocol.html).
   1. Markdown rendering support is enabled by default via [doxia-module-markdown](https://mvnrepository.com/artifact/org.apache.maven.doxia/doxia-module-markdown)
   1. Contains workaround for `SiteToolException: The site descriptor cannot be resolved from the repository:
 ArtifactResolutionException: Unable to locate site descriptor`.\
-    See ["Stackoverflow: How to avoid checking parent project in maven-site-plugin?](https://stackoverflow.com/a/40907580) or ["Unable to locate site descriptor : maven-site-plugin problem"](https://tcollignon.github.io/2016/10/24/Unable-to-locate-site-descriptor-maven-site-plugin-problem.html) for details.
+    See ["Stackoverflow: How to avoid checking parent project in maven-site-plugin?"](https://stackoverflow.com/a/40907580) or ["Unable to locate site descriptor : maven-site-plugin problem"](https://tcollignon.github.io/2016/10/24/Unable-to-locate-site-descriptor-maven-site-plugin-problem.html) for details.
 - Enables workarounds for some build annoyances such as:
   1. Maven generate-sources goal being executed twice. See ["Peter Lynch: How to prevent generate-sources phase executing twice"](http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html) and ["Stackoverflow: Maven phase executing twice"](https://stackoverflow.com/questions/4253700/maven-phase-executing-twice)
   1. Javadoc failing when incomplete tags exist on Java 8+. See ["Stackoverflow: Maven is not working in Java 8 when Javadoc tags are incomplete"](https://stackoverflow.com/a/16743137)
@@ -117,43 +118,7 @@ ArtifactResolutionException: Unable to locate site descriptor`.\
 
 ### Using release builds
 
-Releases of this project are available at https://bintray.com/vegardit/maven-public
-
-Ensure your `~/.m2/settings.xml` contains the [Bintray's JCenter](https://bintray.com/bintray/jcenter) repository, e.g.
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 https://maven.apache.org/xsd/settings-1.1.0.xsd">
-    <profiles>
-        <profile>
-            <id>bintray</id>
-            <repositories>
-                <repository>
-                    <id>central</id>
-                    <name>jcenter-bintray</name>
-                    <url>https://jcenter.bintray.com</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>central</id>
-                    <name>jcenter-bintray-plugins</name>
-                    <url>https://jcenter.bintray.com</url>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>bintray</activeProfile>
-    </activeProfiles>
-</settings>
-```
+Releases of this project are available at https://search.maven.org/artifact/com.vegardit.maven/vegardit-maven-parent
 
 Add the following `parent` declaration to your Maven project `pom.xml`.
 
@@ -164,9 +129,9 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.vegardit.maven</groupId>
-        <artifactId>vegardit-maven-parent</artifactId>
-        <version>RELEASE</version>
+       <groupId>com.vegardit.maven</groupId>
+       <artifactId>vegardit-maven-parent</artifactId>
+       <version>RELEASE</version>
     </parent>
 
     <groupId><!-- your groupId here --></groupId>
@@ -187,26 +152,26 @@ Ensure your `~/.m2/settings.xml` contains the project's snapshots repository, e.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 https://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <profiles>
-        <profile>
-            <id>vegardit-maven-parent-snapshots</id>
-            <repositories>
-                <repository>
-                    <id>vegardit-maven-parent-snapshots</id>
-                    <url>https://raw.githubusercontent.com/vegardit/vegardit-maven-parent/mvn-snapshots-repo/</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>vegardit-maven-parent-snapshots</activeProfile>
-    </activeProfiles>
+   <profiles>
+      <profile>
+         <id>vegardit-maven-parent-snapshots</id>
+         <repositories>
+            <repository>
+                <id>vegardit-maven-parent-snapshots</id>
+                <url>https://raw.githubusercontent.com/vegardit/vegardit-maven-parent/mvn-snapshots-repo/</url>
+                <releases>
+                   <enabled>false</enabled>
+                </releases>
+                <snapshots>
+                   <enabled>true</enabled>
+                </snapshots>
+            </repository>
+         </repositories>
+      </profile>
+   </profiles>
+   <activeProfiles>
+      <activeProfile>vegardit-maven-parent-snapshots</activeProfile>
+   </activeProfiles>
 </settings>
 ```
 
@@ -216,19 +181,19 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+   <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>com.vegardit.maven</groupId>
-        <artifactId>vegardit-maven-parent</artifactId>
-        <version>LATEST</version>
-    </parent>
+   <parent>
+      <groupId>com.vegardit.maven</groupId>
+      <artifactId>vegardit-maven-parent</artifactId>
+      <version>LATEST</version>
+   </parent>
 
-    <groupId><!-- your groupId here --></groupId>
-    <artifactId><!-- your artifactId here --></artifactId>
-    <version><!-- your version here --></version>
+   <groupId><!-- your groupId here --></groupId>
+   <artifactId><!-- your artifactId here --></artifactId>
+   <version><!-- your version here --></version>
 
-    <!-- ... other project settings --->
+   <!-- ... other project settings --->
 </project>
 ```
 

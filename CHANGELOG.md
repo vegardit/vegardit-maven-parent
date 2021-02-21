@@ -8,13 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.4.25] - 2021-02-21
+
 ### Fixed
 - additional source paths are ignored during compilation
 
 ### Changed
+- publish to Maven Central instead of Bintray because of its [termination](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/)
 - Maven plugin upgrades:
-  - checkstyle 8.35 to 8.36.1
+  - checkstyle 8.35 to 8.36.2
+  - os-maven-plugin 8.35 to 8.36.1
   - maven-checkstyle-plugin from 3.1.1 to 3.1.2
+  - formatter-maven-plugin from 2.13.0 to 2.14.0
 
 
 ## [2.4.24] - 2021-01-24

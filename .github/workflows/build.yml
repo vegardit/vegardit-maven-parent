@@ -33,7 +33,7 @@ jobs:
     #    path: |
     #      ~/.xshare/${{ steps.java-version-checksum.outputs.md5sum }}
     #    key: ${{ runner.os }}-xshare-${{ steps.java-version-checksum.outputs.md5sum }}
- 
+
     - name: Cache local Maven repository
       uses: actions/cache@v2
       with:
@@ -54,8 +54,10 @@ jobs:
       env:
         DEPLOY_SNAPSHOTS_TO_GITHUB_BRANCH: true
         GITHUB_USER: ${{ github.actor }}
-        BINTRAY_USER: sebthom
-        BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
+        SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+        SIGN_KEY_PASS: ${{ secrets.GPG_SIGN_KEY_PWD }}
+        SONATYPE_OSSRH_USER: ${{ secrets.SONATYPE_OSSRH_USER }}
+        SONATYPE_OSSRH_USER_TOKEN: ${{ secrets.SONATYPE_OSSRH_USER_TOKEN }}
       run: |
         if [ "${{github.ref}}" = "refs/heads/master" ]; then
           export GITHUB_API_KEY="${{ secrets.GH_API_TOKEN }}"

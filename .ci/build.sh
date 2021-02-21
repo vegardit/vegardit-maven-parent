@@ -93,6 +93,8 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
    # https://stackoverflow.com/questions/8653126/how-to-increment-version-number-in-a-shell-script/21493080#21493080
    nextDevelopmentVersion="$(echo ${POM_RELEASE_VERSION} | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')-SNAPSHOT"
 
+   SKIP_TESTS=${SKIP_TESTS:-false}
+
    echo
    echo "###################################################"
    echo "# Creating Maven Release...                       #"
@@ -112,6 +114,7 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
    fi
 
    mvn $MAVEN_CLI_OPTS \
+      -Pmaven-central-release \
       -DskipTests=${SKIP_TESTS} \
       -DskipITs=${SKIP_TESTS} \
       -DdryRun=${DRY_RUN} \

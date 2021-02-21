@@ -19,14 +19,15 @@
    <version>2.4.25-SNAPSHOT</version>
    <packaging>pom</packaging>
 
-   <description>Maven parent project with Maven best practices configuration and sensible defaults.</description>
 
+   <name>${project.artifactId}</name>
+   <description>Maven parent project with Maven best practices configuration and sensible defaults.</description>
    <url>https://vegardit.com/</url>
+   <inceptionYear>2013</inceptionYear>
    <organization>
       <name>Vegard IT GmbH, Germany</name>
       <url>https://vegardit.com/</url>
    </organization>
-   <inceptionYear>2013</inceptionYear>
    <licenses>
       <license>
          <name>Apache License 2.0</name>
@@ -34,6 +35,38 @@
          <url>https://spdx.org/licenses/Apache-2.0.html</url>
       </license>
    </licenses>
+
+
+   <developers>
+      <developer>
+         <id>vegardit</id>
+         <email>vegardit@users.noreply.github.com</email>
+         <organization>Vegard IT GmbH, Germany</organization>
+         <organizationUrl>https://vegardit.com/</organizationUrl>
+      </developer>
+   </developers>
+
+
+   <scm>
+      <!-- http://maven.apache.org/scm/subversion.html -->
+      <!-- http://maven.apache.org/scm/git.html -->
+      <url>https://github.com/vegardit/vegardit-maven-parent</url>
+      <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
+      <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
+      <tag>HEAD</tag>
+   </scm>
+
+
+   <issueManagement>
+      <system>github.com</system>
+      <url>https://github.com/vegardit/vegardit-maven-parent/issues</url>
+   </issueManagement>
+
+
+   <ciManagement>
+      <system>github.com</system>
+      <url>https://github.com/vegardit/vegardit-maven-parent/actions</url>
+   </ciManagement>
 
 
    <properties>
@@ -71,11 +104,10 @@
 
       <maven.minimum.version>3.5.4</maven.minimum.version>
 
+      <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.11.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
       <maven.wagon.version>3.4.2</maven.wagon.version>
-
-      <maven.surefire.version>2.22.2</maven.surefire.version>
 
       <!-- see http://www.mkyong.com/maven/maven-site-build-is-very-slow-dependency-report/ -->
       <!-- see http://java-drobnosti.blogspot.de/2012/12/maven-slow-generating-dependencies.html -->
@@ -85,29 +117,31 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>8.36.1</checkstyle.version>
+      <checkstyle.version>8.36.2</checkstyle.version>
+      <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.38.0</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
+      <nexus-staging-maven-plugin.autoReleaseAfterClose>true</nexus-staging-maven-plugin.autoReleaseAfterClose>
 
-      <skip.maven-dependency-plugin.properties>false</skip.maven-dependency-plugin.properties>
-      <skip.license.check-thirdparty-licenses>false</skip.license.check-thirdparty-licenses>
+      <skip.dependency-scope-maven-plugin.check>false</skip.dependency-scope-maven-plugin.check>
       <skip.enforcer.basic-checks>false</skip.enforcer.basic-checks>
       <skip.enforcer.enforce-bytecode-version>false</skip.enforcer.enforce-bytecode-version>
       <skip.enforcer.ban-duplicate-classes>false</skip.enforcer.ban-duplicate-classes>
       <skip.enforcer.dependency-convergence>false</skip.enforcer.dependency-convergence>
-      <skip.dependency-scope-maven-plugin.check>false</skip.dependency-scope-maven-plugin.check>
+      <skip.license-maven-plugin.check-thirdparty-licenses>false</skip.license-maven-plugin.check-thirdparty-licenses>
       <skip.japicmp.cmp>false</skip.japicmp.cmp>
+      <skip.nexus-staging-maven-plugin.deploy>${dryRun}</skip.nexus-staging-maven-plugin.deploy>
 
-      <skip.report.maven-javadoc-plugin>false</skip.report.maven-javadoc-plugin>
-      <skip.report.maven-surefire-report-plugin>false</skip.report.maven-surefire-report-plugin>
+      <skip.report.dashboard-maven-plugin>false</skip.report.dashboard-maven-plugin>
       <skip.report.jacoco-maven-plugin>false</skip.report.jacoco-maven-plugin>
       <skip.report.japicmp-maven-plugin>false</skip.report.japicmp-maven-plugin>
       <skip.report.maven-checkstyle-plugin>false</skip.report.maven-checkstyle-plugin>
-      <skip.report.taglist-maven-plugin>false</skip.report.taglist-maven-plugin>
+      <skip.report.maven-javadoc-plugin>false</skip.report.maven-javadoc-plugin>
+      <skip.report.maven-surefire-report-plugin>false</skip.report.maven-surefire-report-plugin>
       <skip.report.maven-project-info-reports-plugin>false</skip.report.maven-project-info-reports-plugin>
-      <skip.report.dashboard-maven-plugin>false</skip.report.dashboard-maven-plugin>
+      <skip.report.taglist-maven-plugin>false</skip.report.taglist-maven-plugin>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
@@ -391,7 +425,7 @@
       ]]></groovy.script.onInitialize>
 
       <groovy.script.onProcessResources><![CDATA[
-         if(project.properties["custom.noJavaArtefact"] != "false") 
+         if(project.properties["custom.noJavaArtefact"] != "false")
             return;
 
          def setProjectProp = { String name, String value ->
@@ -404,43 +438,6 @@
          setProjectProp("custom.ecjTestSourcePaths", '"' + project.testCompileSourceRoots.join('" "') + '"')
       ]]></groovy.script.onProcessResources>
    </properties>
-
-
-   <scm>
-      <!-- http://maven.apache.org/scm/subversion.html -->
-      <!-- http://maven.apache.org/scm/git.html -->
-      <url>https://github.com/vegardit/vegardit-maven-parent</url>
-      <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
-      <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
-      <tag>HEAD</tag>
-   </scm>
-
-
-   <distributionManagement>
-      <downloadUrl>https://jcenter.bintray.com/</downloadUrl>
-      <repository>
-         <id>bintray-release-uploads</id>
-         <url>https://api.bintray.com/maven/vegardit/maven-public/${project.artifactId}/;publish=1</url>
-         <releases>
-            <enabled>true</enabled>
-         </releases>
-         <snapshots>
-            <enabled>false</enabled>
-         </snapshots>
-      </repository>
-   </distributionManagement>
-
-
-   <ciManagement>
-      <system>github.com</system>
-      <url>https://github.com/vegardit/vegardit-maven-parent/actions</url>
-   </ciManagement>
-
-
-   <issueManagement>
-      <system>github.com</system>
-      <url>https://github.com/vegardit/vegardit-maven-parent/issues</url>
-   </issueManagement>
 
 
    <dependencyManagement>
@@ -513,9 +510,6 @@
                   <goals>
                      <goal>properties</goal>
                   </goals>
-                  <configuration>
-                     <skip>${skip.maven-dependency-plugin.properties}</skip>
-                  </configuration>
                </execution>
             </executions>
          </plugin>
@@ -613,7 +607,7 @@
                      <goal>add-third-party</goal>
                   </goals>
                   <configuration>
-                     <skipAddThirdParty>${skip.license.check-thirdparty-licenses}</skipAddThirdParty>
+                     <skipAddThirdParty>${skip.license-maven-plugin.check-thirdparty-licenses}</skipAddThirdParty>
                      <failOnBlacklist>true</failOnBlacklist>
                      <excludedLicenses>
                         <excludedLicense>GPL-1.0</excludedLicense>
@@ -781,6 +775,33 @@
             </executions>
          </plugin>
 
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>check@process-sources</id>
+                  <!-- cannot use phase validate as it needs to be executed after gmavenplus-plugin -->
+                  <phase>process-sources</phase>
+                  <goals>
+                     <goal>check</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <dependencies>
+               <dependency>
+                  <groupId>com.puppycrawl.tools</groupId>
+                  <artifactId>checkstyle</artifactId>
+                  <version>${checkstyle.version}</version>
+               </dependency>
+               <dependency>
+                  <groupId>com.github.sevntu-checkstyle</groupId>
+                  <artifactId>sevntu-checks</artifactId>
+                  <version>${checkstyle.sevntu-checks.version}</version>
+               </dependency>
+            </dependencies>
+         </plugin>
+
          <!--
             We are using the Eclipse Compiler via the exec-maven-plugin because neither plexus-compiler-eclipse nor tycho-compiler-jdt
             (https://wiki.eclipse.org/Tycho/FAQ#Can_I_use_the_Tycho_compiler_support_in_non-OSGi_projects.2C_too.3F) are toolchain aware thus would
@@ -924,43 +945,6 @@
          </plugin>
 
          <plugin>
-            <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.1</version>
-            <executions>
-               <execution>
-                  <id>attach-sources-no-fork</id>
-                  <phase>verify</phase>
-                  <goals>
-                     <goal>jar-no-fork</goal>
-                  </goals>
-               </execution>
-            </executions>
-            <configuration>
-               <skipSource>${custom.noJavaArtefact}</skipSource>
-               <excludes>
-                  <!-- exclude java.*, javax.* stubs -->
-                  <exclude>java/**/*</exclude>
-                  <exclude>java</exclude>
-                  <exclude>javax/**/*</exclude>
-                  <exclude>javax</exclude>
-               </excludes>
-            </configuration>
-         </plugin>
-
-         <plugin>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-               <execution>
-                  <id>generate-and-attach-javadoc</id>
-                  <phase>verify</phase> <!-- only execute after successful integration tests -->
-                  <goals>
-                     <goal>jar</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
-
-         <plugin>
             <!-- enable code coverage -->
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
@@ -1064,30 +1048,40 @@
          </plugin>
 
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.2.1</version>
             <executions>
                <execution>
-                  <id>check@process-sources</id>
-                  <!-- cannot use phase validate as it needs to be executed after gmavenplus-plugin -->
-                  <phase>process-sources</phase>
+                  <id>attach-sources-no-fork</id>
+                  <phase>verify</phase>
                   <goals>
-                     <goal>check</goal>
+                     <goal>jar-no-fork</goal>
                   </goals>
                </execution>
             </executions>
-            <dependencies>
-               <dependency>
-                  <groupId>com.puppycrawl.tools</groupId>
-                  <artifactId>checkstyle</artifactId>
-                  <version>${checkstyle.version}</version>
-               </dependency>
-               <dependency>
-                  <groupId>com.github.sevntu-checkstyle</groupId>
-                  <artifactId>sevntu-checks</artifactId>
-                  <version>${checkstyle.sevntu-checks.version}</version>
-               </dependency>
-            </dependencies>
+            <configuration>
+               <skipSource>${custom.noJavaArtefact}</skipSource>
+               <excludes>
+                  <!-- exclude java.*, javax.* stubs -->
+                  <exclude>java/**/*</exclude>
+                  <exclude>java</exclude>
+                  <exclude>javax/**/*</exclude>
+                  <exclude>javax</exclude>
+               </excludes>
+            </configuration>
+         </plugin>
+
+         <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>generate-and-attach-javadoc</id>
+                  <phase>verify</phase> <!-- only execute after successful integration tests -->
+                  <goals>
+                     <goal>jar</goal>
+                  </goals>
+               </execution>
+            </executions>
          </plugin>
       </plugins>
 
@@ -1562,7 +1556,7 @@
             <plugin>
                <groupId>net.revelc.code.formatter</groupId>
                <artifactId>formatter-maven-plugin</artifactId>
-               <version>2.13.0</version>
+               <version>2.14.0</version>
                <configuration>
                   <configFile>${eclipse-formatter.config.path}</configFile>
                </configuration>
@@ -1807,13 +1801,13 @@
          </activation>
          <properties>
             <skipTests>true</skipTests>
+            <checkstyle.skip>true</checkstyle.skip>
+            <skip.dependency-scope-maven-plugin.check>true</skip.dependency-scope-maven-plugin.check>
             <skip.enforcer.basic-checks>true</skip.enforcer.basic-checks>
             <skip.enforcer.enforce-bytecode-version>true</skip.enforcer.enforce-bytecode-version>
             <skip.enforcer.ban-duplicate-classes>true</skip.enforcer.ban-duplicate-classes>
             <skip.enforcer.dependency-convergence>true</skip.enforcer.dependency-convergence>
-            <skip.dependency-scope-maven-plugin.check>true</skip.dependency-scope-maven-plugin.check>
             <skip.japicmp.cmp>true</skip.japicmp.cmp>
-            <checkstyle.skip>true</checkstyle.skip>
          </properties>
       </profile>
 
@@ -1950,29 +1944,6 @@
 
 
       <profile>
-         <id>release-config</id>
-
-         <activation>
-            <property>
-               <name>performRelease</name>
-               <value>true</value>
-            </property>
-         </activation>
-
-         <build>
-            <plugins>
-               <plugin>
-                  <artifactId>maven-deploy-plugin</artifactId>
-                  <configuration>
-                     <updateReleaseInfo>true</updateReleaseInfo>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-
-
-      <profile>
          <id>jrebel-config</id>
          <!-- only activated if executed within Eclipse and if rebel-remote.xml is present, requires Maven 3.2.2 or higher, see https://issues.apache.org/jira/browse/MNG-4565 -->
          <activation>
@@ -2059,6 +2030,58 @@
          </build>
       </profile>
 
+      <profile>
+         <id>maven-central-release</id>
+         <build>
+            <plugins>
+               <plugin>
+                  <!-- https://github.com/s4u/sign-maven-plugin -->
+                  <!-- use a pure Java based GPG plugin instead of maven-gpg-plugin to allow easy cross platform builds -->
+                  <groupId>org.simplify4u.plugins</groupId>
+                  <artifactId>sign-maven-plugin</artifactId>
+                  <version>0.3.0</version>
+                  <executions>
+                     <execution>
+                        <id>sign@verify</id>
+                        <phase>verify</phase>
+                        <goals>
+                           <goal>sign</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-deploy-plugin</artifactId>
+                  <configuration>
+                     <skip>true</skip>
+                  </configuration>
+               </plugin>
+               <plugin>
+                  <groupId>org.sonatype.plugins</groupId>
+                  <artifactId>nexus-staging-maven-plugin</artifactId>
+                  <version>1.6.8</version>
+                  <extensions>true</extensions>
+                  <executions>
+                     <execution>
+                        <id>deploy@deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                           <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                           <skipNexusStagingDeployMojo>${skip.nexus-staging-maven-plugin.deploy}</skipNexusStagingDeployMojo>
+                           <autoReleaseAfterClose>${nexus-staging-maven-plugin.autoReleaseAfterClose}</autoReleaseAfterClose>
+                           <serverId>sonatype-ossrh</serverId>
+                           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                           <indentSize>3</indentSize>
+                        </configuration>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
 
       <profile>
          <id>inside-eclipse</id>
