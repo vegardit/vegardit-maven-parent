@@ -1056,7 +1056,7 @@
             <executions>
                <execution>
                   <id>attach-sources-no-fork</id>
-                  <phase>verify</phase>
+                  <phase>post-integration-test</phase> <!-- only execute after successful integration tests -->
                   <goals>
                      <goal>jar-no-fork</goal>
                   </goals>
@@ -1079,7 +1079,7 @@
             <executions>
                <execution>
                   <id>generate-and-attach-javadoc</id>
-                  <phase>verify</phase> <!-- only execute after successful integration tests -->
+                  <phase>post-integration-test</phase> <!-- only execute after successful integration tests -->
                   <goals>
                      <goal>jar</goal>
                   </goals>

@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.26] - 2021-02-24
+
+### Fixed
+- sign-maven-plugin is executed before maven-sources-plugin and maven-javadoc-plugin
+
+
 ## [2.4.25] - 2021-02-21
 
 ### Fixed
