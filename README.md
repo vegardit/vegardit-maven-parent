@@ -2,7 +2,7 @@
 
 [![Build Status](https://img.shields.io/github/workflow/status/vegardit/vegardit-maven-parent/Build)](https://github.com/vegardit/vegardit-maven-parent/actions?query=workflow%3A%22Build%22)
 [![License](https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?color=blue)](LICENSE.txt)
-![Maven Central](https://img.shields.io/maven-central/v/com.vegardit.maven/vegardit-maven-parent)
+[![Maven Central](https://img.shields.io/maven-central/v/com.vegardit.maven/vegardit-maven-parent)](https://search.maven.org/artifact/com.vegardit.maven/vegardit-maven-parent)
 
 1. [What is it?](#what-is-it)
 1. [How to use](#how-to-use)
