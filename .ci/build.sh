@@ -113,7 +113,7 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
       git checkout ${GIT_BRANCH}
    fi
 
-   mvn $MAVEN_CLI_OPTS \
+   mvn $MAVEN_CLI_OPTS "$@" \
       -Pmaven-central-release \
       -DskipTests=${SKIP_TESTS} \
       -DskipITs=${SKIP_TESTS} \
@@ -134,7 +134,7 @@ else
    else
       mavenGoal="verify"
    fi
-   mvn $MAVEN_CLI_OPTS \
+   mvn $MAVEN_CLI_OPTS "$@" \
       help:active-profiles clean $mavenGoal \
       | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
 fi

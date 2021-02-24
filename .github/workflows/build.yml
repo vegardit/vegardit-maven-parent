@@ -8,6 +8,11 @@ on:
   pull_request:
   workflow_dispatch:
     # https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
+    inputs:
+      additional_maven_args:
+        description: 'Additional Maven Args'
+        required: false
+        default: ''
 
 jobs:
   build:
@@ -67,4 +72,4 @@ jobs:
         # https://github.community/t/github-actions-bot-email-address/17204
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        bash .ci/build.sh
+        bash .ci/build.sh ${{ github.event.inputs.additional_maven_args }}
