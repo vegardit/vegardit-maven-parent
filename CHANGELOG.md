@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - mvn compile fails on linux with "Unrecognized option :"
 
+### Added
+- project property `nexus-staging-maven-plugin.nexusUrl`
+
 
 ## [2.4.27] - 2021-02-26
 

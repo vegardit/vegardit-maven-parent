@@ -125,6 +125,7 @@
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
       <nexus-staging-maven-plugin.autoReleaseAfterClose>true</nexus-staging-maven-plugin.autoReleaseAfterClose>
+      <nexus-staging-maven-plugin.nexusUrl>https://oss.sonatype.org/</nexus-staging-maven-plugin.nexusUrl>
 
       <skip.dependency-scope-maven-plugin.check>false</skip.dependency-scope-maven-plugin.check>
       <skip.enforcer.basic-checks>false</skip.enforcer.basic-checks>
@@ -2074,7 +2075,7 @@
                            <skipNexusStagingDeployMojo>${skip.nexus-staging-maven-plugin.deploy}</skipNexusStagingDeployMojo>
                            <autoReleaseAfterClose>${nexus-staging-maven-plugin.autoReleaseAfterClose}</autoReleaseAfterClose>
                            <serverId>sonatype-ossrh</serverId>
-                           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                           <nexusUrl>${nexus-staging-maven-plugin.nexusUrl}</nexusUrl>
                            <indentSize>3</indentSize>
                         </configuration>
                      </execution>
