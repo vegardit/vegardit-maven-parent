@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.27] - 2021-02-26
+
+### Fixed
+- mvn compile fails on linux with "Unrecognized option :"
+
+### Changed
+- Maven plugin upgrades:
+  - maven-wagon from 3.4.2 to 3.4.3
+
+
 ## [2.4.26] - 2021-02-24
 
 ### Fixed

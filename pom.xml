@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -108,7 +109,7 @@
       <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.11.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
-      <maven.wagon.version>3.4.2</maven.wagon.version>
+      <maven.wagon.version>3.4.3</maven.wagon.version>
 
       <!-- see http://www.mkyong.com/maven/maven-site-build-is-very-slow-dependency-report/ -->
       <!-- see http://java-drobnosti.blogspot.de/2012/12/maven-slow-generating-dependencies.html -->
@@ -836,24 +837,24 @@
                      <skip>${custom.noJavaArtefact}</skip>
                      <executable>java</executable>
                      <classpathScope>compile</classpathScope>
+                     <!-- https://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                      <commandlineArgs>
                         -jar "${custom.ecjJarPath}"
-
-                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                         -encoding ${project.build.sourceEncoding}
                         ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
-                        -g <!-- include debug info -->
-                        -parameters <!-- generate method parameters attribute -->
-                        <!-- TODO enabling this option breaks
+                        -g<!-- include debug info -->
+                        -parameters <!-- generate method parameters attribute
+                          TODO enabling this option breaks
                           1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
                           2) javac/javadoc with "undeclared type variable: K" when referencing classes with generics of other artifacts compiled with ECJ
                         -genericsignature generate generic signature for lambda expressions -->
-                        -time <!-- display speed information. -->
-                        -showversion <!-- display the build number of the compiler -->
+                        -maxProblems 10<!-- max. number of problems per compilation unit -->
+                        -time<!-- display speed information. -->
+                        -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.outputDirectory}"
                         -source ${java.version}
                         -target ${java.version}
-                        -cp "${custom.compileClasspathElements}" <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                        -cp "${custom.compileClasspathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
                         ${custom.ecjSourcePaths}
                      </commandlineArgs>
                   </configuration>
@@ -870,19 +871,18 @@
                      <classpathScope>test</classpathScope>
                      <commandlineArgs>
                         -jar "${custom.ecjJarPath}"
-
-                        <!-- http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                         ${custom.testCompileBootClasspathOption} "${custom.testCompileBootClasspath}"
                         -encoding ${project.build.sourceEncoding}
-                        -g <!-- include debug info -->
-                        -parameters <!-- generate method parameters attribute -->
-                        -genericsignature <!-- generate generic signature for lambda expressions -->
-                        -time <!-- display speed information. -->
-                        -showversion <!-- display the build number of the compiler -->
+                        -g<!-- include debug info -->
+                        -parameters<!-- generate method parameters attribute -->
+                        -genericsignature<!-- generate generic signature for lambda expressions -->
+                        -maxProblems 10<!-- max. number of problems per compilation unit -->
+                        -time<!-- display speed information. -->
+                        -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.testOutputDirectory}"
                         -source ${java.version.unit-tests}
                         -target ${java.version.unit-tests}
-                        -cp "${custom.testClasspathElements}" <!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                        -cp "${custom.testClasspathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
                         ${custom.ecjTestSourcePaths}
                      </commandlineArgs>
                   </configuration>
