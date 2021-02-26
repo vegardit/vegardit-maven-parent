@@ -842,7 +842,7 @@
                         -encoding ${project.build.sourceEncoding}
                         ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
                         -g<!-- include debug info -->
-                        -parameters <!-- generate method parameters attribute
+                        -parameters<!-- generate method parameters attribute
                           TODO enabling this option breaks
                           1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
                           2) javac/javadoc with "undeclared type variable: K" when referencing classes with generics of other artifacts compiled with ECJ

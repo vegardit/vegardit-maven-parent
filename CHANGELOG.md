@@ -9,10 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-## [2.4.27] - 2021-02-26
+## [2.4.28] - 2021-02-26
 
 ### Fixed
 - mvn compile fails on linux with "Unrecognized option :"
+
+
+## [2.4.27] - 2021-02-26
 
 ### Changed
 - Maven plugin upgrades:
