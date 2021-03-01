@@ -1815,7 +1815,7 @@
 
 
       <profile>
-         <id>ci-deploy-snapshots-to-github</id>
+         <id>deploy-snapshots-to-github</id>
 
          <activation>
             <property>
@@ -2033,7 +2033,19 @@
       </profile>
 
       <profile>
-         <id>maven-central-release</id>
+         <id>deploy-releases-to-maven-central</id>
+
+         <activation>
+            <property>
+               <!--
+                 https://docs.travis-ci.com/user/environment-variables/
+                 https://docs.github.com/en/free-pro-team@latest/actions/reference/environment-variables#default-environment-variables
+               -->
+               <name>env.DEPLOY_RELEASES_TO_MAVEN_CENTRAL</name>
+               <value>true</value>
+            </property>
+         </activation>
+
          <build>
             <plugins>
                <plugin>

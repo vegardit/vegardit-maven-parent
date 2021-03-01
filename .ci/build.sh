@@ -113,8 +113,9 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
       git checkout ${GIT_BRANCH}
    fi
 
+   export DEPLOY_RELEASES_TO_MAVEN_CENTRAL=true
+
    mvn $MAVEN_CLI_OPTS "$@" \
-      -Pmaven-central-release \
       -DskipTests=${SKIP_TESTS} \
       -DskipITs=${SKIP_TESTS} \
       -DdryRun=${DRY_RUN} \

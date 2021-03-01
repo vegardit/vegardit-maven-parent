@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.29] - 2021-03-01
+
+### Changed
+- profile `ci-deploy-snapshots-to-github` to `deploy-snapshots-to-github`
+- profile `maven-central-release` to `deploy-releases-to-maven-central`
+
+
 ## [2.4.28] - 2021-02-26
 
 ### Fixed
