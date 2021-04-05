@@ -11,8 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - upgrade to Eclipse Java Compiler 3.25.0
 - Maven plugin upgrades:
+  - checkstyle 8.36.2 to 8.39
   - flatten-maven-plugin from 1.2.5 to 1.2.7
   - japicmp-maven-plugin from 0.15.2 to 0.15.3
+  - maven-bundle-plugin from 5.1.1 to 5.1.2
+  - sevntu-checks from 1.38.0 to 1.39.0
 
 
 ## [2.4.29] - 2021-03-01
