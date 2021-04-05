@@ -1,13 +1,17 @@
-# ---> Eclipse
-.settings/
+# Local work folder that is not checked in
+_LOCAL/
+
+# Eclipse
 .apt_generated/
-.settings/
 .checkstyle
 .classpath
 .factorypath
 .project
+.settings/
+bin/
+**/.*.md.html
 
-# --> Maven
+# Maven
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -17,11 +21,28 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
-# ---> Temp files
-*.tmp
-*.bak
+# IntelliJ
+.idea
+*.iml
+*.ipr
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+
+# OSX
+.DS_Store
+
+# Vim
+*.swo
 *.swp
-/target
-**/.*.md.html
+
+# patch
+*.orig
+*.rej
