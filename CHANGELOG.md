@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- add [depcheck-maven-plugin](https://github.com/vegardit/depcheck-maven-plugin)
+
 ### Changed
 - upgrade to Eclipse Java Compiler 3.25.0
 - Maven plugin upgrades:

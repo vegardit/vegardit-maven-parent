@@ -1563,6 +1563,28 @@
                   <configFile>${eclipse-formatter.config.path}</configFile>
                </configuration>
             </plugin>
+
+            <plugin>
+               <groupId>com.vegardit.maven</groupId>
+               <artifactId>depcheck-maven-plugin</artifactId>
+               <version>1.0.0</version>
+               <executions>
+                  <execution>
+                     <id>check-deps@prepare-package</id>
+                     <goals>
+                        <goal>check-deps</goal>
+                     </goals>
+                     <phase>prepare-package</phase>
+                     <configuration>
+                        <checkForUnusedDependencies>true</checkForUnusedDependencies>
+                        <checkForUsedTransitiveDependencies>true</checkForUsedTransitiveDependencies>
+                        <failFast>false</failFast>
+                        <failIfUsedTransitiveDependencies>true</failIfUsedTransitiveDependencies>
+                        <failIfUnusedDependencies>false</failIfUnusedDependencies>
+                     </configuration>
+                  </execution>
+               </executions>
+            </plugin>
          </plugins>
       </pluginManagement>
 
