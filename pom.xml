@@ -103,7 +103,7 @@
 
       <groovy.version>3.0.7</groovy.version>
 
-      <maven.minimum.version>3.5.4</maven.minimum.version>
+      <maven.minimum.version>3.6.0</maven.minimum.version>
 
       <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.11.2</maven.scm.version>
@@ -1558,7 +1558,7 @@
             <plugin>
                <groupId>net.revelc.code.formatter</groupId>
                <artifactId>formatter-maven-plugin</artifactId>
-               <version>2.14.0</version>
+               <version>2.15.0</version>
                <configuration>
                   <configFile>${eclipse-formatter.config.path}</configFile>
                </configuration>
@@ -2075,7 +2075,7 @@
                   <!-- use a pure Java based GPG plugin instead of maven-gpg-plugin to allow easy cross platform builds -->
                   <groupId>org.simplify4u.plugins</groupId>
                   <artifactId>sign-maven-plugin</artifactId>
-                  <version>0.3.0</version>
+                  <version>0.3.1</version>
                   <executions>
                      <execution>
                         <id>sign@verify</id>
