@@ -8,17 +8,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.4.30] - 2021-04-10
+
 ### Added
 - add [depcheck-maven-plugin](https://github.com/vegardit/depcheck-maven-plugin)
 
 ### Changed
+- increase minimum required Maven version to 3.6.0
+- enabled additional checkstyle checks
+  - [InvalidJavadocPosition](https://checkstyle.sourceforge.io/config_javadoc.html#InvalidJavadocPosition)
+  - [JavadocBlockTagLocation](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocBlockTagLocation)
+  - [JavadocContentLocation](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocContentLocation)
+  - [JavadocMissingLeadingAsterisk](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocMissingLeadingAsterisk)
+  - [JavadocMissingWhitespaceAfterAsterisk](https://checkstyle.sourceforge.io/config_javadoc.html#JavadocMissingWhitespaceAfterAsterisk)
+  - [RequireEmptyLineBeforeBlockTagGroup](https://checkstyle.sourceforge.io/config_javadoc.html#RequireEmptyLineBeforeBlockTagGroup)
+  - [UnnecessarySemicolonInEnumeration](https://checkstyle.sourceforge.io/config_coding.html#UnnecessarySemicolonInEnumeration)
 - upgrade to Eclipse Java Compiler 3.25.0
 - Maven plugin upgrades:
   - checkstyle 8.36.2 to 8.39
   - flatten-maven-plugin from 1.2.5 to 1.2.7
+  - formatter-maven-plugin from 2.14.0 to 2.15.0
   - japicmp-maven-plugin from 0.15.2 to 0.15.3
   - maven-bundle-plugin from 5.1.1 to 5.1.2
   - sevntu-checks from 1.38.0 to 1.39.0
+  - sign-maven-plugin from 0.3.0 to 0.3.1
 
 
 ## [2.4.29] - 2021-03-01
