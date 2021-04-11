@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- change Checkstyle rule Indentation.lineWrappingIndentation from 3 to 0
+
 
 ## [2.4.30] - 2021-04-10
 
