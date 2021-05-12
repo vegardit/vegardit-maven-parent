@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - change Checkstyle rule Indentation.lineWrappingIndentation from 3 to 0
 - Maven plugin upgrades:
   - checkstyle 8.39 to 8.40
+  - formatter-maven-plugin 2.14.0 to 2.15.0
+  - jacoco-maven-plugin 0.8.6 to 0.8.7
+  - maven-project-info-reports-plugin 3.1.1 to 3.1.2
 - upgrading gmavenplus-plugin's groovy to 3.0.8
 
 
