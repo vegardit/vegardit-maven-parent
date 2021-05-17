@@ -3,8 +3,13 @@ name: Build
 
 on:
   push:
+    branches:
+    - '**'
+    tags-ignore:
+    - '**'
     paths-ignore:
     - '**/*.md'
+    - '.github/*.yml'
   pull_request:
   workflow_dispatch:
     # https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
@@ -42,8 +47,9 @@ jobs:
     - name: Cache local Maven repository
       uses: actions/cache@v2
       with:
-        path: ~/.m2/repository
-              !~/.m2/repository/com/vegardit
+        path: |
+          ~/.m2/repository
+          !~/.m2/repository/com/vegardit
         key: ${{ runner.os }}-mvnrepo-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-mvnrepo-
