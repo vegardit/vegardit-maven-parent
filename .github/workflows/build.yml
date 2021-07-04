@@ -61,20 +61,29 @@ jobs:
           ~/.m2/bin
         key: ${{ runner.os }}-mvnbin-${{ hashFiles('.ci/build.sh') }}
 
+    - name: Test with Maven
+      id: maven-test
+      if: ${{ github.ref != 'refs/heads/main' }}
+      env:
+        GITHUB_USER: ${{ github.actor }}
+        GITHUB_API_KEY: ${{ github.token }}
+        JAVA_VERSION: ${{ matrix.java }}
+        MAY_CREATE_RELEASE: false
+      run: |
+        bash .ci/build.sh ${{ github.event.inputs.additional_maven_args }}
+
     - name: Build with Maven
+      id: maven-build
+      if: ${{ github.ref == 'refs/heads/main' }}
       env:
         DEPLOY_SNAPSHOTS_TO_GITHUB_BRANCH: true
         GITHUB_USER: ${{ github.actor }}
+        GITHUB_API_KEY: ${{ secrets.GH_API_TOKEN }}
         SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
         SIGN_KEY_PASS: ${{ secrets.GPG_SIGN_KEY_PWD }}
         SONATYPE_OSSRH_USER: ${{ secrets.SONATYPE_OSSRH_USER }}
         SONATYPE_OSSRH_USER_TOKEN: ${{ secrets.SONATYPE_OSSRH_USER_TOKEN }}
       run: |
-        if [ "${{github.ref}}" = "refs/heads/master" ]; then
-          export GITHUB_API_KEY="${{ secrets.GH_API_TOKEN }}"
-        else
-          export GITHUB_API_KEY="${{ github.token }}" # ${{ github.token }} only has read access
-        fi
         # https://github.community/t/github-actions-bot-email-address/17204
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
