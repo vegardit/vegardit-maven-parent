@@ -130,7 +130,7 @@ else
    echo "###################################################"
    echo "# Building Maven Project...                       #"
    echo "###################################################"
-   if [[ ${GIT_BRANCH} == "master" ]]; then
+   if [[ ${GIT_BRANCH} == "main" ]]; then
       mavenGoal="deploy"
    else
       mavenGoal="verify"
