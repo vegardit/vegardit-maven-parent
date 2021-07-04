@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - change Checkstyle rule Indentation.lineWrappingIndentation from 3 to 0
 - Maven plugin upgrades:
-  - checkstyle 8.39 to 8.3
+  - checkstyle 8.39 to 8.43
   - doxia-module-markdown from 1.9.1 to 1.10
-  - formatter-maven-plugin 2.14.0 to 2.15.0
+  - formatter-maven-plugin 2.14.0 to 2.16.0
   - jacoco-maven-plugin 0.8.6 to 0.8.7
   - maven-dependency-plugin from 3.1.2 to 3.2.0
   - maven-javadoc-plugin from 3.2.0 to 3.3.0
