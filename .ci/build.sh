@@ -89,7 +89,7 @@ MAVEN_CLI_OPTS="-e -U --batch-mode --show-version --no-transfer-progress -s .ci/
 #
 # decide whether to perform a release build or build+deploy a snapshot version
 #
-if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} ]]; then
+if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} && ${MAY_CREATE_RELEASE:-false} == "true" ]]; then
    # https://stackoverflow.com/questions/8653126/how-to-increment-version-number-in-a-shell-script/21493080#21493080
    nextDevelopmentVersion="$(echo ${POM_RELEASE_VERSION} | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')-SNAPSHOT"
 
@@ -130,7 +130,7 @@ else
    echo "###################################################"
    echo "# Building Maven Project...                       #"
    echo "###################################################"
-   if [[ ${GIT_BRANCH} == "main" ]]; then
+   if [[ ${MAY_CREATE_RELEASE:-false} == "true" ]]; then
       mavenGoal="deploy"
    else
       mavenGoal="verify"
