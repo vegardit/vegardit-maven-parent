@@ -629,6 +629,7 @@
          <plugin>
             <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
+            <!-- TODO https://issues.apache.org/jira/browse/MENFORCER-392 -->
             <version>3.0.0-M3</version>
             <executions>
                <execution>
