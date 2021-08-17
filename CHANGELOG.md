@@ -9,9 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.32] - 2021-08-17
+
 ### Changed
+- rely on Maven Bundle Plugin to calculate Bundle-SymbolicName
 - Maven plugin upgrades:
   - checkstyle 8.43 to 8.44
+  - maven-scm-plugin 1.11.2 to 1.11.3
 
 
 ## [2.4.31] - 2021-07-07
