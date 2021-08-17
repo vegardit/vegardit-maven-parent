@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -124,6 +125,8 @@
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
+      <maven-bundle-plugin.instructions></maven-bundle-plugin.instructions>
+
       <nexus-staging-maven-plugin.autoReleaseAfterClose>true</nexus-staging-maven-plugin.autoReleaseAfterClose>
       <nexus-staging-maven-plugin.nexusUrl>https://oss.sonatype.org/</nexus-staging-maven-plugin.nexusUrl>
 
@@ -937,7 +940,7 @@
                      <instructions>
                         <_include>${custom.manifestTemplateFile}</_include>
                         <Private-Package>*.internal.*</Private-Package>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        ${maven-bundle-plugin.instructions}
                      </instructions>
                      <niceManifest>${maven-bundle-plugin.niceManifest}</niceManifest>
                      <obrRepository>NONE</obrRepository>
