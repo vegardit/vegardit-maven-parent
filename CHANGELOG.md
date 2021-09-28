@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
+  - extra-enforcer-rules from 1.3 to 1.4
+  - maven-enforcer-plugin from 3.0-M3 to 3.0
   - maven-javadoc-plugin from 3.3.0 to 3.3.1
 - upgrading gmavenplus-plugin's groovy to 3.0.9
 
