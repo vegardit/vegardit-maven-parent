@@ -9,13 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.4.35] - 2021-09-30
+
+### Changed
+- downgrading Eclipse Java Compiler from 3.27.0 to 3.26.0 for now since newer versions require JDK 11+
+
+
 ## [2.4.34] - 2021-09-30
 
 ### Added
 - add maven-bundle-plugin.[private|import]-package properties
 
 ### Changed
-- upgrade to Eclipse Java Compiler 3.27.0
+- upgrade Eclipse Java Compiler from 3.25.0 to 3.27.0
 
 
 ## [2.4.33] - 2021-09-28
