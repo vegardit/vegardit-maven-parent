@@ -9,7 +9,8 @@
 
    @author Sebastian Thomschke, Vegard IT GmbH
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -124,6 +125,8 @@
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
+      <maven-bundle-plugin.private-package>*.internal.*</maven-bundle-plugin.private-package>
+      <maven-bundle-plugin.import-package>*</maven-bundle-plugin.import-package>
       <maven-bundle-plugin.instructions />
 
       <nexus-staging-maven-plugin.autoReleaseAfterClose>true</nexus-staging-maven-plugin.autoReleaseAfterClose>
@@ -536,7 +539,7 @@
          </plugin>
 
          <plugin>
-            <!-- http://groovy.github.io/GMavenPlus/ -->
+            <!-- https://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
             <version>1.13.0</version>
@@ -937,7 +940,8 @@
                      </supportedProjectTypes>
                      <instructions>
                         <_include>${custom.manifestTemplateFile}</_include>
-                        <Private-Package>*.internal.*</Private-Package>
+                        <Private-Package>${maven-bundle-plugin.private-package}</Private-Package>
+                        <Import-Package>${maven-bundle-plugin.import-package}</Import-Package>
                         ${maven-bundle-plugin.instructions}
                      </instructions>
                      <niceManifest>${maven-bundle-plugin.niceManifest}</niceManifest>
