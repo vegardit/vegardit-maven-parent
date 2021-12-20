@@ -921,7 +921,7 @@
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
             <extensions>true</extensions>
             <executions>
                <execution>
