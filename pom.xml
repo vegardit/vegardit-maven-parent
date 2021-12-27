@@ -109,7 +109,7 @@
       <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.12.0</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
-      <maven.wagon.version>3.4.3</maven.wagon.version>
+      <maven.wagon.version>3.5.1</maven.wagon.version>
 
       <!-- see http://www.mkyong.com/maven/maven-site-build-is-very-slow-dependency-report/ -->
       <!-- see http://java-drobnosti.blogspot.de/2012/12/maven-slow-generating-dependencies.html -->
