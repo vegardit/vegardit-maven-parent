@@ -107,7 +107,7 @@
       <maven.minimum.version>3.6.0</maven.minimum.version>
 
       <maven.surefire.version>2.22.2</maven.surefire.version>
-      <maven.scm.version>1.12.0</maven.scm.version>
+      <maven.scm.version>1.12.2</maven.scm.version>
       <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
       <maven.wagon.version>3.5.1</maven.wagon.version>
 
