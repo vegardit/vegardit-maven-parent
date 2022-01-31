@@ -1730,7 +1730,7 @@
             <!-- TODO, @todo list report -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>taglist-maven-plugin</artifactId>
-            <version>2.4</version>
+            <version>3.0.0</version>
             <configuration>
                <configuration>
                   <skip>${skip.report.taglist-maven-plugin}</skip>
