@@ -150,6 +150,7 @@
          <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit" />
       </module>
       <module name="NoWhitespaceBefore" />
+      <module name="NoWhitespaceBeforeCaseDefaultColon"/>
       <module name="OperatorWrap">
          <property name="tokens"
             value="QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,LITERAL_INSTANCEOF,TYPE_EXTENSION_AND" />
