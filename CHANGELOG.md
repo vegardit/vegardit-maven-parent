@@ -11,8 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Maven plugin upgrades:
-  - japicmp-maven-plugin from 0.15.3 to 0.15.4
-  - formatter-maven-plugin from 2.16.0 to 2.17.0
+  - build-helper-maven-plugin from 3.2.0 to 3.3.0
+  - checkstyle 8.44 to 9.1
+  - doxia-module-markdown from 1.10 to 1.11.1
+  - extra-enforcer-rules from 1.4 to 1.5.1
+  - formatter-maven-plugin from 2.16.0 to 2.17.1
+  - gmavenplus-plugin from 1.13.0 to 1.13.1
+  - japicmp-maven-plugin from 0.15.3 to 0.15.6
+  - maven-bundle-plugin from 5.1.2 to 5.1.4
+  - maven-compiler-plugin from 3.8.1 to 3.10.0
+  - maven-jar-plugin from 3.2.0 to 3.2.2
+  - maven-javadoc-plugin from 3.3.1 to 3.3.2
+  - maven-project-info-reports-plugin 3.1.2 to 3.2.1
+  - maven-scm-plugin from 1.12.0 to 1.12.2
+  - maven-site-plugin from 3.9.1 to 3.10.0
+  - maven-wagon from 3.4.3 to 3.5.1
+  - sevntu-checks from 1.40.0 to 1.41.0
+  - taglist-maven-plugin from 2.4 to 3.0.0
+  - versions-maven-plugin from 2.8.1 to 2.9.0
 
 
 ## [2.4.35] - 2021-09-30
