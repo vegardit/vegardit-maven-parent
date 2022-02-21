@@ -8,8 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+## [2.5.0] - 2022-02-21
 
+### Added
+- add NoWhitespaceBeforeCaseDefaultColon checkstyle check
+
+### Changed
 - Maven plugin upgrades:
   - build-helper-maven-plugin from 3.2.0 to 3.3.0
   - checkstyle 8.44 to 9.1
@@ -28,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-wagon from 3.4.3 to 3.5.1
   - nexus-staging-maven-plugin from 1.6.8 to 1.6.11
   - sevntu-checks from 1.40.0 to 1.41.0
+  - sign-maven-plugin from 0.3.1 to 1.0.0
   - taglist-maven-plugin from 2.4 to 3.0.0
   - versions-maven-plugin from 2.8.1 to 2.9.0
 
