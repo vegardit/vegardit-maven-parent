@@ -24,8 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-javadoc-plugin from 3.3.1 to 3.3.2
   - maven-project-info-reports-plugin 3.1.2 to 3.2.1
   - maven-scm-plugin from 1.12.0 to 1.12.2
-  - maven-site-plugin from 3.9.1 to 3.10.0
+  - maven-site-plugin from 3.9.1 to 3.11.0
   - maven-wagon from 3.4.3 to 3.5.1
+  - nexus-staging-maven-plugin from 1.6.8 to 1.6.11
   - sevntu-checks from 1.40.0 to 1.41.0
   - taglist-maven-plugin from 2.4 to 3.0.0
   - versions-maven-plugin from 2.8.1 to 2.9.0
