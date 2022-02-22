@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.5.0] - 2022-02-21
+## [2.5.1] - 2022-02-22
 
 ### Added
 - add NoWhitespaceBeforeCaseDefaultColon checkstyle check
@@ -30,7 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-scm-plugin from 1.12.0 to 1.12.2
   - maven-site-plugin from 3.9.1 to 3.11.0
   - maven-wagon from 3.4.3 to 3.5.1
-  - nexus-staging-maven-plugin from 1.6.8 to 1.6.11
   - sevntu-checks from 1.40.0 to 1.41.0
   - sign-maven-plugin from 0.3.1 to 1.0.0
   - taglist-maven-plugin from 2.4 to 3.0.0
