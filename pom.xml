@@ -2116,7 +2116,7 @@
                   <!-- https://help.sonatype.com/repomanager2/staging-releases/configuring-your-project-for-deployment -->
                   <groupId>org.sonatype.plugins</groupId>
                   <artifactId>nexus-staging-maven-plugin</artifactId>
-                  <version>1.6.11</version>
+                  <version>1.6.8</version>
                   <extensions>true</extensions>
                   <executions>
                      <execution>
