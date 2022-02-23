@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- property `maven-bundle-plugin.export-packages.no-uses`
+
+
 ## [2.5.1] - 2022-02-22
 
 ### Added
