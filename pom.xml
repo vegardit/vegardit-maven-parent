@@ -2097,7 +2097,7 @@
                   <!-- use a pure Java based GPG plugin instead of maven-gpg-plugin to allow easy cross platform builds -->
                   <groupId>org.simplify4u.plugins</groupId>
                   <artifactId>sign-maven-plugin</artifactId>
-                  <version>1.0.0</version>
+                  <version>1.0.1</version>
                   <executions>
                      <execution>
                         <id>sign@verify</id>
