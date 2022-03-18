@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.5.3] - 2022-03-18
+
+### Changed
+- Maven plugin upgrades:
+  - formatter-maven-plugin from 2.17.1 to 2.18.0
+  - japicmp-maven-plugin from 0.15.6 to 0.15.7
+  - maven-compiler-plugin from 3.10.0 to 3.10.1
+  - maven-dependency-plugin from. 3.2.0 to 3.3.0
+  - maven-project-info-reports-plugin from 3.2.1 to 3.2.2
+  - sign-maven-plugin from 1.0.0 to 1.0.1
+  - versions-maven-plugin from 2.9.0 to 2.10.0
+- upgrading gmavenplus-plugin's groovy to 3.0.10
+
+
 ## [2.5.2] - 2022-02-23
 
 ### Added
