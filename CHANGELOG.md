@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2022-04-14
+
 ### Changed
 - require Java 11 or higher
 - upgrade Eclipse Java Compiler from 3.26.0 to 3.29.0
