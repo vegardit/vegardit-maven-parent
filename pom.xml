@@ -120,7 +120,7 @@
 
       <checkstyle.version>9.3</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
-      <checkstyle.sevntu-checks.version>1.41.0</checkstyle.sevntu-checks.version>
+      <checkstyle.sevntu-checks.version>1.42.0</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
