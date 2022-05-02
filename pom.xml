@@ -107,7 +107,7 @@
 
       <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.12.2</maven.scm.version>
-      <maven.scm.svnjava.version>2.1.2</maven.scm.svnjava.version>
+      <maven.scm.svnjava.version>2.2.1</maven.scm.svnjava.version>
       <maven.wagon.version>3.5.1</maven.wagon.version>
 
       <!-- see http://www.mkyong.com/maven/maven-site-build-is-very-slow-dependency-report/ -->
@@ -923,7 +923,7 @@
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>5.1.4</version>
+            <version>5.1.5</version>
             <extensions>true</extensions>
             <executions>
                <execution>
@@ -1791,7 +1791,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.2.2</version>
+            <version>3.3.0</version>
             <configuration>
                <skip>${skip.report.maven-project-info-reports-plugin}</skip>
             </configuration>
