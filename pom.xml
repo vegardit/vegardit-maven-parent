@@ -923,7 +923,7 @@
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>5.1.4</version>
+            <version>5.1.5</version>
             <extensions>true</extensions>
             <executions>
                <execution>
