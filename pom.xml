@@ -101,7 +101,7 @@
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
       <eclipse-java-compiler.version>3.29.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.10</groovy.version>
+      <groovy.version>3.0.11</groovy.version>
 
       <maven.minimum.version>3.6.0</maven.minimum.version>
 
