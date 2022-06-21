@@ -236,10 +236,10 @@
 
 
          /*
-          * determine if the artefact contains Java sources
+          * determine if the artifact contains Java sources
           */
          def isJavaCompilable = project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"]
-         setProjectProp("custom.noJavaArtefact", isJavaCompilable ? "false" : "true")
+         setProjectProp("custom.noJavaArtifact", isJavaCompilable ? "false" : "true")
          setProjectProp("skip.jacoco", isJavaCompilable ? "false" : "true")
 
          if(isJavaCompilable) {
@@ -324,13 +324,13 @@
             setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "")
             setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "")
 
-            if(project.properties.get("custom.noJavaArtefact") == "true" || project.version.endsWith("-SNAPSHOT")) {
+            if(project.properties.get("custom.noJavaArtifact") == "true" || project.version.endsWith("-SNAPSHOT")) {
                setProjectProp("maven.javadoc.skip", "true")
             }
 
 
             /*
-             * determine if the artefact contains Java test sources
+             * determine if the artifact contains Java test sources
              */
             def isTestable = false
             if(new File(project.build.testSourceDirectory).exists())
@@ -431,7 +431,7 @@
       ]]></groovy.script.onInitialize>
 
       <groovy.script.onProcessResources><![CDATA[
-         if(project.properties["custom.noJavaArtefact"] != "false")
+         if(project.properties["custom.noJavaArtifact"] != "false")
             return;
 
          def setProjectProp = { String name, String value ->
@@ -838,7 +838,7 @@
                   </goals>
                   <phase>compile</phase>
                   <configuration>
-                     <skip>${custom.noJavaArtefact}</skip>
+                     <skip>${custom.noJavaArtifact}</skip>
                      <executable>java</executable>
                      <classpathScope>compile</classpathScope>
                      <!-- https://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
@@ -905,7 +905,7 @@
                   <id>delete-java-stubs@process-classes</id>
                   <phase>process-classes</phase>
                   <configuration>
-                     <skip>${custom.noJavaArtefact}</skip>
+                     <skip>${custom.noJavaArtifact}</skip>
                      <target>
                         <!-- delete the java.*/javax.* stubs after compilation, before testing -->
                         <delete dir="${project.build.directory}/classes/java" />
@@ -933,7 +933,7 @@
                      <goal>manifest</goal>
                   </goals>
                   <configuration>
-                     <skip>${custom.noJavaArtefact}</skip>
+                     <skip>${custom.noJavaArtifact}</skip>
                      <supportedProjectTypes>
                         <supportedProjectType>jar</supportedProjectType>
                         <supportedProjectType>war</supportedProjectType>
@@ -1072,7 +1072,7 @@
                </execution>
             </executions>
             <configuration>
-               <skipSource>${custom.noJavaArtefact}</skipSource>
+               <skipSource>${custom.noJavaArtifact}</skipSource>
                <excludes>
                   <!-- exclude java.*, javax.* stubs -->
                   <exclude>java/**/*</exclude>
