@@ -8,6 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2022-06-21
+
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 9.3 to 10.0
+  - formatter-maven-plugin from 2.18.0 to 2.19.0
+  - maven-antrun-plugin from 3.0.0 to 3.1.0
+  - maven-bundle-plugin from 5.1.5 to 5.1.6
+  - maven-enforcer-plugin from 3.0.0 to 3.1.0
+  - maven-ejb-plugin from 3.1.0 to 3.2.1
+  - maven-javadoc-plugin from 3.3.2 to
+  - maven-project-info-reports-plugin from 3.2.2 to 3.3.0
+  - maven-release-plugin from 2.5.3 to 3.0.0-M6
+  - maven-scm-plugin from 1.12.2 to 1.13.0
+  - maven-scm-provider-svnjava from 2.1.2 to 2.2.1
+  - maven-site-plugin from 3.11.0 to 3.12.0
+  - maven-toolchains-plugin 3.0.0 to 3.1.0
+  - nexus-staging-maven-plugin 1.6.8 to 1.6.13
+- upgrading gmavenplus-plugin's groovy to 3.0.11
+
+
 ## [3.0.0] - 2022-04-14
 
 ### Changed
