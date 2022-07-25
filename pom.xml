@@ -829,7 +829,7 @@
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
             <executions>
                <execution>
                   <id>ecj@compile</id>
@@ -923,7 +923,7 @@
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>5.1.6</version>
+            <version>5.1.7</version>
             <extensions>true</extensions>
             <executions>
                <execution>
@@ -1288,7 +1288,7 @@
 
             <plugin>
                <artifactId>maven-install-plugin</artifactId>
-               <version>2.5.2</version>
+               <version>3.0.1</version>
             </plugin>
 
             <plugin>
@@ -1578,7 +1578,7 @@
             <plugin>
                <groupId>net.revelc.code.formatter</groupId>
                <artifactId>formatter-maven-plugin</artifactId>
-               <version>2.19.0</version>
+               <version>2.20.0</version>
                <configuration>
                   <configFile>${eclipse-formatter.config.path}</configFile>
                </configuration>
@@ -1791,7 +1791,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.3.0</version>
+            <version>3.4.0</version>
             <configuration>
                <skip>${skip.report.maven-project-info-reports-plugin}</skip>
             </configuration>
