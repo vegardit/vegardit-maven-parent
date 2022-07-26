@@ -99,7 +99,8 @@
       <java.vendor.integration-tests>${java.vendor}</java.vendor.integration-tests>
 
       <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
-      <eclipse-java-compiler.version>3.29.0</eclipse-java-compiler.version>
+      <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
+      <eclipse-java-compiler.version>3.30.0</eclipse-java-compiler.version>
 
       <groovy.version>3.0.12</groovy.version>
 
