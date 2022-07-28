@@ -1279,7 +1279,7 @@
             <plugin>
                <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-resources-plugin</artifactId>
-               <version>3.2.0</version>
+               <version>3.3.0</version>
                <configuration>
                  <!-- see https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html#Filtering_Properties_Files -->
                   <encoding>${project.build.sourceEncoding}</encoding>

@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-deploy-plugin from 2.8.2 to 3.0.0
   - maven-install-plugin from 2.5.2 to 3.0.1
   - maven-project-info-reports-plugin from 3.3.0 to 3.4.0
+  - maven-resources-plugin from 3.2.0 to 3.3.0
   - maven.wagon.version from 3.5.1 to 3.5.2
 
 
