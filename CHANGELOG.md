@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - upgrade Eclipse Java Compiler from 3.29.0 to 3.30.0
+- move maven-enforcer-plugin/requirePluginVersions config to separate plugin execution
 - Maven plugin upgrades:
   - depcheck-maven-plugin from 1.0.0 to 2.0.0
   - exec-maven-plugin from 3.0.0 to 3.1.0

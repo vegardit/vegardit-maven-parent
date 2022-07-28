@@ -134,6 +134,7 @@
 
       <skip.dependency-scope-maven-plugin.check>false</skip.dependency-scope-maven-plugin.check>
       <skip.enforcer.basic-checks>false</skip.enforcer.basic-checks>
+      <skip.enforcer.require-fixed-plugin-versions>false</skip.enforcer.require-fixed-plugin-versions>
       <skip.enforcer.enforce-bytecode-version>false</skip.enforcer.enforce-bytecode-version>
       <skip.enforcer.ban-duplicate-classes>false</skip.enforcer.ban-duplicate-classes>
       <skip.enforcer.dependency-convergence>false</skip.enforcer.dependency-convergence>
@@ -652,15 +653,6 @@
                            <version>[${maven.minimum.version},)</version>
                         </requireMavenVersion>
 
-                        <requirePluginVersions>
-                           <message>Always use fixed plug-in versions to ensure repeatable builds.</message>
-                           <banLatest>true</banLatest>
-                           <banRelease>true</banRelease>
-                           <banSnapshots>true</banSnapshots>
-                           <banTimestamps>false</banTimestamps>
-                           <phases>clean,deploy,site</phases>
-                        </requirePluginVersions>
-
                         <requireReleaseDeps>
                            <failWhenParentIsSnapshot>true</failWhenParentIsSnapshot>
                            <onlyWhenRelease>true</onlyWhenRelease>
@@ -690,6 +682,27 @@
                               <dependency>org.apache.maven.wagon:*</dependency>
                            </dependencies>
                         </requireSameVersions>
+                     </rules>
+                     <fail>true</fail>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>require-fixed-plugin-versions@validate</id>
+                  <goals>
+                     <goal>enforce</goal>
+                  </goals>
+                  <phase>validate</phase>
+                  <configuration>
+                     <skip>${skip.enforcer.require-fixed-plugin-versions}</skip>
+                     <rules>
+                        <requirePluginVersions>
+                           <message>Always use fixed plug-in versions to ensure repeatable builds.</message>
+                           <banLatest>true</banLatest>
+                           <banRelease>true</banRelease>
+                           <banSnapshots>true</banSnapshots>
+                           <banTimestamps>false</banTimestamps>
+                           <phases>clean,deploy,site</phases>
+                        </requirePluginVersions>
                      </rules>
                      <fail>true</fail>
                   </configuration>
