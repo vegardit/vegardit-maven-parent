@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.2] - 2022-07-28
+
 ### Changed
 - upgrade Eclipse Java Compiler from 3.29.0 to 3.30.0
 - move maven-enforcer-plugin/requirePluginVersions config to separate plugin execution
