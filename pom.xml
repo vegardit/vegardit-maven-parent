@@ -797,7 +797,6 @@
          </plugin>
 
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
             <executions>
                <execution>
@@ -1222,7 +1221,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-jar-plugin</artifactId>
                <version>3.2.2</version>
                <configuration>
@@ -1242,7 +1240,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-war-plugin</artifactId>
                <version>3.3.2</version>
                <configuration>
@@ -1264,7 +1261,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-ear-plugin</artifactId>
                <version>3.2.0</version>
                <configuration>
@@ -1290,7 +1286,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-resources-plugin</artifactId>
                <version>3.3.0</version>
                <configuration>
@@ -1311,7 +1306,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-scm-plugin</artifactId>
                <version>${maven.scm.version}</version>
                <configuration>
@@ -1330,7 +1324,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-release-plugin</artifactId>
                <version>3.0.0-M6</version>
                <configuration>
@@ -1368,7 +1361,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-changelog-plugin</artifactId>
                <version>2.3</version>
                <configuration>
@@ -1427,7 +1419,6 @@
             </plugin>
 
             <plugin>
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-assembly-plugin</artifactId>
                <version>3.4.2</version>
                <configuration>
@@ -1438,7 +1429,6 @@
 
             <plugin>
                <!-- exclude unit tests ending with ITest (= integration tests) from unit-test phase -->
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-surefire-plugin</artifactId>
                <version>${maven.surefire.version}</version>
                <configuration>
@@ -1468,7 +1458,6 @@
             </plugin>
             <plugin>
                <!-- http://maven.apache.org/surefire/maven-failsafe-plugin/usage.html -->
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-failsafe-plugin</artifactId>
                <version>${maven.surefire.version}</version>
                <configuration>
@@ -1576,7 +1565,6 @@
 
             <plugin>
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
-               <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-checkstyle-plugin</artifactId>
                <version>3.1.2</version>
                <configuration>
@@ -1689,7 +1677,6 @@
 
          <plugin>
             <!-- Generate a report based on the results of unit tests. -->
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-report-plugin</artifactId>
             <version>${maven.surefire.version}</version>
             <configuration>
@@ -1737,7 +1724,6 @@
          </plugin>
 
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
             <configuration>
                <skip>${skip.report.maven-checkstyle-plugin}</skip>
@@ -1803,7 +1789,6 @@
          </plugin>
 
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
             <version>3.4.0</version>
             <configuration>
@@ -2034,14 +2019,12 @@
             <pluginManagement>
                <plugins>
                   <plugin>
-                     <groupId>org.apache.maven.plugins</groupId>
                      <artifactId>maven-war-plugin</artifactId>
                      <configuration>
                         <packagingExcludes>**/rebel.xml</packagingExcludes>
                      </configuration>
                   </plugin>
                   <plugin>
-                     <groupId>org.apache.maven.plugins</groupId>
                      <artifactId>maven-jar-plugin</artifactId>
                      <configuration>
                         <excludes>
@@ -2117,7 +2100,6 @@
                   </executions>
                </plugin>
                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-deploy-plugin</artifactId>
                   <configuration>
                      <skip>true</skip>
