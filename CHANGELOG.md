@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Disable InnerAssignment checkstyle rule
+- Maven plugin upgrades:
+  - maven-bundle-plugin from 5.1.7 to 5.1.8
+  - maven-site-plugin from 3.12.0 to 3.12.1
+
+
 ## [3.0.2] - 2022-07-28
 
 ### Changed
