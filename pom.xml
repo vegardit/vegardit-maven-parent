@@ -1297,12 +1297,14 @@
 
             <plugin>
                <artifactId>maven-install-plugin</artifactId>
-               <version>3.0.1</version>
+               <!-- don't use 3.0.1 see https://issues.apache.org/jira/browse/MINSTALL-151 -->
+               <version>2.5.2</version><!--$NO-MVN-MAN-VER$-->
             </plugin>
 
             <plugin>
                <artifactId>maven-deploy-plugin</artifactId>
-               <version>3.0.0</version>
+               <!-- don't use 3.0.0 see https://issues.apache.org/jira/browse/MINSTALL-151 -->
+               <version>2.8.2</version><!--$NO-MVN-MAN-VER$-->
             </plugin>
 
             <plugin>
@@ -1504,7 +1506,7 @@
                <!-- http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
                <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#Where_in_the_pom.xml_do_I_configure_the_Javadoc_Plugin -->
                <artifactId>maven-javadoc-plugin</artifactId>
-               <version>3.4.0</version>
+               <version>3.4.1</version>
                <configuration>
                   <skip>${maven.javadoc.skip}</skip>
                   <!-- exclude internal package and java.*, javax.* stubs -->
@@ -1790,7 +1792,7 @@
 
          <plugin>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.4.0</version>
+            <version>3.4.1</version>
             <configuration>
                <skip>${skip.report.maven-project-info-reports-plugin}</skip>
             </configuration>

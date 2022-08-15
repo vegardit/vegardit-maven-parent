@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Maven plugin upgrades:
+  - maven-javadoc-plugin from 3.4.0 to 3.4.1
+  - maven-project-info-reports-plugin from 3.4.0 to 3.4.1
+- Maven plugin downgrades:
+  - maven-deploy-plugin from 3.0.0 to 2.8.2 because of [MINSTALL-151](https://issues.apache.org/jira/browse/MINSTALL-151)
+  - maven-install-plugin from 3.0.1 to 2.5.2 because of [MINSTALL-151](https://issues.apache.org/jira/browse/MINSTALL-151)
+
+
 ## [3.0.3] - 2022-08-13
 
 ### Changed
