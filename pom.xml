@@ -1298,7 +1298,7 @@
             <plugin>
                <artifactId>maven-install-plugin</artifactId>
                <!-- don't use 3.0.1 see https://issues.apache.org/jira/browse/MINSTALL-151 -->
-               <version>2.5.2</version><!--$NO-MVN-MAN-VER$-->
+               <version>3.0.1</version><!--$NO-MVN-MAN-VER$-->
             </plugin>
 
             <plugin>
