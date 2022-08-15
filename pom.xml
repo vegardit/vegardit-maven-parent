@@ -1304,7 +1304,7 @@
             <plugin>
                <artifactId>maven-deploy-plugin</artifactId>
                <!-- don't use 3.0.0 see https://issues.apache.org/jira/browse/MINSTALL-151 -->
-               <version>2.8.2</version><!--$NO-MVN-MAN-VER$-->
+               <version>3.0.0</version><!--$NO-MVN-MAN-VER$-->
             </plugin>
 
             <plugin>
