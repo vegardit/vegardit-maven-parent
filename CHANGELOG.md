@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- building Java artifacts fails `Unrecognized option : <path>\src\main\java` if source directory does not exist
+
 ### Changed
 - Maven plugin upgrades:
   - maven-javadoc-plugin from 3.4.0 to 3.4.1

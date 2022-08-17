@@ -241,6 +241,8 @@
           * determine if the artifact contains Java sources
           */
          def isJavaCompilable = project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"]
+           && !project.compileSourceRoots.isEmpty()
+           && new File(project.compileSourceRoots[0]).exists()
          setProjectProp("custom.noJavaArtifact", isJavaCompilable ? "false" : "true")
          setProjectProp("skip.jacoco", isJavaCompilable ? "false" : "true")
 
