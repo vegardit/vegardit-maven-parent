@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
+  - flatten-maven-plugin from 1.2.7 to 1.3.0
   - maven-javadoc-plugin from 3.4.0 to 3.4.1
   - maven-project-info-reports-plugin from 3.4.0 to 3.4.1
 - Maven plugin downgrades:
