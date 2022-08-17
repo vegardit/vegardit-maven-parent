@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.4] - 2022-08-17
+
 ### Fixed
 - building Java artifacts fails `Unrecognized option : <path>\src\main\java` if source directory does not exist
 
