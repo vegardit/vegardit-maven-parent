@@ -102,7 +102,7 @@
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.30.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.12</groovy.version>
+      <groovy.version>3.0.13</groovy.version>
 
       <maven.minimum.version>3.6.0</maven.minimum.version>
 
@@ -1219,7 +1219,7 @@
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
                <artifactId>versions-maven-plugin</artifactId>
-               <version>2.11.0</version>
+               <version>2.12.0</version>
             </plugin>
 
             <plugin>
@@ -1528,7 +1528,7 @@
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <groupId>com.github.siom79.japicmp</groupId>
                <artifactId>japicmp-maven-plugin</artifactId>
-               <version>0.15.7</version>
+               <version>0.16.0</version>
                <configuration>
                   <skip>${skip.japicmp.cmp}</skip>
                   <parameter>
