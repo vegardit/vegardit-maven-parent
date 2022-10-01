@@ -104,7 +104,7 @@
 
       <groovy.version>3.0.13</groovy.version>
 
-      <maven.minimum.version>3.6.0</maven.minimum.version>
+      <maven.minimum.version>3.6.3</maven.minimum.version>
 
       <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.13.0</maven.scm.version>
