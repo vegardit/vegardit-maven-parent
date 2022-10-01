@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [3.0.5] - 2022-10-01
+
+### Changed
+- increase minimum required Maven version to 3.6.3
+- upgrade Eclipse Java Compiler from 3.30.0 to 3.31.0
+- Maven plugin upgrades:
+  - groovy.version from 3.0.12 to 3.0.13
+  - japicmp-maven-plugin from 0.15.7 to 0.16.0
+  - maven-checkstyle-plugin from 3.1.2 to 3.2.0
+  - maven-jar-plugin from 3.2.2 to 3.3.0
+  - maven-shade-plugin from 3.3.0 to 3.4.0
+  - versions-maven-plugin from 2.11.0 to 2.12.0
+
+
 ## [3.0.4] - 2022-08-17
 
 ### Fixed
