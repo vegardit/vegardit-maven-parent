@@ -15,7 +15,7 @@
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>3.0.6-SNAPSHOT</version>
+   <version>3.0.6</version>
    <packaging>pom</packaging>
 
 
@@ -54,7 +54,7 @@
       <url>https://github.com/vegardit/vegardit-maven-parent</url>
       <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
       <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>3.0.6</tag>
    </scm>
 
 
@@ -87,7 +87,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2022-10-01T16:02:54Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2022-10-05T20:22:47Z</project.build.outputTimestamp>
 
       <java.version>11</java.version>
       <java.vendor>default</java.vendor>
@@ -925,14 +925,14 @@
                         <!-- delete the java.*/javax.* class stubs after compilation, before testing -->
                         <delete>
                             <!-- we only delete class files not any potential other resource files -->
-                            <fileset dir="${project.build.directory}/classes/java" includes="**/*.class"/>
-                            <fileset dir="${project.build.directory}/classes/javax" includes="**/*.class"/>
+                            <fileset dir="${project.build.directory}/classes/java" includes="**/*.class" />
+                            <fileset dir="${project.build.directory}/classes/javax" includes="**/*.class" />
                         </delete>
 
                         <!-- recursively delete empty directories -->
                         <delete includeemptydirs="true">
-                           <fileset dir="${project.build.directory}/classes"  >
-                              <and><type type="dir"/><size value="0"/></and>
+                           <fileset dir="${project.build.directory}/classes">
+                              <and><type type="dir" /><size value="0" /></and>
                            </fileset>
                         </delete>
                      </target>
