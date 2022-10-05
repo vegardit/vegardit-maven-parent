@@ -922,9 +922,19 @@
                   <configuration>
                      <skip>${custom.noJavaArtifact}</skip>
                      <target>
-                        <!-- delete the java.*/javax.* stubs after compilation, before testing -->
-                        <delete dir="${project.build.directory}/classes/java" />
-                        <delete dir="${project.build.directory}/classes/javax" />
+                        <!-- delete the java.*/javax.* class stubs after compilation, before testing -->
+                        <delete>
+                            <!-- we only delete class files not any potential other resource files -->
+                            <fileset dir="${project.build.directory}/classes/java" includes="**/*.class"/>
+                            <fileset dir="${project.build.directory}/classes/javax" includes="**/*.class"/>
+                        </delete>
+
+                        <!-- recursively delete empty directories -->
+                        <delete includeemptydirs="true">
+                           <fileset dir="${project.build.directory}/classes"  >
+                              <and><type type="dir"/><size value="0"/></and>
+                           </fileset>
+                        </delete>
                      </target>
                   </configuration>
                   <goals>
