@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-   Copyright 2013-2022 by Vegard IT GmbH, Germany, https://vegardit.com
+   SPDX-FileCopyrightText: © Vegard IT GmbH (https://vegardit.com)
    SPDX-License-Identifier: Apache-2.0
 
    check for new dependency/plugin updates using:
@@ -946,6 +946,7 @@
 
          <plugin>
             <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html -->
+            <!-- https://github.com/apache/felix-dev/tree/master/tools/maven-bundle-plugin -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
             <version>5.1.8</version>
