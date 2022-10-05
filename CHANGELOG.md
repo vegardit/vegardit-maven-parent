@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- enable execution of gmavenplus plugin from within eclipse on full builds
+
 
 ## [3.0.5] - 2022-10-01
 

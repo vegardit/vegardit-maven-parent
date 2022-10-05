@@ -2309,7 +2309,10 @@
                                     </goals>
                                  </pluginExecutionFilter>
                                  <action>
-                                    <ignore />
+                                    <execute>
+                                       <runOnConfiguration>true</runOnConfiguration>
+                                       <runOnIncremental>false</runOnIncremental>
+                                    </execute>
                                  </action>
                               </pluginExecution>
                               <pluginExecution>
