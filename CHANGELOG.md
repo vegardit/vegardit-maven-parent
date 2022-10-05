@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [3.0.6] - 2022-10-05
+
 ### Changed
 - enable execution of gmavenplus plugin from within eclipse on full builds
 - change delete-java-stubs@process-classes to only delete class files from target/classes and not resource files
