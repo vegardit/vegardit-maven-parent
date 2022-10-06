@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.8] - 2022-10-06
+
+### Fix
+- delete-java-stubs@process-classes goal fails because of syntax error
+
+
 ## [3.0.7] - 2022-10-06
 
 ### Fix

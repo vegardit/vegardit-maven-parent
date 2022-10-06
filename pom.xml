@@ -923,15 +923,15 @@
                      <skip>${custom.noJavaArtifact}</skip>
                      <target>
                         <!-- delete the java.*/javax.* class stubs after compilation, before testing -->
-                        <delete erroronmissingdir="false">
+                        <delete>
                             <!-- we only delete class files not any potential other resource files -->
-                            <fileset dir="${project.build.directory}/classes/java" includes="**/*.class" />
-                            <fileset dir="${project.build.directory}/classes/javax" includes="**/*.class" />
+                            <fileset erroronmissingdir="false" dir="${project.build.directory}/classes/java" includes="**/*.class" />
+                            <fileset erroronmissingdir="false" dir="${project.build.directory}/classes/javax" includes="**/*.class" />
                         </delete>
 
                         <!-- recursively delete empty directories -->
-                        <delete erroronmissingdir="false" includeemptydirs="true">
-                           <fileset dir="${project.build.directory}/classes">
+                        <delete includeemptydirs="true">
+                           <fileset erroronmissingdir="false" dir="${project.build.directory}/classes">
                               <and><type type="dir" /><size value="0" /></and>
                            </fileset>
                         </delete>
