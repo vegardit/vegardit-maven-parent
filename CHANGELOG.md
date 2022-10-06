@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.7] - 2022-10-06
+
+### Fix
+- delete-java-stubs@process-classes goal fails if stub directories are missing in target/classes
+
+
 ## [3.0.6] - 2022-10-05
 
 ### Changed
