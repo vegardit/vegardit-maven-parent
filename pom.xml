@@ -361,9 +361,9 @@
           * Manifest template location, used by maven-bundle-plugin
           */
          if(!project.properties.containsKey("custom.manifestTemplateFile")) {
-            if(new File("src/main/resources/META-INF/MANIFEST.MF").exists())
+            if(new File(project.basedir, "src/main/resources/META-INF/MANIFEST.MF").exists())
                setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF")
-            else if(new File("src/main/java/META-INF/MANIFEST.MF").exists())
+            else if(new File(project.basedir, "src/main/java/META-INF/MANIFEST.MF").exists())
                setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF")
          }
 
@@ -969,6 +969,7 @@
 
                      <!-- https://bnd.bndtools.org/chapters/825-instructions-ref.html -->
                      <instructions>
+                        <!-- https://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html#_using_an_existing_manifest_mf_file -->
                         <_include>${custom.manifestTemplateFile}</_include>
                         <_nouses>${maven-bundle-plugin.export-packages.no-uses}</_nouses>
                         <Private-Package>${maven-bundle-plugin.private-package}</Private-Package>
