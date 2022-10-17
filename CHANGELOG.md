@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.9] - 2022-10-17
+
+### Fix
+- custom.manifestTemplateFile property not working with multi-module projects
+
+### Changed
+- set Maven property `m2e.apt.activation=jdt_apt` to enable annotation processing in Eclipse by default
+- configure M2E lifecycle mapping for more build-helper-maven-plugin goals
+- Maven plugin upgrades:
+  - gmavenplus-plugin from 1.13.1 to 2.0.0
+
+
 ## [3.0.8] - 2022-10-06
 
 ### Fix
