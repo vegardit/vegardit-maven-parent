@@ -2238,7 +2238,15 @@
                                     <artifactId>build-helper-maven-plugin</artifactId>
                                     <versionRange>[0.0,)</versionRange>
                                     <goals>
+                                       <goal>add-source</goal>
+                                       <goal>add-test-source</goal>
+                                       <goal>add-resource</goal>
+                                       <goal>add-test-resource</goal>
+                                       <goal>maven-version</goal>
+                                       <goal>parse-version</goal>
+                                       <goal>regex-properties</goal>
                                        <goal>regex-property</goal>
+                                       <goal>timestamp-property</goal>
                                     </goals>
                                  </pluginExecutionFilter>
                                  <action>
