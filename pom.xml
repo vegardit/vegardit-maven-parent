@@ -1514,7 +1514,7 @@
             <plugin>
                <!-- This plugin provides the capability to package the artifact in an uber-jar -->
                <artifactId>maven-shade-plugin</artifactId>
-               <version>3.4.0</version>
+               <version>3.4.1</version>
             </plugin>
 
             <plugin>
