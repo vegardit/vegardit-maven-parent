@@ -90,7 +90,9 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   [INFO] ------------------------------------------------------------------------
   ```
 - The [jrebel-maven-plugin](https://manuals.zeroturnaround.com/jrebel/standalone/maven.html) will be enabled automatically if the file `src/main/resources/rebel-remote.xml` is present in a project.
-- Additional Maven project properties are referenceable without any further configuration:
+
+### Additional Maven project properties
+Additional Maven project properties are referenceable without any further configuration:
   1. The [os-maven-plugin](https://github.com/trustin/os-maven-plugin) is configured to provide platform-specific project properties that allows easy inclusion of native dependencies, e.g.
      ```xml
      <dependency>
@@ -102,14 +104,24 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
      ```
   1. The [maven-dependency-plugin](https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html) sets a property pointing to the artifact file for each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier]}`, e.g. `${com.google.guava:guava:jar}`.\
      See ["Stackoverflow: Can I use the path to a Maven dependency as a property?"](https://stackoverflow.com/a/2359947)
-  1. The [dependencyversion-maven-plugin](https://gitlab.com/josh.cain/dependencyversion-maven-plugin) sets a property containing the version of each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier].version}`, e.g. `${com.google.guava:guava:jar.version}`.\
-- Maven Site improvements:
+  1. The [dependencyversion-maven-plugin](https://gitlab.com/josh.cain/dependencyversion-maven-plugin) sets a property containing the version of each project dependency following the pattern `${<groupId>:<artifactId>:<type>[:classifier].version}`, e.g. `${com.google.guava:guava:jar.version}`.
+  1. The [parse-version](https://www.mojohaus.org/build-helper-maven-plugin/parse-version-mojo.html) goal of the [build-helper-maven-plugin](https://www.mojohaus.org/build-helper-maven-plugin/index.html) sets the following properties:
+     ```python
+     ${parsedVersion.majorVersion}
+     ${parsedVersion.minorVersion}
+     ${parsedVersion.incrementalVersion}
+     ${parsedVersion.qualifier}
+     ${parsedVersion.buildNumber}
+     ```
+
+### Maven Site improvements:
   1. WebDAV and SFTP protocols enabled for [Maven site deployment](https://maven.apache.org/plugins/maven-site-plugin/examples/adding-deploy-protocol.html).
   1. Markdown rendering support is enabled by default via [doxia-module-markdown](https://mvnrepository.com/artifact/org.apache.maven.doxia/doxia-module-markdown)
   1. Contains workaround for `SiteToolException: The site descriptor cannot be resolved from the repository:
 ArtifactResolutionException: Unable to locate site descriptor`.\
     See ["Stackoverflow: How to avoid checking parent project in maven-site-plugin?"](https://stackoverflow.com/a/40907580) or ["Unable to locate site descriptor : maven-site-plugin problem"](https://tcollignon.github.io/2016/10/24/Unable-to-locate-site-descriptor-maven-site-plugin-problem.html) for details.
-- Enables workarounds for some build annoyances such as:
+
+### Enables workarounds for some build annoyances such as:
   1. Maven generate-sources goal being executed twice. See ["Peter Lynch: How to prevent generate-sources phase executing twice"](http://blog.peterlynch.ca/2010/05/maven-how-to-prevent-generate-sources.html) and ["Stackoverflow: Maven phase executing twice"](https://stackoverflow.com/questions/4253700/maven-phase-executing-twice)
   1. Javadoc failing when incomplete tags exist on Java 8+. See ["Stackoverflow: Maven is not working in Java 8 when Javadoc tags are incomplete"](https://stackoverflow.com/a/16743137)
   1. `getClass().getPackage().getImplementationVersion()` for your classes in JARs and WARs will correctly return the Maven project version. See ["Stackoverflow: Get Maven artifact version at runtime"](https://stackoverflow.com/a/2713013)

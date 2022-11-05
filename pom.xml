@@ -1047,6 +1047,13 @@
             <version>3.3.0</version>
             <executions>
                <execution>
+                  <id>parse-version</id>
+                  <phase>validate</phase>
+                  <goals>
+                     <goal>parse-version</goal>
+                  </goals>
+               </execution>
+               <execution>
                   <inherited>false</inherited>
                   <id>attach-files</id>
                   <phase>package</phase>
