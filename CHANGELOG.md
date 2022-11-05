@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+
+## [3.0.10] - 2022-05-11
+
+### Changed
+- configure build-helper-maven-plugin:parse-version
+- Maven plugin upgrades:
+  - formatter-maven-plugin from 2.20.0 to 2.21.0
+  - gmavenplus-plugin from 2.0.0 to 2.1.0
+  - maven-ear-plugin from 3.2.0 to 3.3.0
+  - maven-release-plugin from 2.5.3 to 3.0.0-M7
+  - maven-shade-plugin from 3.4.0 to 3.4.1
+  - versions-maven-plugin from 2.12.0 to 2.13.0
+
 
 ## [3.0.9] - 2022-10-17
 
