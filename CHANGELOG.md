@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- Maven plugin upgrades:
+  - checkstyle from 10.0 to 10.3.4
 
 
 ## [3.0.10] - 2022-05-11
