@@ -3,6 +3,8 @@
 #
 # Author: Sebastian Thomschke, Vegard IT GmbH
 #
+# https://github.com/vegardit/vegardit-maven-parent
+#
 # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions
 name: Build
 
