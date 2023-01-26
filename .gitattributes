@@ -58,6 +58,7 @@
 *.zsh        text eol=lf
 *.lua        text
 *.php        text
+*.py         text
 *.python     text
 *.sql        text
 

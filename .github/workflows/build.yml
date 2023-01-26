@@ -27,6 +27,10 @@ on:
         required: false
         default: ''
 
+defaults:
+  run:
+    shell: bash
+
 env:
   JAVA_VERSION: 11
 
@@ -34,13 +38,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Show environment variables
+      run: env | sort
+
     - name: Git Checkout
       uses: actions/checkout@v3 #https://github.com/actions/checkout
 
     - name: Set up JDK ${{ env.JAVA_VERSION }}
       uses: actions/setup-java@v3 #https://github.com/actions/setup-java
       with:
-        distribution: 'zulu'
+        distribution: temurin
         java-version: ${{ env.JAVA_VERSION }}
 
     # reusing CDS archives of the same JVM randomly fails in GitHub Actions with
@@ -48,7 +55,7 @@ jobs:
     #- name: Calculate Java version checksum
     #  id: java-version-checksum
     #  run: |
-    #    echo "::set-output name=md5sum::$(java -version 2>&1 | md5sum | cut -f1 -d" ")"
+    #    echo "md5sum=$(java -version 2>&1 | md5sum | cut -f1 -d" ")" >> $GITHUB_OUTPUT
     #- name: Cache Java CDS archive
     #  uses: actions/cache@v3
     #  with:
@@ -56,26 +63,20 @@ jobs:
     #      ~/.xshare/${{ steps.java-version-checksum.outputs.md5sum }}
     #    key: ${{ runner.os }}-xshare-${{ steps.java-version-checksum.outputs.md5sum }}
 
-    - name: "Cache: Local Maven Repository"
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.m2/repository
-          !~/.m2/repository/com/vegardit/maven
-        key: ${{ runner.os }}-mvnrepo-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-mvnrepo-
-
-    - name: "Cache: Maven Binaries"
-      uses: actions/cache@v3
+    - name: "Cache: Restore"
+      id: cache-restore
+      if: ${{ !env.ACT }} # https://github.com/nektos/act#skipping-steps
+      uses: actions/cache/restore@v3
       with:
         path: |
           ~/.m2/bin
-        key: ${{ runner.os }}-mvnbin-${{ hashFiles('.ci/build.sh') }}
+          ~/.m2/repository
+          !~/.m2/repository/com/vegardit/maven
+        key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
 
     - name: Test with Maven
       id: maven-test
-      if: ${{ github.ref != 'refs/heads/main' }}
+      if: ${{ github.ref != 'refs/heads/main' || env.ACT }}
       env:
         GITHUB_USER: ${{ github.actor }}
         GITHUB_API_KEY: ${{ github.token }}
@@ -85,7 +86,7 @@ jobs:
 
     - name: Build with Maven
       id: maven-build
-      if: github.ref == 'refs/heads/main'
+      if: ${{ github.ref == 'refs/heads/main' && !env.ACT }}
       env:
         DEPLOY_SNAPSHOTS_TO_GITHUB_BRANCH: true
         GITHUB_USER: ${{ github.actor }}
@@ -102,3 +103,42 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         bash .ci/build.sh ${{ github.event.inputs.additional_maven_args }}
+
+
+    ##################################################
+    # Cache Update
+    # See https://github.com/actions/cache/issues/342
+    ##################################################
+    - name: "Cache: Delete Previous"
+      if: ${{ steps.cache-restore.outputs.cache-hit && !env.ACT }}
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete ${{ steps.cache-restore.outputs.cache-primary-key }} --confirm
+
+    - name: "Cache: Update"
+      uses: actions/cache/save@v3
+      if: ${{ always() && !env.ACT }} # save cache even fails
+      with:
+        path: |
+          ~/.m2/bin
+          ~/.m2/repository
+          !~/.m2/repository/com/vegardit/maven
+        key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+
+
+  ###########################################################
+  cleanup:
+  ###########################################################
+    runs-on: ubuntu-latest
+    needs: 
+      - build
+
+    steps:
+    - name: "Delete intermediate build artifacts"
+      if: ${{ !env.ACT }} # https://github.com/nektos/act#skipping-steps
+      uses: geekyeggo/delete-artifact@v2 # https://github.com/GeekyEggo/delete-artifact/
+      with:
+        name: "*"
+        failOnError: false
