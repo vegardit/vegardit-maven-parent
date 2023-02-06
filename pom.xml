@@ -639,7 +639,7 @@
          <plugin>
             <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.1</version>
             <executions>
                <execution>
                   <id>basic-checks@validate</id>
@@ -846,7 +846,7 @@
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.1</version>
             <executions>
                <execution>
                   <id>ecj@compile</id>
@@ -916,7 +916,7 @@
 
          <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>3.1.0</version> <!--$NO-MVN-MAN-VER$-->
+            <version>3.2.1</version> <!--$NO-MVN-MAN-VER$-->
             <executions>
                <execution>
                   <id>delete-java-stubs@process-classes</id>
@@ -1144,7 +1144,7 @@
          <plugins>
             <plugin>
                <artifactId>maven-toolchains-plugin</artifactId>
-               <version>3.1.0</version>
+               <version>3.2.1</version>
                <executions>
                   <execution>
                      <id>toolchain@validate</id>
