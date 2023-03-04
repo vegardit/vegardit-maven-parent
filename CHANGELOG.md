@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.12] - 2023-03-04
+
+### Changed
+- Maven plugin upgrades:
+  - japicmp-maven-plugin from 0.17.1 to 0.17.2
+  - checkstyle from 10.4 to 10.8.0
+  - doxia-module-markdown from 1.11.1 to 1.12.0
+  - formatter-maven-plugin from 2.21.0 to 2.22.0
+  - groovy.version from 3.0.14 to 3.0.15
+  - maven-assembly-plugin from 3.4.2 to 3.5.0
+  - maven-checkstyle-plugin from 3.2.0 to 3.2.1
+  - maven-compiler-plugin from 3.10.1 to 3.11.0
+  - maven-dependency-plugin from 3.4.0 to 3.5.0
+  - maven-deploy-plugin from 2.8.2 to 3.1.0
+  - maven-enforcer-plugin from 3.1.0 to 3.2.1
+  - maven-install-plugin from 2.5.2 to 3.1.0
+  - maven-javadoc-plugin from 3.4.1 to 3.5.0
+  - maven-project-info-reports-plugin from 3.4.1 to 3.4.2
+  - versions-maven-plugin from 2.14.2 to 2.15.0
+
+
 ## [3.0.11] - 2022-12-29
 
 ### Changed

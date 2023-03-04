@@ -98,7 +98,7 @@
       <java.version.integration-tests>${java.version}</java.version.integration-tests>
       <java.vendor.integration-tests>${java.vendor}</java.vendor.integration-tests>
 
-      <!-- https://search.maven.org/search?q=g:org.eclipse.jdt%20a:ecj -->
+      <!-- https://central.sonatype.com/search?q=g%253Aorg.eclipse.jdt%2520a%253Aecj -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.32.0</eclipse-java-compiler.version>
 
