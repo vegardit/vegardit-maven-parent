@@ -119,26 +119,10 @@ jobs:
 
     - name: "Cache: Update"
       uses: actions/cache/save@v3
-      if: ${{ always() && !env.ACT }} # save cache even fails
+      if: ${{ always() && !cancelled() && !env.ACT }} # save cache even fails
       with:
         path: |
           ~/.m2/bin
           ~/.m2/repository
           !~/.m2/repository/com/vegardit/maven
         key: ${{ steps.cache-restore.outputs.cache-primary-key }}
-
-
-  ###########################################################
-  cleanup:
-  ###########################################################
-    runs-on: ubuntu-latest
-    needs: 
-      - build
-
-    steps:
-    - name: "Delete intermediate build artifacts"
-      if: ${{ !env.ACT }} # https://github.com/nektos/act#skipping-steps
-      uses: geekyeggo/delete-artifact@v2 # https://github.com/GeekyEggo/delete-artifact/
-      with:
-        name: "*"
-        failOnError: false
