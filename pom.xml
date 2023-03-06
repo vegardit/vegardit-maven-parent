@@ -108,7 +108,7 @@
 
       <maven.surefire.version>2.22.2</maven.surefire.version>
       <maven.scm.version>1.13.0</maven.scm.version>
-      <maven.scm.svnjava.version>2.2.1</maven.scm.svnjava.version>
+      <maven.scm.svnjava.version>2.3.0</maven.scm.svnjava.version>
       <maven.wagon.version>3.5.3</maven.wagon.version>
 
       <m2e.apt.activation>jdt_apt</m2e.apt.activation>
