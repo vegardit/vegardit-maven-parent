@@ -608,6 +608,7 @@
 
          <plugin>
             <!-- https://www.mojohaus.org/license-maven-plugin/usage.html -->
+            <!-- https://github.com/mojohaus/license-maven-plugin -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>license-maven-plugin</artifactId>
             <version>2.0.0</version>
@@ -623,10 +624,21 @@
                      <sortArtifactByName>true</sortArtifactByName>
                      <failOnBlacklist>true</failOnBlacklist>
                      <excludedLicenses>
+                        <excludedLicense>AGPL 3</excludedLicense>
+                        <excludedLicense>AGPL-3.0</excludedLicense>
+                        <excludedLicense>GPL</excludedLicense>
+                        <excludedLicense>GPLv1</excludedLicense>
+                        <excludedLicense>GPLv2</excludedLicense>
+                        <excludedLicense>GPLv3</excludedLicense>
+                        <excludedLicense>GPL v1</excludedLicense>
+                        <excludedLicense>GPL v2</excludedLicense>
+                        <excludedLicense>GPL v3</excludedLicense>
                         <excludedLicense>GPL-1.0</excludedLicense>
                         <excludedLicense>GPL-2.0</excludedLicense>
                         <excludedLicense>GPL-3.0</excludedLicense>
-                        <excludedLicense>AGPL-3.0</excludedLicense>
+                        <excludedLicense>gpl_v1</excludedLicense>
+                        <excludedLicense>gpl_v2</excludedLicense>
+                        <excludedLicense>gpl_v3</excludedLicense>
                         <excludedLicense>GNU General Public License (GPL) 1.0</excludedLicense>
                         <excludedLicense>GNU General Public License (GPL) 2.0</excludedLicense>
                         <excludedLicense>GNU General Public License (GPL) 3.0</excludedLicense>
