@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maven plugin upgrades:
   - checkstyle from 10.8.0 to 10.8.1
   - groovy.version from 3.0.15 to 3.0.16
-
+  - maven-scm-provider-svnjava from 2.2.1 to 2.3.0
 
 ## [3.0.12] - 2023-03-04
 
