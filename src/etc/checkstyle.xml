@@ -122,7 +122,7 @@
       <module name="RedundantImport" />
       <module name="UnusedImports" />
 
-      <!-- Indention -->
+      <!-- Indentation -->
       <module name="CommentsIndentation" />
       <module name="Indentation">
          <property name="basicOffset" value="3" />
@@ -237,30 +237,31 @@
       <module name="AvoidEscapedUnicodeCharacters">
          <property name="allowEscapesForControlCharacters" value="true" />
          <property name="allowNonPrintableEscapes" value="true" />
+         <property name="allowIfAllCharactersEscaped" value="true" />
       </module>
       <module name="OuterTypeFilename" />
       <module name="UpperEll" />
 
       <!-- Filters -->
       <module name="SuppressWithNearbyCommentFilter">
-         <metadata name="net.sf.eclipsecs.core.comment" value="Disable Checkstyle for the following line" />
+         <metadata name="net.sf.eclipsecs.core.comment" value="Disable matching checkstyle rules for the following line" />
          <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+) FOR NEXT LINE" />
          <property name="checkFormat" value="$1" />
          <property name="influenceFormat" value="1" />
       </module>
       <module name="SuppressWithNearbyCommentFilter">
-         <metadata name="net.sf.eclipsecs.core.comment" value="Disable Checkstyle for the following N lines" />
+         <metadata name="net.sf.eclipsecs.core.comment" value="Disable matching checkstyle rules for the following N lines" />
          <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+) FOR NEXT (\d+) LINES" />
          <property name="checkFormat" value="$1" />
          <property name="influenceFormat" value="$2" />
       </module>
       <module name="SuppressWithNearbyCommentFilter">
-         <metadata name="net.sf.eclipsecs.core.comment" value="Disable Checkstyle for same line" />
+         <metadata name="net.sf.eclipsecs.core.comment" value="Disable matching checkstyle rules on the same line" />
          <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+)" />
          <property name="checkFormat" value="$1" />
       </module>
       <module name="SuppressWithNearbyCommentFilter">
-         <metadata name="net.sf.eclipsecs.core.comment" value="Disable switch fallthrough warning for next line" />
+         <metadata name="net.sf.eclipsecs.core.comment" value="Disable switch fallthrough warning for the following line" />
          <property name="commentFormat" value="\$FALL-THROUGH\$" />
          <property name="checkFormat" value="FallThrough" />
          <property name="influenceFormat" value="1" />
@@ -285,6 +286,7 @@
       <module name="LogicConditionNeedOptimizationCheck" />
       <module name="LineLengthExtendedCheck">
          <property name="max" value="160" />
+         <property name="ignorePattern" value="^import .*$|^\s+(\*|//)\s.*https?:\/\/.+" />
       </module>
       <module name="MapIterationInForEachLoopCheck">
          <property name="proposeKeySetUsage" value="true" />
