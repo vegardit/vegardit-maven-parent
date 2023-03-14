@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
 # SPDX-FileCopyrightText: © Vegard IT GmbH (https://vegardit.com)
+# SPDX-FileContributor: Sebastian Thomschke
 # SPDX-License-Identifier: Apache-2.0
-#
-# @author Sebastian Thomschke, Vegard IT GmbH
+# SPDX-ArtifactOfProjectHomePage: https://github.com/vegardit/vegardit-maven-parent
 
 #####################
 # Script init

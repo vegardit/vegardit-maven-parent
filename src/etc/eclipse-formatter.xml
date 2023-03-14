@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
    SPDX-FileCopyrightText: © Vegard IT GmbH (https://vegardit.com)
+   SPDX-FileContributor: Sebastian Thomschke
    SPDX-License-Identifier: Apache-2.0
-
-   @author Sebastian Thomschke, Vegard IT GmbH
+   SPDX-ArtifactOfProjectHomePage: https://github.com/vegardit/vegardit-maven-parent
 -->
 <profiles version="18">
    <profile kind="CodeFormatterProfile" name="com.vegardit" version="18">
