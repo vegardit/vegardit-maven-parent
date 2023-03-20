@@ -1360,7 +1360,7 @@
 
             <plugin>
                <artifactId>maven-release-plugin</artifactId>
-               <version>3.0.0-M7</version>
+               <version>3.0.0</version>
                <configuration>
                   <checkModificationExcludes>
                      <!-- workaround for https://stackoverflow.com/questions/16199154/maven-releaseprepare-cannot-prepare-the-release -->
