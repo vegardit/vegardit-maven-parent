@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ### Changed
+- upgrade Eclipse Java Compiler from 3.32.0 to 3.33.0
 - Maven plugin upgrades:
   - checkstyle from 10.8.0 to 10.8.1
   - groovy.version from 3.0.15 to 3.0.16

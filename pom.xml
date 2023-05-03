@@ -100,7 +100,7 @@
 
       <!-- https://central.sonatype.com/search?q=g%253Aorg.eclipse.jdt%2520a%253Aecj -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.32.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.33.0</eclipse-java-compiler.version>
 
       <groovy.version>3.0.16</groovy.version>
 
