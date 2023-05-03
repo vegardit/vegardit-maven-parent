@@ -9,12 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.13] - 2023-05-03
+
 ### Changed
 - upgrade Eclipse Java Compiler from 3.32.0 to 3.33.0
 - Maven plugin upgrades:
   - checkstyle from 10.8.0 to 10.8.1
+  - flatten-maven-plugin from 1.3.0 to 1.4.1
   - groovy.version from 3.0.15 to 3.0.16
+  - jacoco-maven-plugin from 0.8.8 to 0.8.10
+  - jrebel-maven-plugin from 1.1.10 to 1.1.11
+  - maven-checkstyle-plugin from 3.2.1 to 3.2.2
+  - maven-deploy-plugin from 3.1.0 to 3.1.1
+  - maven-enforcer-plugin from 3.2.1 to 3.3.0
+  - maven-install-plugin from 3.1.0 to 3.1.1
+  - maven-project-info-reports-plugin from 3.4.2 to 3.4.3
+  - maven-release-plugin from 3.0.0-M7 to 3.0.0
+  - maven-resources-plugin from 3.3.0 to 3.3.1
+  - maven-scm-plugin from 1.13.0 to 2.0.0
   - maven-scm-provider-svnjava from 2.2.1 to 2.3.0
+  - maven-surefire-plugin from 2.22.2 to 3.0.0
+
 
 ## [3.0.12] - 2023-03-04
 
