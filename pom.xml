@@ -102,7 +102,7 @@
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.33.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.16</groovy.version>
+      <groovy.version>3.0.17</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
 
