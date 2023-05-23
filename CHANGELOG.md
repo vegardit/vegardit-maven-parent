@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Changed
+- Maven plugin upgrades:
+  - build-helper-maven-plugin from 3.3.0 to 3.4.0
+  - checkstyle from 10.8.1 to 10.11.0
+  - extra-enforcer-rules from 1.6.1 to 1.6.2
+  - flatten-maven-plugin from 1.4.1 to 1.5.0
+  - groovy.version from 3.0.16 to 3.0.17
+  - license-maven-plugin from 2.0.0 to 2.0.1
+  - maven-assembly-plugin from 3.5.0 to 3.6.0
+  - maven-bundle-plugin from 5.1.8 to 5.1.9
+  - maven-checkstyle-plugin from 3.2.2 to 3.3.0
+  - maven-dependency-plugin from 3.5.0 to 3.6.0
+  - maven-scm-plugin from 2.0.0 to 2.0.1
+  - maven-source-plugin from 3.2.1 to 3.3.0
+  - maven.surefire.version from 3.0.0 to 3.1.0
+
+
 ## [3.0.13] - 2023-05-03
 
 ### Changed
