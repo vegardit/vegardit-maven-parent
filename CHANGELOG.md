@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.14] - 2023-05-26
+
 ### Changed
 - Maven plugin upgrades:
   - build-helper-maven-plugin from 3.3.0 to 3.4.0
