@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - checkstyle from 10.8.1 to 10.11.0
   - extra-enforcer-rules from 1.6.1 to 1.6.2
   - flatten-maven-plugin from 1.4.1 to 1.5.0
+  - gmavenplus-plugin from 2.1.0 to 3.0.0
   - groovy.version from 3.0.16 to 3.0.17
   - license-maven-plugin from 2.0.0 to 2.0.1
   - maven-assembly-plugin from 3.5.0 to 3.6.0
