@@ -213,6 +213,7 @@
          <module name="InnerAssignment" />
          "final var button = this.button = new Button()" is needed to workaround Eclipse Null Analysis issues
       -->
+      <module name="NoEnumTrailingComma"/>
       <module name="NoFinalizer" />
       <module name="OneStatementPerLine" />
       <module name="PackageDeclaration" />
