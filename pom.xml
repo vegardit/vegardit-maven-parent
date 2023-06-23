@@ -250,10 +250,16 @@
 
          if(isJavaCompilable) {
 
+            def javaVersion = project.properties["java.version"]
+            def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
+            def ecjVersion = javaMajorVersion < 17
+                ? "3.33.0"
+                : project.properties["eclipse-java-compiler.version"]
+
             /*
              * loading/locating eclipse Java compiler artifact
              */
-            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", project.properties["eclipse-java-compiler.version"], "jar", null)
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                .setArtifact(ecjArtifactMeta)
                .setLocalRepository(session.localRepository)
@@ -265,7 +271,7 @@
              * determine bootclasspath for compilation of src/main/java
              */
             def compileJDKSpec = [
-               "version": project.properties["java.version"],
+               "version": javaVersion,
                "vendor": project.properties["java.vendor"]
             ]
             // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain

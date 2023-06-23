@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.16] - 2023-06-23
+
+### Fixed
+- automatically downgrade Eclipse Java Compiler from 3.34.0 to 3.33.0 if Java version selected by toolchain plugin is lower than 17
+
 
 ## [3.0.15] - 2023-06-23
 
