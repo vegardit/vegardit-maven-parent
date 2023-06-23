@@ -75,7 +75,7 @@ jobs:
 
     - name: Test with Maven
       id: maven-test
-      if: ${{ github.ref != 'refs/heads/main' || env.ACT }}
+      if: ${{ github.ref_name != 'main' || env.ACT }}
       env:
         GITHUB_USER: ${{ github.actor }}
         GITHUB_API_KEY: ${{ github.token }}
@@ -85,7 +85,7 @@ jobs:
 
     - name: Build with Maven
       id: maven-build
-      if: ${{ github.ref == 'refs/heads/main' && !env.ACT }}
+      if: ${{ github.ref_name == 'main' && !env.ACT }}
       env:
         DEPLOY_SNAPSHOTS_TO_GITHUB_BRANCH: true
         GITHUB_USER: ${{ github.actor }}
