@@ -9,9 +9,9 @@ name: Build
 
 on:
   push:
-    branches:
-    - '**'
-    tags-ignore:
+    branches-ignore: # build all branches except:
+      - 'dependabot/**' # prevent GHA triggered twice (once for commit to the branch and once for opening/syncing the PR)
+    tags-ignore: # don't build tags
     - '**'
     paths-ignore:
     - '**/*.adoc'
