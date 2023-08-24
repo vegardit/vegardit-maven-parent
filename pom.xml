@@ -1474,7 +1474,6 @@
                   <runOrder>alphabetical</runOrder>
                   <trimStackTrace>false</trimStackTrace>
                   <argLine>
-                     -noverify
                      -Xmx768m
                      -Duser.language=en
                      -Duser.region=US
@@ -1503,7 +1502,6 @@
                   <runOrder>alphabetical</runOrder>
                   <trimStackTrace>false</trimStackTrace>
                   <argLine>
-                     -noverify
                      -Xmx768m
                      -Duser.language=en
                      -Duser.region=US
