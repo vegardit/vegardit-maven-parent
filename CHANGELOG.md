@@ -8,106 +8,116 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- remove "-noverify" argument surefire JVM config
+- Maven plugin upgrades:
+  - checkstyle 10.12.0 -> 10.12.2
+  - depcheck-maven-plugin 2.0.0 -> 2.0.1
+  - groovy.version 3.0.17 -> 3.0.19
+  - maven-enforcer-plugin 3.3.0 -> 3.4.0
+  - license-maven-plugin 2.1.0 -> 2.2.0
+
+
 ## [3.0.16] - 2023-06-23
 
 ### Fixed
-- automatically downgrade Eclipse Java Compiler from 3.34.0 to 3.33.0 if Java version selected by toolchain plugin is lower than 17
+- automatically downgrade Eclipse Java Compiler 3.34.0 -> 3.33.0 if Java version selected by toolchain plugin is lower than 17
 
 
 ## [3.0.15] - 2023-06-23
 
 ### Changed
-- upgrade Eclipse Java Compiler from 3.33.0 to 3.34.0
+- upgrade Eclipse Java Compiler 3.33.0 -> 3.34.0
 - Maven plugin upgrades:
-  - checkstyle from 10.11.0 to 10.12.0
-  - extra-enforcer-rules from 1.6.2 to 1.7.0
-  - formatter-maven-plugin from 2.22.0 to 2.23.0
-  - jrebel-maven-plugin from 1.1.11 to 1.2.0
-  - license-maven-plugin from 2.0.1 to 2.1.0
+  - checkstyle 10.11.0 -> 10.12.0
+  - extra-enforcer-rules 1.6.2 -> 1.7.0
+  - formatter-maven-plugin 2.22.0 -> 2.23.0
+  - jrebel-maven-plugin 1.1.11 -> 1.2.0
+  - license-maven-plugin 2.0.1 -> 2.1.0
   - maven-clean-plugin 3.2.0 -> 3.3.1
-  - maven-project-info-reports-plugin from 3.4.3 to 3.4.5
-  - maven-release-plugin from 3.0.0 to 3.0.1
-  - maven-shade-plugin from 3.4.1 to 3.5.0
-  - maven-war-plugin from 3.3.2 to 3.4.0
-  - maven.surefire.version from 3.1.0 to 3.1.2
-  - versions-maven-plugin from 2.15.0 to 2.16.0
+  - maven-project-info-reports-plugin 3.4.3 -> 3.4.5
+  - maven-release-plugin 3.0.0 -> 3.0.1
+  - maven-shade-plugin 3.4.1 -> 3.5.0
+  - maven-war-plugin 3.3.2 -> 3.4.0
+  - maven.surefire.version 3.1.0 -> 3.1.2
+  - versions-maven-plugin 2.15.0 -> 2.16.0
 
 
 ## [3.0.14] - 2023-05-26
 
 ### Changed
 - Maven plugin upgrades:
-  - build-helper-maven-plugin from 3.3.0 to 3.4.0
-  - checkstyle from 10.8.1 to 10.11.0
-  - extra-enforcer-rules from 1.6.1 to 1.6.2
-  - flatten-maven-plugin from 1.4.1 to 1.5.0
-  - gmavenplus-plugin from 2.1.0 to 3.0.0
-  - groovy.version from 3.0.16 to 3.0.17
-  - license-maven-plugin from 2.0.0 to 2.0.1
-  - maven-assembly-plugin from 3.5.0 to 3.6.0
-  - maven-bundle-plugin from 5.1.8 to 5.1.9
-  - maven-checkstyle-plugin from 3.2.2 to 3.3.0
-  - maven-dependency-plugin from 3.5.0 to 3.6.0
-  - maven-scm-plugin from 2.0.0 to 2.0.1
-  - maven-source-plugin from 3.2.1 to 3.3.0
-  - maven.surefire.version from 3.0.0 to 3.1.0
+  - build-helper-maven-plugin 3.3.0 -> 3.4.0
+  - checkstyle 10.8.1 -> 10.11.0
+  - extra-enforcer-rules 1.6.1 -> 1.6.2
+  - flatten-maven-plugin 1.4.1 -> 1.5.0
+  - gmavenplus-plugin 2.1.0 -> 3.0.0
+  - groovy.version 3.0.16 -> 3.0.17
+  - license-maven-plugin 2.0.0 -> 2.0.1
+  - maven-assembly-plugin 3.5.0 -> 3.6.0
+  - maven-bundle-plugin 5.1.8 -> 5.1.9
+  - maven-checkstyle-plugin 3.2.2 -> 3.3.0
+  - maven-dependency-plugin 3.5.0 -> 3.6.0
+  - maven-scm-plugin 2.0.0 -> 2.0.1
+  - maven-source-plugin 3.2.1 -> 3.3.0
+  - maven.surefire.version 3.0.0 -> 3.1.0
 
 
 ## [3.0.13] - 2023-05-03
 
 ### Changed
-- upgrade Eclipse Java Compiler from 3.32.0 to 3.33.0
+- upgrade Eclipse Java Compiler 3.32.0 -> 3.33.0
 - Maven plugin upgrades:
-  - checkstyle from 10.8.0 to 10.8.1
-  - flatten-maven-plugin from 1.3.0 to 1.4.1
-  - groovy.version from 3.0.15 to 3.0.16
-  - jacoco-maven-plugin from 0.8.8 to 0.8.10
-  - jrebel-maven-plugin from 1.1.10 to 1.1.11
-  - maven-checkstyle-plugin from 3.2.1 to 3.2.2
-  - maven-deploy-plugin from 3.1.0 to 3.1.1
-  - maven-enforcer-plugin from 3.2.1 to 3.3.0
-  - maven-install-plugin from 3.1.0 to 3.1.1
-  - maven-project-info-reports-plugin from 3.4.2 to 3.4.3
-  - maven-release-plugin from 3.0.0-M7 to 3.0.0
-  - maven-resources-plugin from 3.3.0 to 3.3.1
-  - maven-scm-plugin from 1.13.0 to 2.0.0
-  - maven-scm-provider-svnjava from 2.2.1 to 2.3.0
-  - maven-surefire-plugin from 2.22.2 to 3.0.0
+  - checkstyle 10.8.0 -> 10.8.1
+  - flatten-maven-plugin 1.3.0 -> 1.4.1
+  - groovy.version 3.0.15 -> 3.0.16
+  - jacoco-maven-plugin 0.8.8 -> 0.8.10
+  - jrebel-maven-plugin 1.1.10 -> 1.1.11
+  - maven-checkstyle-plugin 3.2.1 -> 3.2.2
+  - maven-deploy-plugin 3.1.0 -> 3.1.1
+  - maven-enforcer-plugin 3.2.1 -> 3.3.0
+  - maven-install-plugin 3.1.0 -> 3.1.1
+  - maven-project-info-reports-plugin 3.4.2 -> 3.4.3
+  - maven-release-plugin 3.0.0-M7 -> 3.0.0
+  - maven-resources-plugin 3.3.0 -> 3.3.1
+  - maven-scm-plugin 1.13.0 -> 2.0.0
+  - maven-scm-provider-svnjava 2.2.1 -> 2.3.0
+  - maven-surefire-plugin 2.22.2 -> 3.0.0
 
 
 ## [3.0.12] - 2023-03-04
 
 ### Changed
 - Maven plugin upgrades:
-  - japicmp-maven-plugin from 0.17.1 to 0.17.2
-  - checkstyle from 10.4 to 10.8.0
-  - doxia-module-markdown from 1.11.1 to 1.12.0
-  - formatter-maven-plugin from 2.21.0 to 2.22.0
-  - groovy.version from 3.0.14 to 3.0.15
-  - maven-assembly-plugin from 3.4.2 to 3.5.0
-  - maven-checkstyle-plugin from 3.2.0 to 3.2.1
-  - maven-compiler-plugin from 3.10.1 to 3.11.0
-  - maven-dependency-plugin from 3.4.0 to 3.5.0
-  - maven-deploy-plugin from 2.8.2 to 3.1.0
-  - maven-enforcer-plugin from 3.1.0 to 3.2.1
-  - maven-install-plugin from 2.5.2 to 3.1.0
-  - maven-javadoc-plugin from 3.4.1 to 3.5.0
-  - maven-project-info-reports-plugin from 3.4.1 to 3.4.2
-  - versions-maven-plugin from 2.14.2 to 2.15.0
+  - japicmp-maven-plugin 0.17.1 -> 0.17.2
+  - checkstyle 10.4 -> 10.8.0
+  - doxia-module-markdown 1.11.1 -> 1.12.0
+  - formatter-maven-plugin 2.21.0 -> 2.22.0
+  - groovy.version 3.0.14 -> 3.0.15
+  - maven-assembly-plugin 3.4.2 -> 3.5.0
+  - maven-checkstyle-plugin 3.2.0 -> 3.2.1
+  - maven-compiler-plugin 3.10.1 -> 3.11.0
+  - maven-dependency-plugin 3.4.0 -> 3.5.0
+  - maven-deploy-plugin 2.8.2 -> 3.1.0
+  - maven-enforcer-plugin 3.1.0 -> 3.2.1
+  - maven-install-plugin 2.5.2 -> 3.1.0
+  - maven-javadoc-plugin 3.4.1 -> 3.5.0
+  - maven-project-info-reports-plugin 3.4.1 -> 3.4.2
+  - versions-maven-plugin 2.14.2 -> 2.15.0
 
 
 ## [3.0.11] - 2022-12-29
 
 ### Changed
-- upgrade Eclipse Java Compiler from 3.31.0 to 3.32.0
+- upgrade Eclipse Java Compiler 3.31.0 -> 3.32.0
 - Maven plugin upgrades:
-  - groovy.version from 3.0.13 to 3.0.14
-  - checkstyle from 10.0 to 10.4.0
-  - japicmp-maven-plugin from 0.16.0 to 0.17.1
-  - os-maven-plugin from 1.7.0 to 1.7.1
-  - sevntu-checks from 1.42.0 to 1.44.1
-  - versions-maven-plugin from 2.13.0 to 2.14.2
-  - maven.wagon.version from 3.5.2 to 3.5.3
+  - groovy.version 3.0.13 -> 3.0.14
+  - checkstyle 10.0 -> 10.4.0
+  - japicmp-maven-plugin 0.16.0 -> 0.17.1
+  - os-maven-plugin 1.7.0 -> 1.7.1
+  - sevntu-checks 1.42.0 -> 1.44.1
+  - versions-maven-plugin 2.13.0 -> 2.14.2
+  - maven.wagon.version 3.5.2 -> 3.5.3
 
 
 ## [3.0.10] - 2022-05-11
@@ -115,12 +125,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - configure build-helper-maven-plugin:parse-version
 - Maven plugin upgrades:
-  - formatter-maven-plugin from 2.20.0 to 2.21.0
-  - gmavenplus-plugin from 2.0.0 to 2.1.0
-  - maven-ear-plugin from 3.2.0 to 3.3.0
-  - maven-release-plugin from 2.5.3 to 3.0.0-M7
-  - maven-shade-plugin from 3.4.0 to 3.4.1
-  - versions-maven-plugin from 2.12.0 to 2.13.0
+  - formatter-maven-plugin 2.20.0 -> 2.21.0
+  - gmavenplus-plugin 2.0.0 -> 2.1.0
+  - maven-ear-plugin 3.2.0 -> 3.3.0
+  - maven-release-plugin 2.5.3 -> 3.0.0-M7
+  - maven-shade-plugin 3.4.0 -> 3.4.1
+  - versions-maven-plugin 2.12.0 -> 2.13.0
 
 
 ## [3.0.9] - 2022-10-17
@@ -132,7 +142,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - set Maven property `m2e.apt.activation=jdt_apt` to enable annotation processing in Eclipse by default
 - configure M2E lifecycle mapping for more build-helper-maven-plugin goals
 - Maven plugin upgrades:
-  - gmavenplus-plugin from 1.13.1 to 2.0.0
+  - gmavenplus-plugin 1.13.1 -> 2.0.0
 
 
 ## [3.0.8] - 2022-10-06
@@ -157,15 +167,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.0.5] - 2022-10-01
 
 ### Changed
-- increase minimum required Maven version to 3.6.3
-- upgrade Eclipse Java Compiler from 3.30.0 to 3.31.0
+- increase minimum required Maven version -> 3.6.3
+- upgrade Eclipse Java Compiler 3.30.0 -> 3.31.0
 - Maven plugin upgrades:
-  - groovy.version from 3.0.12 to 3.0.13
-  - japicmp-maven-plugin from 0.15.7 to 0.16.0
-  - maven-checkstyle-plugin from 3.1.2 to 3.2.0
-  - maven-jar-plugin from 3.2.2 to 3.3.0
-  - maven-shade-plugin from 3.3.0 to 3.4.0
-  - versions-maven-plugin from 2.11.0 to 2.12.0
+  - groovy.version 3.0.12 -> 3.0.13
+  - japicmp-maven-plugin 0.15.7 -> 0.16.0
+  - maven-checkstyle-plugin 3.1.2 -> 3.2.0
+  - maven-jar-plugin 3.2.2 -> 3.3.0
+  - maven-shade-plugin 3.3.0 -> 3.4.0
+  - versions-maven-plugin 2.11.0 -> 2.12.0
 
 
 ## [3.0.4] - 2022-08-17
@@ -175,12 +185,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - flatten-maven-plugin from 1.2.7 to 1.3.0
-  - maven-javadoc-plugin from 3.4.0 to 3.4.1
-  - maven-project-info-reports-plugin from 3.4.0 to 3.4.1
+  - flatten-maven-plugin 1.2.7 -> 1.3.0
+  - maven-javadoc-plugin 3.4.0 -> 3.4.1
+  - maven-project-info-reports-plugin 3.4.0 -> 3.4.1
 - Maven plugin downgrades:
-  - maven-deploy-plugin from 3.0.0 to 2.8.2 because of [MINSTALL-151](https://issues.apache.org/jira/browse/MINSTALL-151)
-  - maven-install-plugin from 3.0.1 to 2.5.2 because of [MINSTALL-151](https://issues.apache.org/jira/browse/MINSTALL-151)
+  - maven-deploy-plugin 3.0.0 -> 2.8.2 because of [MINSTALL-151](https://issues.apache.org/jira/browse/MINSTALL-151)
+  - maven-install-plugin 3.0.1 -> 2.5.2 because of [MINSTALL-151](https://issues.apache.org/jira/browse/MINSTALL-151)
 
 
 ## [3.0.3] - 2022-08-13
@@ -188,75 +198,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Disable InnerAssignment checkstyle rule
 - Maven plugin upgrades:
-  - maven-bundle-plugin from 5.1.7 to 5.1.8
-  - maven-site-plugin from 3.12.0 to 3.12.1
+  - maven-bundle-plugin 5.1.7 -> 5.1.8
+  - maven-site-plugin 3.12.0 -> 3.12.1
 
 
 ## [3.0.2] - 2022-07-28
 
 ### Changed
-- upgrade Eclipse Java Compiler from 3.29.0 to 3.30.0
+- upgrade Eclipse Java Compiler 3.29.0 -> 3.30.0
 - move maven-enforcer-plugin/requirePluginVersions config to separate plugin execution
 - Maven plugin upgrades:
-  - depcheck-maven-plugin from 1.0.0 to 2.0.0
-  - exec-maven-plugin from 3.0.0 to 3.1.0
-  - extra-enforcer-rules from 1.5.1 to 1.6.1
-  - formatter-maven-plugin from 2.19.0 to 2.20.0
-  - groovy.version from 3.0.11 to 3.0.12
-  - maven-assembly-plugin from 3.3.0 to 3.4.2
-  - maven-bundle-plugin from 5.1.6 to 5.1.7
-  - maven-deploy-plugin from 2.8.2 to 3.0.0
-  - maven-install-plugin from 2.5.2 to 3.0.1
-  - maven-project-info-reports-plugin from 3.3.0 to 3.4.0
-  - maven-resources-plugin from 3.2.0 to 3.3.0
-  - maven.wagon.version from 3.5.1 to 3.5.2
+  - depcheck-maven-plugin 1.0.0 -> 2.0.0
+  - exec-maven-plugin 3.0.0 -> 3.1.0
+  - extra-enforcer-rules 1.5.1 -> 1.6.1
+  - formatter-maven-plugin 2.19.0 -> 2.20.0
+  - groovy.version 3.0.11 -> 3.0.12
+  - maven-assembly-plugin 3.3.0 -> 3.4.2
+  - maven-bundle-plugin 5.1.6 -> 5.1.7
+  - maven-deploy-plugin 2.8.2 -> 3.0.0
+  - maven-install-plugin 2.5.2 -> 3.0.1
+  - maven-project-info-reports-plugin 3.3.0 -> 3.4.0
+  - maven-resources-plugin 3.2.0 -> 3.3.0
+  - maven.wagon.version 3.5.1 -> 3.5.2
 
 
 ## [3.0.1] - 2022-06-21
 
 ### Changed
 - Maven plugin upgrades:
-  - checkstyle 9.3 to 10.0
-  - formatter-maven-plugin from 2.18.0 to 2.19.0
-  - maven-antrun-plugin from 3.0.0 to 3.1.0
-  - maven-bundle-plugin from 5.1.5 to 5.1.6
-  - maven-enforcer-plugin from 3.0.0 to 3.1.0
-  - maven-ejb-plugin from 3.1.0 to 3.2.1
-  - maven-javadoc-plugin from 3.3.2 to
-  - maven-project-info-reports-plugin from 3.2.2 to 3.3.0
-  - maven-release-plugin from 2.5.3 to 3.0.0-M6
-  - maven-scm-plugin from 1.12.2 to 1.13.0
-  - maven-scm-provider-svnjava from 2.1.2 to 2.2.1
-  - maven-site-plugin from 3.11.0 to 3.12.0
-  - maven-toolchains-plugin 3.0.0 to 3.1.0
-  - nexus-staging-maven-plugin 1.6.8 to 1.6.13
-- upgrading gmavenplus-plugin's groovy to 3.0.11
+  - checkstyle 9.3 -> 10.0
+  - formatter-maven-plugin 2.18.0 -> 2.19.0
+  - maven-antrun-plugin 3.0.0 -> 3.1.0
+  - maven-bundle-plugin 5.1.5 -> 5.1.6
+  - maven-enforcer-plugin 3.0.0 -> 3.1.0
+  - maven-ejb-plugin 3.1.0 -> 3.2.1
+  - maven-javadoc-plugin 3.3.2 to
+  - maven-project-info-reports-plugin 3.2.2 -> 3.3.0
+  - maven-release-plugin 2.5.3 -> 3.0.0-M6
+  - maven-scm-plugin 1.12.2 -> 1.13.0
+  - maven-scm-provider-svnjava 2.1.2 -> 2.2.1
+  - maven-site-plugin 3.11.0 -> 3.12.0
+  - maven-toolchains-plugin 3.0.0 -> 3.1.0
+  - nexus-staging-maven-plugin 1.6.8 -> 1.6.13
+- upgrading gmavenplus-plugin's groovy -> 3.0.11
 
 
 ## [3.0.0] - 2022-04-14
 
 ### Changed
 - require Java 11 or higher
-- upgrade Eclipse Java Compiler from 3.26.0 to 3.29.0
+- upgrade Eclipse Java Compiler 3.26.0 -> 3.29.0
 - Maven plugin upgrades:
-  - checkstyle 9.1 to 9.3
-  - jacoco-maven-plugin from 0.8.7 to 0.8.8
-  - maven-clean-plugin from 3.1.0 to 3.2.0
-  - maven-shade-plugin from 3.2.4 to 3.3.0
+  - checkstyle 9.1 -> 9.3
+  - jacoco-maven-plugin 0.8.7 -> 0.8.8
+  - maven-clean-plugin 3.1.0 -> 3.2.0
+  - maven-shade-plugin 3.2.4 -> 3.3.0
 
 
 ## [2.5.3] - 2022-03-18
 
 ### Changed
 - Maven plugin upgrades:
-  - formatter-maven-plugin from 2.17.1 to 2.18.0
-  - japicmp-maven-plugin from 0.15.6 to 0.15.7
-  - maven-compiler-plugin from 3.10.0 to 3.10.1
-  - maven-dependency-plugin from. 3.2.0 to 3.3.0
-  - maven-project-info-reports-plugin from 3.2.1 to 3.2.2
-  - sign-maven-plugin from 1.0.0 to 1.0.1
-  - versions-maven-plugin from 2.9.0 to 2.10.0
-- upgrading gmavenplus-plugin's groovy to 3.0.10
+  - formatter-maven-plugin 2.17.1 -> 2.18.0
+  - japicmp-maven-plugin 0.15.6 -> 0.15.7
+  - maven-compiler-plugin 3.10.0 -> 3.10.1
+  - maven-dependency-plugin from. 3.2.0 -> 3.3.0
+  - maven-project-info-reports-plugin 3.2.1 -> 3.2.2
+  - sign-maven-plugin 1.0.0 -> 1.0.1
+  - versions-maven-plugin 2.9.0 -> 2.10.0
+- upgrading gmavenplus-plugin's groovy -> 3.0.10
 
 
 ## [2.5.2] - 2022-02-23
@@ -272,25 +282,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - build-helper-maven-plugin from 3.2.0 to 3.3.0
-  - checkstyle 8.44 to 9.1
-  - doxia-module-markdown from 1.10 to 1.11.1
-  - extra-enforcer-rules from 1.4 to 1.5.1
-  - formatter-maven-plugin from 2.16.0 to 2.17.1
-  - gmavenplus-plugin from 1.13.0 to 1.13.1
-  - japicmp-maven-plugin from 0.15.3 to 0.15.6
-  - maven-bundle-plugin from 5.1.2 to 5.1.4
-  - maven-compiler-plugin from 3.8.1 to 3.10.0
-  - maven-jar-plugin from 3.2.0 to 3.2.2
-  - maven-javadoc-plugin from 3.3.1 to 3.3.2
-  - maven-project-info-reports-plugin 3.1.2 to 3.2.1
-  - maven-scm-plugin from 1.12.0 to 1.12.2
-  - maven-site-plugin from 3.9.1 to 3.11.0
-  - maven-wagon from 3.4.3 to 3.5.1
-  - sevntu-checks from 1.40.0 to 1.41.0
-  - sign-maven-plugin from 0.3.1 to 1.0.0
-  - taglist-maven-plugin from 2.4 to 3.0.0
-  - versions-maven-plugin from 2.8.1 to 2.9.0
+  - build-helper-maven-plugin 3.2.0 -> 3.3.0
+  - checkstyle 8.44 -> 9.1
+  - doxia-module-markdown 1.10 -> 1.11.1
+  - extra-enforcer-rules 1.4 -> 1.5.1
+  - formatter-maven-plugin 2.16.0 -> 2.17.1
+  - gmavenplus-plugin 1.13.0 -> 1.13.1
+  - japicmp-maven-plugin 0.15.3 -> 0.15.6
+  - maven-bundle-plugin 5.1.2 -> 5.1.4
+  - maven-compiler-plugin 3.8.1 -> 3.10.0
+  - maven-jar-plugin 3.2.0 -> 3.2.2
+  - maven-javadoc-plugin 3.3.1 -> 3.3.2
+  - maven-project-info-reports-plugin 3.1.2 -> 3.2.1
+  - maven-scm-plugin 1.12.0 -> 1.12.2
+  - maven-site-plugin 3.9.1 -> 3.11.0
+  - maven-wagon 3.4.3 -> 3.5.1
+  - sevntu-checks 1.40.0 -> 1.41.0
+  - sign-maven-plugin 0.3.1 -> 1.0.0
+  - taglist-maven-plugin 2.4 -> 3.0.0
+  - versions-maven-plugin 2.8.1 -> 2.9.0
 
 
 ## [2.4.35] - 2021-09-30
@@ -312,11 +322,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - extra-enforcer-rules from 1.3 to 1.4
-  - maven-enforcer-plugin from 3.0-M3 to 3.0
-  - maven-javadoc-plugin from 3.3.0 to 3.3.1
-  - maven-scm-plugin from 1.11.3 to 1.12.0
-- upgrading gmavenplus-plugin's groovy to 3.0.9
+  - extra-enforcer-rules 1.3 -> 1.4
+  - maven-enforcer-plugin 3.0-M3 -> 3.0
+  - maven-javadoc-plugin 3.3.0 -> 3.3.1
+  - maven-scm-plugin 1.11.3 -> 1.12.0
+- upgrading gmavenplus-plugin's groovy -> 3.0.9
 
 
 ## [2.4.32] - 2021-08-17
@@ -324,8 +334,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - rely on Maven Bundle Plugin to calculate Bundle-SymbolicName
 - Maven plugin upgrades:
-  - checkstyle 8.43 to 8.44
-  - maven-scm-plugin 1.11.2 to 1.11.3
+  - checkstyle 8.43 -> 8.44
+  - maven-scm-plugin 1.11.2 -> 1.11.3
 
 
 ## [2.4.31] - 2021-07-07
@@ -333,15 +343,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - change Checkstyle rule Indentation.lineWrappingIndentation from 3 to 0
 - Maven plugin upgrades:
-  - checkstyle 8.39 to 8.43
-  - doxia-module-markdown from 1.9.1 to 1.10
-  - formatter-maven-plugin 2.14.0 to 2.16.0
-  - jacoco-maven-plugin 0.8.6 to 0.8.7
-  - maven-dependency-plugin from 3.1.2 to 3.2.0
-  - maven-javadoc-plugin from 3.2.0 to 3.3.0
-  - maven-project-info-reports-plugin 3.1.1 to 3.1.2
-  - sevntu-checks from 1.39.0 to 1.40.0
-- upgrading gmavenplus-plugin's groovy to 3.0.8
+  - checkstyle 8.39 -> 8.43
+  - doxia-module-markdown 1.9.1 -> 1.10
+  - formatter-maven-plugin 2.14.0 -> 2.16.0
+  - jacoco-maven-plugin 0.8.6 -> 0.8.7
+  - maven-dependency-plugin 3.1.2 -> 3.2.0
+  - maven-javadoc-plugin 3.2.0 -> 3.3.0
+  - maven-project-info-reports-plugin 3.1.1 -> 3.1.2
+  - sevntu-checks 1.39.0 -> 1.40.0
+- upgrading gmavenplus-plugin's groovy -> 3.0.8
 
 
 ## [2.4.30] - 2021-04-10
@@ -361,13 +371,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [UnnecessarySemicolonInEnumeration](https://checkstyle.sourceforge.io/config_coding.html#UnnecessarySemicolonInEnumeration)
 - upgrade to Eclipse Java Compiler 3.25.0
 - Maven plugin upgrades:
-  - checkstyle 8.36.2 to 8.39
-  - flatten-maven-plugin from 1.2.5 to 1.2.7
-  - formatter-maven-plugin from 2.14.0 to 2.15.0
-  - japicmp-maven-plugin from 0.15.2 to 0.15.3
-  - maven-bundle-plugin from 5.1.1 to 5.1.2
-  - sevntu-checks from 1.38.0 to 1.39.0
-  - sign-maven-plugin from 0.3.0 to 0.3.1
+  - checkstyle 8.36.2 -> 8.39
+  - flatten-maven-plugin 1.2.5 -> 1.2.7
+  - formatter-maven-plugin 2.14.0 -> 2.15.0
+  - japicmp-maven-plugin 0.15.2 -> 0.15.3
+  - maven-bundle-plugin 5.1.1 -> 5.1.2
+  - sevntu-checks 1.38.0 -> 1.39.0
+  - sign-maven-plugin 0.3.0 -> 0.3.1
 
 
 ## [2.4.29] - 2021-03-01
@@ -390,7 +400,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - maven-wagon from 3.4.2 to 3.4.3
+  - maven-wagon 3.4.2 -> 3.4.3
 
 
 ## [2.4.26] - 2021-02-24
@@ -407,10 +417,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - publish to Maven Central instead of Bintray because of its [termination](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/)
 - Maven plugin upgrades:
-  - checkstyle 8.35 to 8.36.2
-  - os-maven-plugin 8.35 to 8.36.1
-  - maven-checkstyle-plugin from 3.1.1 to 3.1.2
-  - formatter-maven-plugin from 2.13.0 to 2.14.0
+  - checkstyle 8.35 -> 8.36.2
+  - os-maven-plugin 8.35 -> 8.36.1
+  - maven-checkstyle-plugin 3.1.1 -> 3.1.2
+  - formatter-maven-plugin 2.13.0 -> 2.14.0
 
 
 ## [2.4.24] - 2021-01-24
@@ -425,8 +435,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - minimum required Maven version is now 3.5.4
 - upgrade to Eclipse Java Compiler 3.24.0
 - Maven plugin upgrades:
-  - japicmp-maven-plugin from 0.15.1 to 0.15.2
-  - maven-resources-plugin from 3.1.0 to 3.2.0
+  - japicmp-maven-plugin 0.15.1 -> 0.15.2
+  - maven-resources-plugin 3.1.0 -> 3.2.0
 
 
 ## [2.4.22] - 2021-01-05
@@ -434,10 +444,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - run **maven-toolchains-plugin:toolchain** goal in validate phase
 - Maven plugin upgrades:
-  - gmavenplus-plugin from 1.11.0 to 1.12.1
-  - japicmp-maven-plugin from 0.14.4 to 0.15.1
-  - maven-ear-plugin from 3.1.0 to 3.2.0
-  - maven-wagon from 3.4.1 to 3.4.2
+  - gmavenplus-plugin 1.11.0 -> 1.12.1
+  - japicmp-maven-plugin 0.14.4 -> 0.15.1
+  - maven-ear-plugin 3.1.0 -> 3.2.0
+  - maven-wagon 3.4.1 -> 3.4.2
 - upgrading gmavenplus-plugin's groovy to 3.0.7
 
 
@@ -453,7 +463,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - migrate from Travis CI to GitHub Actions
 - Maven plugin upgrades:
-  - sevntu-checks from 1.37.1 to 1.38.0
+  - sevntu-checks 1.37.1 -> 1.38.0
 
 
 ## [2.4.18] - 2020-11-01
@@ -470,24 +480,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Maven plugin upgrades:
-  - checkstyle 8.32 to 8.35
-  - build-helper-maven-plugin from 3.1.0 to 3.2.0
-  - exec-maven-plugin from 1.6.0 to 3.0.0
-  - extra-enforcer-rules from 1.2 to 1.3
-  - flatten-maven-plugin from 1.2.2 to 1.2.4
-  - formatter-maven-plugin from 2.11.0 to 2.13.0
-  - gmavenplus-plugin from 1.8.1 to 1.11.0
-  - jacoco-maven-plugin from 0.8.5 to 0.8.6
-  - japicmp-maven-plugin from 0.14.3 to 0.14.4
-  - maven-assembly-plugin from 3.2.0 to 3.3.0
-  - maven-bundle-plugin from 4.2.1 to 5.1.1
-  - maven-ear-plugin from 3.0.2 to 3.1.0
-  - maven-ejb-plugin from 3.0.1 to 3.1.0
-  - maven-project-info-reports-plugin from 3.0 to 3.1.1
-  - maven-shade-plugin from 3.2.3 to 3.2.4
-  - maven-site-plugin from 3.9.0 to 3.9.1
-  - maven-war-plugin from 3.2.3 to 3.3.1
-  - maven-wagon from 3.4.0 to 3.4.1
+  - checkstyle 8.32 -> 8.35
+  - build-helper-maven-plugin 3.1.0 -> 3.2.0
+  - exec-maven-plugin 1.6.0 -> 3.0.0
+  - extra-enforcer-rules 1.2 -> 1.3
+  - flatten-maven-plugin 1.2.2 -> 1.2.4
+  - formatter-maven-plugin 2.11.0 -> 2.13.0
+  - gmavenplus-plugin 1.8.1 -> 1.11.0
+  - jacoco-maven-plugin 0.8.5 -> 0.8.6
+  - japicmp-maven-plugin 0.14.3 -> 0.14.4
+  - maven-assembly-plugin 3.2.0 -> 3.3.0
+  - maven-bundle-plugin 4.2.1 -> 5.1.1
+  - maven-ear-plugin 3.0.2 -> 3.1.0
+  - maven-ejb-plugin 3.0.1 -> 3.1.0
+  - maven-project-info-reports-plugin 3.0 -> 3.1.1
+  - maven-shade-plugin 3.2.3 -> 3.2.4
+  - maven-site-plugin 3.9.0 -> 3.9.1
+  - maven-war-plugin 3.2.3 -> 3.3.1
+  - maven-wagon 3.4.0 -> 3.4.1
 - upgrade to Eclipse Java Compiler 3.22.0
 - upgrading gmavenplus-plugin's groovy to 3.0.6
 
@@ -497,7 +507,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - set maven-release-plugin `<checkModificationExclude>pom.xml</checkModificationExclude>`
 - Maven plugin upgrades:
-  - checkstyle 8.30 to 8.31
+  - checkstyle 8.30 -> 8.31
 
 
 ## [2.4.15] - 2020-04-27
@@ -506,7 +516,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - use Sevntu's [LineLengthExtendedCheck](https://github.com/sevntu-checkstyle/sevntu.checkstyle/blob/master/sevntu-checks/src/main/java/com/github/sevntu/checkstyle/checks/sizes/LineLengthExtendedCheck.java) instead of Checkstyle's [LineLengthCheck](https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/sizes/LineLengthCheck.java) for Java source code to workaround [Checkstyle issue #7460](https://github.com/checkstyle/checkstyle/issues/7460)
 - upgrade to Eclipse Java Compiler 3.21.0
 - Maven plugin upgrades:
-  - maven-antrun-plugin 1.8 to 3.0.0
+  - maven-antrun-plugin 1.8 -> 3.0.0
 
 
 ## [2.4.14] - 2020-04-15
@@ -515,27 +525,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - set maven-install-plugin `installAtEnd` to `true`
 - set maven-deploy-plugin `deployAtEnd` to `true`
 - Maven plugin upgrades:
-  - maven-shade-plugin 3.2.2 to 3.2.3
-  - gmavenplus-plugin from 1.8.1 to 1.9.0
-  - flatten-maven-plugin 1.2.1 to 1.2.2
+  - maven-shade-plugin 3.2.2 -> 3.2.3
+  - gmavenplus-plugin 1.8.1 -> 1.9.0
+  - flatten-maven-plugin 1.2.1 -> 1.2.2
 
 
 ## [2.4.13] - 2020-03-21
 
 ### Changed
 - Maven plugin upgrades:
-  - build-helper-maven-plugin from 3.0.0 to 3.1.0
-  - checkstyle 8.27 to 8.30
+  - build-helper-maven-plugin 3.0.0 -> 3.1.0
+  - checkstyle 8.27 -> 8.30
   - dependency-scope-maven-plugin 0.10
   - flatten-maven-plugin 1.2.1
   - japicmp-maven-plugin 0.14.3
-  - maven-checkstyle-plugin from 3.1.0 to 3.1.1
-  - maven-dependency-plugin from 3.1.1 to 3.1.2
-  - maven-javadoc-plugin from 3.1.1 to 3.2.0
-  - maven-shade-plugin from 3.2.1 to 3.2.2
-  - maven-site-plugin from 3.8.2 to 3.9.0
-  - maven-source-plugin from 3.2.0 to 3.2.1
-  - sevntu-checks from 1.36.0 to 1.37.1
+  - maven-checkstyle-plugin 3.1.0 -> 3.1.1
+  - maven-dependency-plugin 3.1.1 -> 3.1.2
+  - maven-javadoc-plugin 3.1.1 -> 3.2.0
+  - maven-shade-plugin 3.2.1 -> 3.2.2
+  - maven-site-plugin 3.8.2 -> 3.9.0
+  - maven-source-plugin 3.2.0 -> 3.2.1
+  - sevntu-checks 1.36.0 -> 1.37.1
 - removed deprecated checkstyle rules JavadocMethod.allowMissingThrowsTags/allowUndeclaredRTE/allowThrowsTagsForSubclasses/suppressLoadErrors, see https://github.com/checkstyle/checkstyle/issues/7329
 
 
@@ -551,17 +561,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add `-Djava.rmi.server.hostname=localhost` to surefire-plugin config
 - upgrade to Eclipse Compiler 3.20.0
 - Maven plugin upgrades:
-  - checkstyle 8.20 to 8.27
-  - gmavenplus-plugin from 1.7.1 to 1.8.1
-  - jacoco-maven-plugin from 0.8.4 to 0.8.5
+  - checkstyle 8.20 -> 8.27
+  - gmavenplus-plugin 1.7.1 -> 1.8.1
+  - jacoco-maven-plugin 0.8.4 -> 0.8.5
   - japicmp-maven-plugin 0.14.2
-  - maven-assembly-plugin from 3.1.1 to 3.2.0
-  - maven-ear-plugin from 3.0.1 to 3.0.2
+  - maven-assembly-plugin 3.1.1 -> 3.2.0
+  - maven-ear-plugin 3.0.1 -> 3.0.2
   - maven-enforcer-plugin 3.0-M3
-  - maven-jar-plugin from 3.1.2 to 3.2.0
-  - maven-source-plugin from 3.1.0 to 3.2.0
+  - maven-jar-plugin 3.1.2 -> 3.2.0
+  - maven-source-plugin 3.1.0 -> 3.2.0
   - maven-wagon 3.3.4
-  - sevntu-checks 1.35.0 to 1.36.0
+  - sevntu-checks 1.35.0 -> 1.36.0
 
 
 ## [2.4.7] - 2019-11-01
