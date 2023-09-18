@@ -100,7 +100,7 @@
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.34.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.35.0</eclipse-java-compiler.version>
 
       <groovy.version>3.0.19</groovy.version>
 
