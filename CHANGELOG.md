@@ -9,13 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- upgrade Eclipse Java Compiler 3.34.0 -> 3.35.0
 - remove "-noverify" argument surefire JVM config
 - Maven plugin upgrades:
-  - checkstyle 10.12.0 -> 10.12.2
+  - checkstyle 10.12.0 -> 10.12.3
   - depcheck-maven-plugin 2.0.0 -> 2.0.1
   - groovy.version 3.0.17 -> 3.0.19
-  - maven-enforcer-plugin 3.3.0 -> 3.4.0
+  - japicmp-maven-plugin 0.17.2 -> 0.17.3
   - license-maven-plugin 2.1.0 -> 2.2.0
+  - maven-enforcer-plugin 3.3.0 -> 3.4.1
+  - maven-javadoc-plugin 3.5.0 -> 3.6.0
 
 
 ## [3.0.16] - 2023-06-23
