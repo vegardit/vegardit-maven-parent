@@ -20,16 +20,16 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
   Different JDKs - as defined in the local [toolchains.xml](https://maven.apache.org/ref/3.5.3/maven-core/toolchains.html) - can be selected for the different build steps via [Maven project properties](https://maven.apache.org/pom.html#Properties) like so:
     ```xml
     <properties>
-       <!-- use Oracle JDK 8 for compilation -->
-       <java.version>8</java.version>
+       <!-- use Oracle JDK 11 for compilation -->
+       <java.version>11</java.version>
        <java.vendor>oracle</java.vendor>
 
-       <!-- use Open JDK 11 for test classes compilation and unit testing -->
-       <java.version.unit-tests>11</java.version.unit-tests>
+       <!-- use Open JDK 17 for test classes compilation and unit testing -->
+       <java.version.unit-tests>17</java.version.unit-tests>
        <java.vendor.unit-tests>openjdk</java.vendor.unit-tests>
 
-       <!-- use Open JDK 15 for integration testing -->
-       <java.version.integration-tests>15</java.version.integration-tests>
+       <!-- use Open JDK 21 for integration testing -->
+       <java.version.integration-tests>21</java.version.integration-tests>
        <java.vendor.integration-tests>openjdk</java.vendor.integration-tests>
     </properties>
     ```
@@ -68,26 +68,39 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
 - Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
   ```
-  [INFO] ------------------------------------------------------------------------
-  [INFO] BUILD SUCCESS
-  [INFO] ------------------------------------------------------------------------
-  [INFO] Total time: 3.269 s
-  [INFO] Finished at: 2018-05-31T15:38:25+02:00
-  [INFO] ------------------------------------------------------------------------
-  [INFO] Build Time Summary:
-  [INFO]
-  [INFO] vegardit-maven-parent
-  [INFO]   maven-enforcer-plugin:enforce (basic-checks@validate) .... [0.128s]
-  [INFO]   dependencyversion-maven-plugin:set-version (set-version@in [0.032s]
-  [INFO]   maven-enforcer-plugin:enforce (ban-duplicate-classes@valid [0.010s]
-  [INFO]   maven-enforcer-plugin:enforce (enforce-bytecode-version@va [0.008s]
-  [INFO]   maven-enforcer-plugin:enforce (dependency-convergence@vali [0.002s]
-  [INFO]   gmavenplus-plugin:execute (groovy.script.onInitialize@init [1.048s]
-  [INFO]   jacoco-maven-plugin:prepare-agent (pre-unit-test) ........ [0.179s]
-  [INFO]   exec-maven-plugin:exec (ecj@compile) ..................... [0.061s]
-  [INFO]   dependency-scope-maven-plugin:check (check@validate) ..... [0.136s]
-  [INFO]   maven-dependency-plugin:properties (properties@initialize) [0.346s]
-  [INFO] ------------------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.175 s
+[INFO] Finished at: 2023-10-02T12:16:18+02:00
+[INFO] ------------------------------------------------------------------------
+[INFO] Build Time Summary:
+[INFO]
+[INFO] vegardit-maven-parent
+[INFO]   maven-enforcer-plugin:enforce (require-fixed-plugin-versio [0.010s]
+[INFO]   maven-enforcer-plugin:enforce (basic-checks@validate) .... [0.149s]
+[INFO]   japicmp-maven-plugin:cmp (cmp@package) ................... [0.194s]
+[INFO]   maven-checkstyle-plugin:check (check@process-sources) .... [0.848s]
+[INFO]   maven-site-plugin:attach-descriptor (attach-descriptor) .. [0.405s]
+[INFO]   maven-enforcer-plugin:enforce (enforce-bytecode-version@va [0.003s]
+[INFO]   jacoco-maven-plugin:report (post-unit-test) .............. [0.003s]
+[INFO]   maven-toolchains-plugin:toolchain (toolchain@validate) ... [0.031s]
+[INFO]   maven-bundle-plugin:manifest (manifest@process-classes) .. [0.008s]
+[INFO]   maven-dependency-plugin:properties (properties@initialize) [0.414s]
+[INFO]   exec-maven-plugin:exec (ecj@test-compile) ................ [0.001s]
+[INFO]   maven-clean-plugin:clean (default-clean) ................. [0.045s]
+[INFO]   gmavenplus-plugin:execute (groovy.script.onProcessResource [0.032s]
+[INFO]   build-helper-maven-plugin:attach-artifact (attach-files) . [0.003s]
+[INFO]   maven-enforcer-plugin:enforce (ban-duplicate-classes@valid [0.004s]
+[INFO]   exec-maven-plugin:exec (ecj@compile) ..................... [0.031s]
+[INFO]   jacoco-maven-plugin:prepare-agent (pre-unit-test) ........ [0.075s]
+[INFO]   maven-toolchains-plugin:toolchain (toolchain@process-test- [0.003s]
+[INFO]   dependencyversion-maven-plugin:set-version (set-version@in [0.063s]
+[INFO]   build-helper-maven-plugin:parse-version (parse-version) .. [0.036s]
+[INFO]   maven-antrun-plugin:run (delete-java-stubs@process-classes [0.022s]
+[INFO]   gmavenplus-plugin:execute (groovy.script.onInitialize@init [1.783s]
+[INFO]   license-maven-plugin:add-third-party (check-thirdparty-lic [0.467s]
+[INFO]   dependency-scope-maven-plugin:check (check@validate) ..... [0.128s]
+[INFO]   maven-enforcer-plugin:enforce (dependency-convergence@vali [0.006s]
+[INFO] ------------------------------------------------------------------------
   ```
 - The [jrebel-maven-plugin](https://manuals.zeroturnaround.com/jrebel/standalone/maven.html) will be enabled automatically if the file `src/main/resources/rebel-remote.xml` is present in a project.
 
