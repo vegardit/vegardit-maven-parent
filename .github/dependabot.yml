@@ -27,3 +27,5 @@ updates:
     labels:
       - mvn
       - dependencies
+    ignore:
+      - dependency-name: "co.leantechniques:maven-buildtime-extension"
