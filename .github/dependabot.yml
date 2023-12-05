@@ -6,28 +6,28 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: "09:00"
+      time: "10:00"
     commit-message:
       prefix: fix
       prefix-development: chore
       include: scope
     labels:
-      - gha
-      - dependencies
       - pinned
+      - dependencies
+      - gha
   - package-ecosystem: maven
     directory: /
     schedule:
       interval: weekly
       day: monday
-      time: "09:00"
+      time: "10:00"
     commit-message:
       prefix: fix
       prefix-development: chore
       include: scope
     labels:
-      - mvn
-      - dependencies
       - pinned
+      - dependencies
+      - mvn
     ignore:
       - dependency-name: "co.leantechniques:maven-buildtime-extension"

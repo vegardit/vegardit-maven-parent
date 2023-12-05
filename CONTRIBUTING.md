@@ -8,6 +8,7 @@ We want to make contributing as easy and transparent as possible.
 ## Code of Conduct
 
 Our code of conduct is described in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Please follow it in all your interactions with the project.
 
 
 ## Issues
@@ -20,6 +21,6 @@ We use GitHub issues to track bugs and feature requests. Please ensure your desc
 Before you make a substantial pull request, please file an issue and make sure someone from the team agrees that there is a problem or room for improvement.
 
 
-## License
+### License
 
 By contributing your code, you agree to license your contribution under the [Apache License 2.0](LICENSE.txt).
