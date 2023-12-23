@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.0.18] - 2023-12-23
+
 ### Changed
 - upgrade Eclipse Java Compiler 3.35.0 -> 3.36.0
 - Maven plugin upgrades:
   - checkstyle 10.12.5 -> 10.12.6
+  - groovy.version 3.0.19 -> 3.0.20
+  - maven-compiler-plugin 3.11.0 -> 3.12.0
+  - maven.surefire.version 3.2.2 -> 3.2.3
 
 
 ## [3.0.17] - 2023-12-04
