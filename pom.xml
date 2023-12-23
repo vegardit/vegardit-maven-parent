@@ -1883,6 +1883,7 @@
             <skip.enforcer.ban-duplicate-classes>true</skip.enforcer.ban-duplicate-classes>
             <skip.enforcer.dependency-convergence>true</skip.enforcer.dependency-convergence>
             <skip.japicmp.cmp>true</skip.japicmp.cmp>
+            <skip.license-maven-plugin.check-thirdparty-licenses>true</skip.license-maven-plugin.check-thirdparty-licenses>
          </properties>
       </profile>
 
