@@ -9,7 +9,9 @@
       mvn -U versions:display-dependency-updates versions:display-plugin-updates
    plugin announcements: https://blogs.apache.org/maven/
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -49,8 +51,7 @@
 
 
    <scm>
-      <!-- http://maven.apache.org/scm/subversion.html -->
-      <!-- http://maven.apache.org/scm/git.html -->
+      <!-- https://maven.apache.org/scm/git.html -->
       <url>https://github.com/vegardit/vegardit-maven-parent</url>
       <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
       <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
@@ -252,7 +253,10 @@
 
             def javaVersion = project.properties["java.version"]
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"] /* * loading/locating eclipse Java compiler artifact
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
+
+            /*
+             * loading/locating eclipse Java compiler artifact
              */
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
