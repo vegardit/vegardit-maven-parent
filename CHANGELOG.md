@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- new Maven property `maximum.maven.version` evaluated by enforcer plugin
 - specify versions-maven-plugin:ignoredVersions `.*-(alpha|beta|M|RC|SNAPSHOT)([-_0-9].*)?`
 
 ### Changed

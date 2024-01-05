@@ -106,6 +106,7 @@
       <groovy.version>3.0.20</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
+      <maven.maximum.version></maven.maximum.version>
 
       <maven.surefire.version>3.2.3</maven.surefire.version>
       <maven.scm.version>2.0.1</maven.scm.version>
@@ -671,7 +672,7 @@
                         <banDuplicatePomDependencyVersions />
 
                         <requireMavenVersion>
-                           <version>[${maven.minimum.version},)</version>
+                           <version>[${maven.minimum.version},${maven.maximum.version})</version>
                         </requireMavenVersion>
 
                         <requireReleaseDeps>
