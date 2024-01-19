@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [3.1.0] - 2024-01-19
+
 ### Added
 - new Maven property `maximum.maven.version` evaluated by enforcer plugin
 - specify versions-maven-plugin:ignoredVersions `.*-(alpha|beta|M|RC|SNAPSHOT)([-_0-9].*)?`
@@ -15,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Maven plugin upgrades:
   - checkstyle 10.12.6 -> 10.12.7
+  - flatten-maven-plugin 1.5.0 -> 1.6.0
+  - maven.surefire.version 3.2.3 -> 3.2.5
 
 
 ## [3.0.18] - 2023-12-23
