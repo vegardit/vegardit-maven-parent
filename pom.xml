@@ -9,15 +9,13 @@
       mvn -U versions:display-dependency-updates versions:display-plugin-updates
    plugin announcements: https://blogs.apache.org/maven/
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>3.0.19-SNAPSHOT</version>
+   <version>3.1.0</version>
    <packaging>pom</packaging>
 
 
@@ -55,7 +53,7 @@
       <url>https://github.com/vegardit/vegardit-maven-parent</url>
       <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
       <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>3.1.0</tag>
    </scm>
 
 
@@ -88,7 +86,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2023-12-23T22:30:29Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2024-01-19T09:58:32Z</project.build.outputTimestamp>
 
       <java.version>11</java.version>
       <java.vendor>default</java.vendor>
@@ -106,7 +104,7 @@
       <groovy.version>3.0.20</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
-      <maven.maximum.version></maven.maximum.version>
+      <maven.maximum.version />
 
       <maven.surefire.version>3.2.5</maven.surefire.version>
       <maven.scm.version>2.0.1</maven.scm.version>
@@ -254,9 +252,7 @@
 
             def javaVersion = project.properties["java.version"]
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
-
-            /*
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"] /*
              * loading/locating eclipse Java compiler artifact
              */
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
