@@ -97,7 +97,7 @@ jobs:
     - name: "Cache: Restore"
       id: cache-restore
       if: ${{ !env.ACT }} # https://github.com/nektos/act#skipping-steps
-      uses: actions/cache/restore@v3 # https://github.com/actions/cache/blob/main/restore/README.md
+      uses: actions/cache/restore@v4 # https://github.com/actions/cache/blob/main/restore/README.md
       with:
         path: |
           ~/.m2/bin
@@ -150,7 +150,7 @@ jobs:
         gh actions-cache delete ${{ steps.cache-restore.outputs.cache-primary-key }} --confirm || true
 
     - name: "Cache: Update"
-      uses: actions/cache/save@v3 # https://github.com/actions/cache/blob/main/save/README.md
+      uses: actions/cache/save@v4 # https://github.com/actions/cache/blob/main/save/README.md
       if: ${{ always() && !cancelled() && !env.ACT }} # save cache even fails
       with:
         path: |
