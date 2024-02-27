@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.1.1] - 2024-02-27
+
+### Fixed
+- exclude module-info.java files from checkstyle
+
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 10.12.7 -> 10.13.0
+  - exec-maven-plugin from 3.1.1 -> 3.2.0
+  - japicmp-maven-plugin 0.18.3 -> 0.18.5
+  - license-maven-plugin 2.3.0 -> 2.4.0
+  - maven-shade-plugin 3.5.1 -> 3.5.2
+  - sign-maven-plugin 1.0.1 -> 1.1.0
+
+
 ## [3.1.0] - 2024-01-19
 
 ### Added
