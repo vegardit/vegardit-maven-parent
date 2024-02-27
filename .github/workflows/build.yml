@@ -80,6 +80,12 @@ jobs:
         java-version: ${{ env.JAVA_VERSION }}
 
 
+    - name: "Install: Maven"
+      uses: stCarolas/setup-maven@v4.5 # https://github.com/stCarolas/setup-maven
+      with:
+        maven-version: 3.9.6
+
+
     # reusing CDS archives of the same JVM randomly fails in GitHub Actions with
     # "An error has occurred while processing the shared archive file. shared class paths mismatch"
     #- name: Calculate Java version checksum
