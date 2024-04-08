@@ -30,3 +30,5 @@ updates:
       - pinned
       - dependencies
       - mvn
+    ignore:
+      - dependency-name: 'co.leantechniques:maven-buildtime-extension'
