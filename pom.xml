@@ -1657,7 +1657,7 @@
             <!-- https://github.com/timgifford/maven-buildtime-extension -->
             <groupId>co.leantechniques</groupId>
             <artifactId>maven-buildtime-extension</artifactId>
-            <version>2.0.3</version>
+            <version>3.0.5</version>
             <!--
                 Newer versions like 3.x and other profilers like https://github.com/khmarbaise/maven-buildtime-profiler
                 or https://github.com/jcgay/maven-profiler are not portable as they cannot be configured in the parent pom.xml
