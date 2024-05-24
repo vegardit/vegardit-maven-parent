@@ -1923,7 +1923,7 @@
                <plugin>
                   <artifactId>maven-deploy-plugin</artifactId>
                   <configuration>
-                     <altSnapshotDeploymentRepository>temp-snapshots-repo::default::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
+                     <altSnapshotDeploymentRepository>temp-snapshots-repo::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
                   </configuration>
                </plugin>
 
