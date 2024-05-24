@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.1.3] - 2024-05-24
+
+### Fixed
+- maven-deploy-plugin warning: Using legacy syntax for alternative repository
+
+### Changed
+- Maven plugin upgrades:
+  - build-helper-maven-plugin 3.5.0 -> 3.6.0
+  - checkstyle 10.15.0 -> 10.16.0
+  - exec-maven-plugin 3.2.0 -> 3.3.0
+  - jacoco-maven-plugin from 0.8.11 -> 0.8.12
+  - japicmp-maven-plugin 0.20.0 -> 0.21.2
+  - maven-deploy-plugin 3.1.1 -> 3.1.2
+  - maven-install-plugin 3.1.1 -> 3.1.2
+  - maven-jar-plugin 3.3.0 -> 3.4.1
+  - maven-scm-plugin 2.0.1 -> 2.1.0
+  - maven-shade-plugin 3.5.2 -> 3.5.3
+  - maven-source-plugin 3.3.0 -> 3.3.1
+  - maven-toolchains-plugin 3.1.0 -> 3.2.0
+
+
 ## [3.1.2] - 2024-04-02
 
 ### Changed
