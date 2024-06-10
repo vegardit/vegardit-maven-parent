@@ -1606,7 +1606,7 @@
             <plugin>
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <artifactId>maven-checkstyle-plugin</artifactId>
-               <version>3.3.1</version>
+               <version>3.4.0</version>
                <configuration>
                   <configLocation>${checkstyle.config.path}</configLocation>
                   <consoleOutput>true</consoleOutput>
