@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.1.5] - 2024-06-12
+
+### Fixed
+- correct maven-jar-plugin to 3.4.1 from non-existing 3.5.0
+
+
 ## [3.1.4] - 2024-06-12
 
 ### Changed
