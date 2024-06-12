@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [3.1.4] - 2024-06-12
+
+### Changed
+- upgrade Eclipse Java Compiler 3.37.0 -> 3.38.0
+- Maven plugin upgrades:
+  - checkstyle 10.16.0 -> 10.17.0
+  - formatter-maven-plugin 2.23.0 -> 2.24.1
+  - maven-checkstyle-plugin 3.3.1 -> 3.4.0
+  - maven-dependency-plugin 3.6.1 -> 3.7.0
+  - maven-enforcer-plugin 3.4.1 -> 3.5.0
+  - maven-javadoc-plugin 3.6.3 -> 3.7.0
+  - maven-shade-plugin 3.5.3 -> 3.6.0
+  - nexus-staging-maven-plugin 1.6.13 -> 1.7.0
+
+
 ## [3.1.3] - 2024-05-24
 
 ### Fixed
