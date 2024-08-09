@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.7] - 2024-08-09
+
+### Changed
+- Maven plugin upgrades:
+  - groovy.version 3.0.21 -> 3.0.22
+  - japicmp-maven-plugin 0.21.2 -> 0.22.0
+  - maven-javadoc-plugin 3.7.0 -> 3.8.0
+  - maven-release-plugin 3.1.0 -> 3.1.1
+  - maven-project-info-reports-plugin 3.6.0 -> 3.6.2
+  - maven.surefire.version 3.3.0 -> 3.3.1
+  - taglist-maven-plugin 3.0.0 -> 3.1.0
+  - versions-maven-plugin 2.16.2 -> 2.17.1
+
 
 ## [3.1.6] - 2024-06-25
 
