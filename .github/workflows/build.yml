@@ -109,20 +109,33 @@ jobs:
       with:
         path: |
           ~/.m2/wrapper
-        key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
+        key: ${{ runner.os }}-${{ runner.arch }}-mvn-binary-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
 
 
-    - name: "Cache: Restore Maven Repo"
+    - name: "Cache: Restore"
       id: cache-restore
       if: ${{ !env.ACT }}  # https://github.com/nektos/act#skipping-steps
       uses: actions/cache/restore@v4  # https://github.com/actions/cache/blob/main/restore/README.md
       with:
+        # IMPORTANT: path must have exactly the same value as in the cache save step otherwise restore will fail with cache key not found 
         path: |
           ~/.m2/bin
           ~/.m2/repository
+          !~/.m2/repository/.cache
+          !~/.m2/repository/.meta
           !~/.m2/repository/com/vegardit/maven
           !~/.m2/repository/*SNAPSHOT*
-        key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pom.xml') }}
+        key: ${{ runner.os }}-${{ runner.arch }}-mvn-repo-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ runner.arch }}-mvn-repo-
+
+
+    - name: "Move Restored Repo"
+      if: ${{ steps.cache-restore.outputs.cache-hit && !env.ACT }}
+      run: |
+         RESTORED_REPO_PATH=$HOME/.m2/repository-restored
+         mv -v ~/.m2/repository $RESTORED_REPO_PATH
+         echo "RESTORED_REPO_PATH=$RESTORED_REPO_PATH" >> $GITHUB_ENV
 
 
     - name: Test with Maven
@@ -175,6 +188,8 @@ jobs:
         path: |
           ~/.m2/bin
           ~/.m2/repository
+          !~/.m2/repository/.cache
+          !~/.m2/repository/.meta
           !~/.m2/repository/com/vegardit/maven
           !~/.m2/repository/*SNAPSHOT*
         key: ${{ steps.cache-restore.outputs.cache-primary-key }}
