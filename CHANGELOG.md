@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- enable automatic source code validation via formatter-maven-plugin
 - update Eclipse Formatter settings (e.g. reduce max line length from 160 to 140)
 - Maven plugin upgrades:
   - exec-maven-plugin from 3.3.0 -> 3.4.1

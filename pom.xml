@@ -126,6 +126,16 @@
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
+      <!-- https://code.revelc.net/formatter-maven-plugin/validate-mojo.html#optional-parameters -->
+      <formatter.skip>true</formatter.skip>
+      <formatter.validate.skip>false</formatter.validate.skip>
+      <formatter.css.skip>true</formatter.css.skip>
+      <formatter.html.skip>true</formatter.html.skip>
+      <formatter.java.skip>false</formatter.java.skip>
+      <formatter.js.skip>true</formatter.js.skip>
+      <formatter.json.skip>true</formatter.json.skip>
+      <formatter.xml.skip>true</formatter.xml.skip>
+
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
       <maven-bundle-plugin.private-package>*.internal.*</maven-bundle-plugin.private-package>
       <maven-bundle-plugin.import-package>*</maven-bundle-plugin.import-package>
@@ -820,9 +830,10 @@
             <artifactId>maven-checkstyle-plugin</artifactId>
             <executions>
                <execution>
-                  <id>check@process-sources</id>
+                  <id>check@process-resources</id>
                   <!-- cannot use phase validate as it needs to be executed after gmavenplus-plugin -->
-                  <phase>process-sources</phase>
+                  <!-- using process-resources instead of process-sources to run after formatter-maven-plugin:format -->
+                  <phase>process-resources</phase>
                   <goals>
                      <goal>check</goal>
                   </goals>
@@ -840,6 +851,35 @@
                   <version>${checkstyle.sevntu-checks.version}</version>
                </dependency>
             </dependencies>
+         </plugin>
+
+         <plugin>
+            <groupId>net.revelc.code.formatter</groupId>
+            <artifactId>formatter-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>format@process-sources</id>
+                  <!-- cannot use phase validate as it needs to be executed after gmavenplus-plugin -->
+                  <phase>process-sources</phase>
+                  <goals>
+                     <goal>format</goal>
+                  </goals>
+                  <configuration>
+                     <skipFormatting>${formatter.skip}</skipFormatting>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>validate@process-resources</id>
+                  <!-- cannot use phase validate as it needs to be executed after gmavenplus-plugin -->
+                  <phase>process-resources</phase>
+                  <goals>
+                     <goal>validate</goal>
+                  </goals>
+                  <configuration>
+                     <skipFormatting>${formatter.validate.skip}</skipFormatting>
+                  </configuration>
+               </execution>
+            </executions>
          </plugin>
 
          <!--
