@@ -103,7 +103,16 @@ jobs:
     #    key: ${{ runner.os }}-xshare-${{ steps.java-version-checksum.outputs.md5sum }}
 
 
-    - name: "Cache: Restore"
+    - name: "Cache: Maven Binary"
+      if: ${{ !env.ACT }}  # https://github.com/nektos/act#skipping-steps
+      uses: actions/cache@v4  # https://github.com/actions/cache/blob/main/restore/README.md
+      with:
+        path: |
+          ~/.m2/wrapper
+        key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
+
+
+    - name: "Cache: Restore Maven Repo"
       id: cache-restore
       if: ${{ !env.ACT }}  # https://github.com/nektos/act#skipping-steps
       uses: actions/cache/restore@v4  # https://github.com/actions/cache/blob/main/restore/README.md
@@ -112,7 +121,8 @@ jobs:
           ~/.m2/bin
           ~/.m2/repository
           !~/.m2/repository/com/vegardit/maven
-        key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          !~/.m2/repository/*SNAPSHOT*
+        key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/pom.xml') }}
 
 
     - name: Test with Maven
