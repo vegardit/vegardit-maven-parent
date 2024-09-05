@@ -1412,6 +1412,9 @@
                   <checkModificationExcludes>
                      <!-- workaround for https://stackoverflow.com/questions/16199154/maven-releaseprepare-cannot-prepare-the-release -->
                      <checkModificationExclude>pom.xml</checkModificationExclude>
+
+                     <!-- because of chmod u+x in build.sh -->
+                     <checkModificationExclude>mvnw</checkModificationExclude>
                   </checkModificationExcludes>
 
                   <providerImplementations>
