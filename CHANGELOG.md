@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- update Eclipse Formatter settings (e.g. reduce max line length from 160 to 140)
+- Maven plugin upgrades:
+  - exec-maven-plugin from 3.3.0 -> 3.4.1
+  - maven.surefire.version 3.3.1 -> 3.5.0
+  - maven-checkstyle-plugin 3.4.0 -> 3.5.0
+  - maven-javadoc-plugin 3.8.0 -> 3.10.0
+  - maven-site-plugin 3.12.1 -> 3.20.0
+  - maven-project-info-reports-plugin 3.6.2 -> 3.7.0
+  - maven-dependency-plugin 3.7.1 -> 3.8.0
+
+
 ## [3.1.7] - 2024-08-09
 
 ### Changed
