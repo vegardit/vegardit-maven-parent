@@ -100,7 +100,10 @@ echo "###################################################"
 echo "# Determining current Maven project version...    #"
 echo "###################################################"
 # https://stackoverflow.com/questions/3545292/how-to-get-maven-project-version-to-the-bash-command-line
-projectVersion="$(mvn -s .ci/maven-settings.xml help:evaluate -Dexpression=project.version -q -DforceStdout)"
+projectVersion=$(python -c "import xml.etree.ElementTree as ET; \
+  print(ET.parse(open('pom.xml')).getroot().find(  \
+  '{http://maven.apache.org/POM/4.0.0}version').text)")
+
 echo "  -> Current Version: $projectVersion"
 
 #
