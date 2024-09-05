@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maven plugin upgrades:
   - exec-maven-plugin from 3.3.0 -> 3.4.1
   - maven.surefire.version 3.3.1 -> 3.5.0
+  - maven-deploy-plugin 3.1.2 -> 3.1.3
+  - maven-install-plugin 3.1.2 -> 3.1.3
   - maven-checkstyle-plugin 3.4.0 -> 3.5.0
   - maven-javadoc-plugin 3.8.0 -> 3.10.0
   - maven-site-plugin 3.12.1 -> 3.20.0

@@ -1379,12 +1379,12 @@
 
             <plugin>
                <artifactId>maven-install-plugin</artifactId>
-               <version>3.1.2</version><!--$NO-MVN-MAN-VER$-->
+               <version>3.1.3</version><!--$NO-MVN-MAN-VER$-->
             </plugin>
 
             <plugin>
                <artifactId>maven-deploy-plugin</artifactId>
-               <version>3.1.2</version><!--$NO-MVN-MAN-VER$-->
+               <version>3.1.3</version><!--$NO-MVN-MAN-VER$-->
             </plugin>
 
             <plugin>
