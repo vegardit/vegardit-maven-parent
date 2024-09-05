@@ -88,7 +88,7 @@
       -->
       <project.build.outputTimestamp>2024-08-09T11:47:39Z</project.build.outputTimestamp>
 
-      <java.version>11</java.version>
+      <java.version>17</java.version>
       <java.vendor>default</java.vendor>
 
       <java.version.unit-tests>${java.version}</java.version.unit-tests>

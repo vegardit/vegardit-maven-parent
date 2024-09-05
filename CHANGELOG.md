@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- set default Java version to 17
 - enable automatic source code validation via formatter-maven-plugin
 - update Eclipse Formatter settings (e.g. reduce max line length from 160 to 140)
 - Maven plugin upgrades:
