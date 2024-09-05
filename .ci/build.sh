@@ -63,13 +63,17 @@ echo "###################################################"
 echo "# Configuring MAVEN_OPTS...                       #"
 echo "###################################################"
 MAVEN_OPTS="${MAVEN_OPTS:-}"
-MAVEN_OPTS="$MAVEN_OPTS -XX:+TieredCompilation -XX:TieredStopAtLevel=1" # https://zeroturnaround.com/rebellabs/your-maven-build-is-slow-speed-it-up/
-MAVEN_OPTS="$MAVEN_OPTS -Djava.security.egd=file:/dev/./urandom" # https://stackoverflow.com/questions/58991966/what-java-security-egd-option-is-for/59097932#59097932
-MAVEN_OPTS="$MAVEN_OPTS -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS" # https://stackoverflow.com/questions/5120470/how-to-time-the-different-stages-of-maven-execution/49494561#49494561
-export MAVEN_OPTS="$MAVEN_OPTS -Xmx1024m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dhttps.protocols=TLSv1.2"
+MAVEN_OPTS+=" -Djava.security.egd=file:/dev/./urandom" # https://stackoverflow.com/questions/58991966/what-java-security-egd-option-is-for/59097932#59097932
+MAVEN_OPTS+=" -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss,SSS" # https://stackoverflow.com/questions/5120470/how-to-time-the-different-stages-of-maven-execution/49494561#49494561
+MAVEN_OPTS+=" -Xmx1024m -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Dhttps.protocols=TLSv1.3,TLSv1.2"
 echo "  -> MAVEN_OPTS: $MAVEN_OPTS"
+export MAVEN_OPTS
 
-MAVEN_CLI_OPTS="-e -U --batch-mode --show-version --no-transfer-progress -s .ci/maven-settings.xml -t .ci/maven-toolchains.xml"
+MAVEN_CLI_OPTS="-e -U --batch-mode --show-version -s .ci/maven-settings.xml -t .ci/maven-toolchains.xml"
+if [[ -n ${GITEA_ACTIONS:-} || (-n ${CI:-} && -z ${ACT:-}) ]]; then # if running on a remote CI but not on local nektos/act runner
+  MAVEN_CLI_OPTS+=" --no-transfer-progress"
+fi
+echo "  -> MAVEN_CLI_OPTS: $MAVEN_CLI_OPTS"
 
 
 echo
