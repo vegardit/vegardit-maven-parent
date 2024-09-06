@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.2] - 2024-09-06
+
+### Fixed
+- overriding of `java.version`/`java.vendor` on command line does not work
+
+
+## [4.0.1] - 2024-09-06
+
 ### Added
 - make formatter line ending configurable through `formatter.lineending` and `formatter.validate.lineending`
 

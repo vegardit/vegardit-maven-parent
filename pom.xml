@@ -181,11 +181,15 @@
 
          def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver")
          def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory")
+         def getProjectProp = {String name -> // workaround for https://github.com/groovy/GMavenPlus/issues/72
+            def value = session.userProperties[name] ? session.userProperties[name] : project.properties[name]
+            log.info("Got project property [$name] '${value}'")
+            value
+         }
          def setProjectProp = { String name, String value ->
             project.properties[name] = value
             log.info("Set project property [$name] '${project.properties[name]}'")
          }
-
 
          if(project.parent != null) {
             /*
@@ -262,9 +266,13 @@
 
          if(isJavaCompilable) {
 
-            def javaVersion = project.properties["java.version"]
+            // not using project.properties, see https://github.com/groovy/GMavenPlus/issues/72
+            def javaVersion = getProjectProp("java.version")
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"] /* * loading/locating eclipse Java compiler artifact
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
+
+            /*
+             * loading/locating eclipse Java compiler artifact
              */
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
@@ -279,7 +287,7 @@
              */
             def compileJDKSpec = [
                "version": javaVersion,
-               "vendor": project.properties["java.vendor"]
+               "vendor": getProjectProp("java.vendor")
             ]
             // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain
             def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec)
@@ -311,8 +319,8 @@
              * determine bootclasspath for compilation of src/test/java
              */
             def testCompileJDKSpec = [
-               "version": project.properties["java.version.unit-tests"],
-               "vendor": project.properties["java.vendor.unit-tests"]
+               "version": getProjectProp("java.version.unit-tests"),
+               "vendor": getProjectProp("java.vendor.unit-tests")
             ]
             testCompileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec)
             if(!testCompileJDKs)
