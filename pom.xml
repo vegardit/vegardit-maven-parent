@@ -15,7 +15,7 @@
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>4.0.2-SNAPSHOT</version>
+   <version>4.0.2</version>
    <packaging>pom</packaging>
 
 
@@ -53,7 +53,7 @@
       <url>https://github.com/vegardit/vegardit-maven-parent</url>
       <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
       <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>4.0.2</tag>
    </scm>
 
 
@@ -86,7 +86,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2024-09-06T10:06:36Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2024-09-06T11:17:40Z</project.build.outputTimestamp>
 
       <java.version>17</java.version>
       <java.vendor>default</java.vendor>
@@ -269,9 +269,7 @@
             // not using project.properties, see https://github.com/groovy/GMavenPlus/issues/72
             def javaVersion = getProjectProp("java.version")
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
-
-            /*
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"] /*
              * loading/locating eclipse Java compiler artifact
              */
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
