@@ -8,15 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- make formatter line ending configurable through `formatter.lineending` and `formatter.validate.lineending`
+
 ### Changed
 - Maven plugin upgrades:
   - checkstyle 10.17.0 -> 10.18.1
 
+
 ## [4.0.0] - 2024-09-05
+
+### Added
+- enable automatic source code validation via formatter-maven-plugin
 
 ### Changed
 - set default Java version to 17
-- enable automatic source code validation via formatter-maven-plugin
 - update Eclipse Formatter settings (e.g. reduce max line length from 160 to 140)
 - Maven plugin upgrades:
   - exec-maven-plugin from 3.3.0 -> 3.4.1
