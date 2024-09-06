@@ -6,7 +6,7 @@
    SPDX-ArtifactOfProjectHomePage: https://github.com/vegardit/vegardit-maven-parent
 
    check for new dependency/plugin updates using:
-      mvn -U versions:display-dependency-updates versions:display-plugin-updates
+      mvn -U -ntp versions:display-dependency-updates versions:display-plugin-updates
    plugin announcements: https://blogs.apache.org/maven/
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">

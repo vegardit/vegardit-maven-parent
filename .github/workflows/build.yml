@@ -59,11 +59,22 @@ jobs:
   maven-build:
   ###########################################################
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - maven_version: mvnw # as defined in .mvn/wrapper/maven-wrapper.properties
+          may_create_release: ${{ github.ref_name == 'main' }}
+          experimental: false
+        - maven_version: 3.6.3 # oldest supported Maven version
+          may_create_release: false
+          experimental: false
 
 
     # https://docs.github.com/en/actions/using-jobs/using-concurrency
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.maven_version }}
       cancel-in-progress: false
 
 
@@ -108,7 +119,7 @@ jobs:
       with:
         path: |
           ~/.m2/wrapper
-        key: ${{ runner.os }}-${{ runner.arch }}-mvn-binary-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
+        key: ${{ runner.os }}-${{ runner.arch }}-mvn-binary-${{ matrix.maven_version }}-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
 
 
     - name: "Cache: Restore"
@@ -135,9 +146,15 @@ jobs:
          mv -v ~/.m2/repository $RESTORED_REPO_PATH
          echo "RESTORED_REPO_PATH=$RESTORED_REPO_PATH" >> $GITHUB_ENV
 
+    - name: Set Maven version [${{ matrix.maven_version }}]
+      run: |
+        if [[ "${{ matrix.maven_version }}" != "mvnw" ]]; then
+          chmod u+x mvnw
+          ./mvnw -ntp wrapper:wrapper -Dmaven=${{ matrix.maven_version }}
+        fi
 
     - name: "Test with Maven 🔨"
-      if: ${{ github.ref_name != 'main' || env.ACT }}
+      if: ${{ !matrix.may_create_release || env.ACT }}
       env:
         GITHUB_USER: ${{ github.actor }}
         GITHUB_API_KEY: ${{ github.token }}
@@ -147,7 +164,7 @@ jobs:
 
 
     - name: "Build with Maven 🔨"
-      if: ${{ github.ref_name == 'main' && !env.ACT }}
+      if: ${{ matrix.may_create_release && !env.ACT }}
       env:
         DEPLOY_SNAPSHOTS_TO_GITHUB_BRANCH: true
         GITHUB_USER: ${{ github.actor }}
