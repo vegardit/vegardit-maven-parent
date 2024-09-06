@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- by default use the same Java version for integration tests as for unit tests
+- use the same JDK for compiling unit tests as for library code
+- by default use the same Java version for running integration tests as for unit tests
+
+### Added
+- allow configuring different JDK for `verify` phase
+
 
 ## [4.0.2] - 2024-09-06
 

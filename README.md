@@ -16,19 +16,19 @@
 Opinionated best practices [Maven](https://maven.apache.org) parent project with the following 'features':
 
 - Configures UTF-8 as default encoding of source files and generated reports.
-- Configures the [maven-toolchains-plugin](https://maven.apache.org/plugins/maven-toolchains-plugin/) to enable reproducible builds by decoupling the JDK used to run Maven and it's plugins from the JDK(s) used to compile, unit- and integration-test code.\
-  Different JDKs - as defined in the local [toolchains.xml](https://maven.apache.org/ref/3.5.3/maven-core/toolchains.html) - can be selected for the different build steps via [Maven project properties](https://maven.apache.org/pom.html#Properties) like so:
+- Configures the [maven-toolchains-plugin](https://maven.apache.org/plugins/maven-toolchains-plugin/) to enable reproducible builds by decoupling the JDK used to run Maven and it's plugins from the JDK(s) used to compile and test code.\
+  Different JDKs - as defined in the local [toolchains.xml](https://maven.apache.org/ref/3-LATEST/maven-core/toolchains.html) - can be selected for the different build steps via [Maven project properties](https://maven.apache.org/pom.html#Properties) like so:
     ```xml
     <properties>
        <!-- use Oracle JDK 11 for compilation -->
        <java.version>11</java.version>
        <java.vendor>oracle</java.vendor>
 
-       <!-- use Open JDK 17 for test classes compilation and unit testing -->
+       <!-- use Open JDK 17 for running unit tests -->
        <java.version.unit-tests>17</java.version.unit-tests>
        <java.vendor.unit-tests>openjdk</java.vendor.unit-tests>
 
-       <!-- use Open JDK 21 for integration testing -->
+       <!-- use Open JDK 21 for running integration tests -->
        <java.version.integration-tests>21</java.version.integration-tests>
        <java.vendor.integration-tests>openjdk</java.vendor.integration-tests>
     </properties>

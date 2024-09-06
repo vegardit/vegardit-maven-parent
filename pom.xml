@@ -97,6 +97,9 @@
       <java.version.integration-tests>${java.version.unit-tests}</java.version.integration-tests>
       <java.vendor.integration-tests>${java.vendor.unit-tests}</java.vendor.integration-tests>
 
+      <java.version.verify>${java.version}</java.version.verify>
+      <java.vendor.verify>${java.vendor}</java.vendor.verify>
+
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.38.0</eclipse-java-compiler.version>
@@ -184,7 +187,7 @@
          def getProjectProp = {String name -> // workaround for https://github.com/groovy/GMavenPlus/issues/72
             def value = session.userProperties[name] ? session.userProperties[name] : project.properties[name]
             log.info("Got project property [$name] '${value}'")
-            value
+            return value
          }
          def setProjectProp = { String name, String value ->
             project.properties[name] = value
@@ -265,16 +268,16 @@
          setProjectProp("skip.jacoco", isJavaCompilable ? "false" : "true")
 
          if(isJavaCompilable) {
-
-            // not using project.properties, see https://github.com/groovy/GMavenPlus/issues/72
-            def javaVersion = getProjectProp("java.version")
-            def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
-
+            if(project.version.endsWith("-SNAPSHOT")) {
+               setProjectProp("maven.javadoc.skip", "true")
+            }
 
             /*
              * loading/locating eclipse Java compiler artifact
              */
+            def javaVersion = getProjectProp("java.version")
+            def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                .setArtifact(ecjArtifactMeta)
@@ -318,47 +321,6 @@
 
 
             /*
-             * determine bootclasspath for compilation of src/test/java
-             */
-            def testCompileJDKSpec = [
-               "version": getProjectProp("java.version.unit-tests"),
-               "vendor": getProjectProp("java.vendor.unit-tests")
-            ]
-            testCompileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", testCompileJDKSpec)
-            if(!testCompileJDKs)
-                throw new RuntimeException("No toolchain found with specification $testCompileJDKSpec")
-            def testCompileJDK =testCompileJDKs[0]
-            if(new File("${testCompileJDK.javaHome}/jmods").exists()) {
-               setProjectProp("custom.testCompileBootClasspathOption", "--module-path")
-               setProjectProp("custom.testCompileBootClasspath", "${testCompileJDK.javaHome}/jmods")
-            } else {
-               setProjectProp("custom.testCompileBootClasspathOption", "-bootclasspath")
-               setProjectProp("custom.testCompileBootClasspath", [
-                  "${testCompileJDK.javaHome}/jre/lib/resources.jar",
-                  "${testCompileJDK.javaHome}/jre/lib/rt.jar",
-                  "${testCompileJDK.javaHome}/jre/lib/jsse.jar",
-                  "${testCompileJDK.javaHome}/jre/lib/jce.jar",
-                  "${testCompileJDK.javaHome}/jre/lib/charsets.jar",
-                  "${testCompileJDK.javaHome}/jre/lib/jfr.jar",
-                  "${testCompileJDK.javaHome}/jre/lib/classes"
-               ].join(File.pathSeparator))
-            }
-
-
-            /*
-             * configure javadoc command, https://stackoverflow.com/questions/27728733/javadoc-error-invalid-flag-xdoclintnone-when-i-use-java-7-but-it-works-i
-             * since it is toolchain aware and executed after the integration tests we check the integration test JDK if it supports "-Xdoclint:none"
-             */
-            def stdOut = ["${testCompileJDK.javaHome}/bin/javadoc", "-X"].execute().text
-            setProjectProp("custom.javadocOptionXdoclint", stdOut.indexOf("-Xdoclint") > -1 ? "-Xdoclint:none" : "")
-            setProjectProp("custom.javadocOptionHtml5", stdOut.indexOf("-html5") > -1 ? "-html5" : "")
-
-            if(project.properties.get("custom.noJavaArtifact") == "true" || project.version.endsWith("-SNAPSHOT")) {
-               setProjectProp("maven.javadoc.skip", "true")
-            }
-
-
-            /*
              * determine if the artifact contains Java test sources
              */
             def isTestable = false
@@ -371,7 +333,7 @@
                setProjectProp("custom.noJavaTests", "false")
 
                compileClasspath.addAll(project.testClasspathElements)
-               setProjectProp("custom.testClasspathElements", compileClasspath.join(File.pathSeparator))
+               setProjectProp("custom.test.classpathElements", compileClasspath.join(File.pathSeparator))
             } else {
                setProjectProp("custom.noJavaTests", "true")
             }
@@ -470,7 +432,6 @@
 
          // determine source directories, not doing this in onInitialize more source roots may have been registerd by other plugins
          setProjectProp("custom.ecjSourcePaths", '"' + project.compileSourceRoots.join('" "') + '"')
-         setProjectProp("custom.ecjTestSourcePaths", '"' + project.testCompileSourceRoots.join('" "') + '"')
       ]]></groovy.script.onProcessResources>
    </properties>
 
@@ -928,9 +889,8 @@
                      <!-- https://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.jdt.doc.user/tasks/task-using_batch_compiler.htm -->
                      <commandlineArgs>
                         -jar "${custom.ecjJarPath}"
+                        ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
                         -encoding ${project.build.sourceEncoding}
-                        ${custom.compileBootClasspathOption}
-                        "${custom.compileBootClasspath}"
                         -g<!-- include debug info -->
                         -parameters<!-- generate method parameters attribute
                           TODO enabling this option breaks
@@ -960,9 +920,8 @@
                      <classpathScope>test</classpathScope>
                      <commandlineArgs>
                         -jar "${custom.ecjJarPath}"
-                        ${custom.testCompileBootClasspathOption} "${custom.testCompileBootClasspath}"
-                        -encoding
-                        ${project.build.sourceEncoding}
+                        ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
+                        -encoding ${project.build.sourceEncoding}
                         -g<!-- include debug info -->
                         -parameters<!-- generate method parameters attribute -->
                         -genericsignature<!-- generate generic signature for lambda expressions -->
@@ -970,12 +929,13 @@
                         -time<!-- display speed information. -->
                         -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.testOutputDirectory}"
-                        -source ${java.version.unit-tests}
-                        -target ${java.version.unit-tests}
-                        -cp
-                        "${custom.testClasspathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
-                        ${custom.ecjTestSourcePaths}
+                        -source ${java.version}
+                        -target ${java.version}
+                        -cp "${custom.test.classpathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
+                        ${custom.ecjSourcePaths}
                      </commandlineArgs>
+                     <toolchain>
+                     </toolchain>
                   </configuration>
                </execution>
             </executions>
@@ -1267,8 +1227,8 @@
                      <configuration>
                         <toolchains>
                            <jdk>
-                              <version>${java.version.integration-tests}</version>
-                              <vendor>${java.vendor.integration-tests}</vendor>
+                              <version>${java.version.verify}</version>
+                              <vendor>${java.vendor.verify}</vendor>
                            </jdk>
                         </toolchains>
                      </configuration>
