@@ -128,6 +128,8 @@
 
       <!-- https://code.revelc.net/formatter-maven-plugin/validate-mojo.html#optional-parameters -->
       <formatter.skip>true</formatter.skip>
+      <formatter.lineending>AUTO</formatter.lineending>
+      <formatter.validate.lineending>${formatter.lineending}</formatter.validate.lineending>
       <formatter.validate.skip>false</formatter.validate.skip>
       <formatter.css.skip>true</formatter.css.skip>
       <formatter.html.skip>true</formatter.html.skip>
@@ -866,6 +868,7 @@
                   </goals>
                   <configuration>
                      <skipFormatting>${formatter.skip}</skipFormatting>
+                     <lineEnding>${formatter.lineending}</lineEnding>
                   </configuration>
                </execution>
                <execution>
@@ -877,6 +880,7 @@
                   </goals>
                   <configuration>
                      <skipFormatting>${formatter.validate.skip}</skipFormatting>
+                     <lineEnding>${formatter.validate.lineending}</lineEnding>
                   </configuration>
                </execution>
             </executions>
