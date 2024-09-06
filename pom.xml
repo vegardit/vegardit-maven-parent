@@ -269,7 +269,11 @@
             // not using project.properties, see https://github.com/groovy/GMavenPlus/issues/72
             def javaVersion = getProjectProp("java.version")
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"] /* * loading/locating eclipse Java compiler artifact
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
+
+
+            /*
+             * loading/locating eclipse Java compiler artifact
              */
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
@@ -278,6 +282,7 @@
                .setRemoteRepositories(project.remoteArtifactRepositories)
             ).artifacts[0]
             setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath)
+
 
             /*
              * determine bootclasspath for compilation of src/main/java
