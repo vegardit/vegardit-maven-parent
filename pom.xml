@@ -31,7 +31,7 @@
       <license>
          <name>Apache License 2.0</name>
          <distribution>repo</distribution>
-         <url>https://spdx.org/licenses/Apache-2.0.html</url>
+         <url>https://spdx.org/licenses/Apache-2.0</url>
       </license>
    </licenses>
 
@@ -262,7 +262,10 @@
 
             def javaVersion = project.properties["java.version"]
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"] /* * loading/locating eclipse Java compiler artifact
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
+
+            /*
+             * loading/locating eclipse Java compiler artifact
              */
             def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
