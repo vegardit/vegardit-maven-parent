@@ -174,87 +174,91 @@
           * skip this script if run via m2eclipse
           */
          if(System.getProperty("eclipse.application") != null)
-            return
+            return;
 
          /*
           * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
           */
-         session.systemProperties["buildtime.output.log"] = "true"
+         session.systemProperties["buildtime.output.log"] = "true";
 
 
-         def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver")
-         def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory")
-         def getProjectProp = {String name -> // workaround for https://github.com/groovy/GMavenPlus/issues/72
-            def value = session.userProperties[name] ? session.userProperties[name] : project.properties[name]
-            log.info("Got project property [$name] '${value}'")
-            return value
-         }
+         def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver");
+         def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory");
+         def getProjectProp = { String name -> /* workaround for https://github.com/groovy/GMavenPlus/issues/72 */
+            def value = session.userProperties[name] ? session.userProperties[name] : project.properties[name];
+            log.info("Got project property [$name] '${value}'");
+            return value;
+         };
          def setProjectProp = { String name, String value ->
-            project.properties[name] = value
-            log.info("Set project property [$name] '${project.properties[name]}'")
-         }
+            project.properties[name] = value;
+            log.info("Set project property [$name] '${project.properties[name]}'");
+         };
 
          if(project.parent != null) {
             /*
              * workaround for https://issues.apache.org/jira/projects/MRELEASE/issues/MRELEASE-399
              */
-            log.info("=== PARENT-VERSION-MODIFIER: START ===")
+            log.info("=== PARENT-VERSION-MODIFIER: START ===");
 
-            def projectParentVersionRaw = "${project.parent.version}"
-            def projectParentVersionResolved  = project.parent.version
-            def pomXmlReleaseBackupFile = new File(project.basedir, "pom.xml.releaseBackup")
+            def projectParentVersionRaw = "${project.parent.version}";
+            def projectParentVersionResolved  = project.parent.version;
+            def pomXmlReleaseBackupFile = new File(project.basedir, "pom.xml.releaseBackup");
 
-            log.info("project.basedir:               " + project.basedir)
-            log.info("project.version:               " + project.version)
-            log.info("project.parent.version:        " + projectParentVersionRaw + " (raw) / " + projectParentVersionResolved + " (resolved)")
-            log.info("pom.xml.releaseBackup exists:  " + pomXmlReleaseBackupFile.exists())
+            log.info("project.basedir:               " + project.basedir);
+            log.info("project.version:               " + project.version);
+            log.info("project.parent.version:        " + projectParentVersionRaw + " (raw) / " + projectParentVersionResolved + " (resolved)");
+            log.info("pom.xml.releaseBackup exists:  " + pomXmlReleaseBackupFile.exists());
 
-            def isBeforeReleasePomCommit      = !project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists()
-            def isBeforeNextSnapshotPomCommit =  project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists()
+            def isBeforeReleasePomCommit      = !project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists();
+            def isBeforeNextSnapshotPomCommit =  project.version.endsWith("-SNAPSHOT") && pomXmlReleaseBackupFile.exists();
 
-            log.info("isBeforeReleasePomCommit:      " + isBeforeReleasePomCommit)
-            log.info("isBeforeNextSnapshotPomCommit: " + isBeforeNextSnapshotPomCommit)
+            log.info("isBeforeReleasePomCommit:      " + isBeforeReleasePomCommit);
+            log.info("isBeforeNextSnapshotPomCommit: " + isBeforeNextSnapshotPomCommit);
 
-            def newParentVersion = null
+            def newParentVersion = null;
 
             if(isBeforeReleasePomCommit) {
-               // this code block is for invocation via <preparationGoals>clean verify</preparationGoals>
-               // --> we are working on the release POM before commit
-               log.info("Processing release pom before commit...")
+               /*
+                * this code block is for invocation via <preparationGoals>clean verify</preparationGoals>
+                *  --> we are working on the release POM before commit
+                */
+               log.info("Processing release pom before commit...");
                if(projectParentVersionRaw in ["RELEASE", "LATEST"]) {
-                  newParentVersion = projectParentVersionResolved
+                  newParentVersion = projectParentVersionResolved;
                }
             } else if(isBeforeNextSnapshotPomCommit) {
-               // this code block is for invocation via <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
-               // --> we are working on the next development snapshot POM before commit
-               log.info("Processing next snapshot pom commit...")
-               def oldPomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomXmlReleaseBackupFile)).documentElement
+               /*
+                * this code block is for invocation via <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals>
+                * --> we are working on the next development snapshot POM before commit
+                */
+               log.info("Processing next snapshot pom commit...");
+               def oldPomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomXmlReleaseBackupFile)).documentElement;
                use(groovy.xml.dom.DOMCategory) {
-                  oldPomParentVersion = oldPomRoot.parent.version[0].text()
+                  oldPomParentVersion = oldPomRoot.parent.version[0].text();
                }
                if(projectParentVersionRaw != oldPomParentVersion && oldPomParentVersion in ["RELEASE", "LATEST"]) {
-                  newParentVersion = oldPomParentVersion
+                  newParentVersion = oldPomParentVersion;
                }
             }
 
             if(newParentVersion) {
-               log.info("Action: Changing <parent><version> in pom.xml to: " + newParentVersion)
-               def pomFile = new File(project.basedir, "pom.xml")
-               def pomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomFile)).documentElement
+               log.info("Action: Changing <parent><version> in pom.xml to: " + newParentVersion);
+               def pomFile = new File(project.basedir, "pom.xml");
+               def pomRoot = groovy.xml.DOMBuilder.parse(new FileReader(pomFile)).documentElement;
                use(groovy.xml.dom.DOMCategory) {
-                  pomRoot.parent.version[0].value = newParentVersion
+                  pomRoot.parent.version[0].value = newParentVersion;
                }
-               xmlBadEndings = groovy.xml.XmlUtil.serialize(pomRoot)
-               xmlLinuxEndings = xmlBadEndings.replaceAll(/\r?\n/,"\n")
-               xml = xmlLinuxEndings.replace("\n", System.getProperty("line.separator"))
-               pomFile.write(xml)
+               xmlBadEndings = groovy.xml.XmlUtil.serialize(pomRoot);
+               xmlLinuxEndings = xmlBadEndings.replaceAll(/\r?\n/,"\n");
+               xml = xmlLinuxEndings.replace("\n", System.getProperty("line.separator"));
+               pomFile.write(xml);
             } else {
-               log.info("Action: none")
+               log.info("Action: none");
             }
 
-            log.info("=== PARENT-VERSION-MODIFIER: END ===")
+            log.info("=== PARENT-VERSION-MODIFIER: END ===");
          } else {
-            log.debug("=== PARENT-VERSION-MODIFIER: SKIPPED ===")
+            log.debug("=== PARENT-VERSION-MODIFIER: SKIPPED ===");
          }
 
 
@@ -263,28 +267,28 @@
           */
          def isJavaCompilable = project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"]
            && !project.compileSourceRoots.isEmpty()
-           && new File(project.compileSourceRoots[0]).exists()
-         setProjectProp("custom.noJavaArtifact", isJavaCompilable ? "false" : "true")
-         setProjectProp("skip.jacoco", isJavaCompilable ? "false" : "true")
+           && new File(project.compileSourceRoots[0]).exists();
+         setProjectProp("custom.noJavaArtifact", isJavaCompilable ? "false" : "true");
+         setProjectProp("skip.jacoco", isJavaCompilable ? "false" : "true");
 
          if(isJavaCompilable) {
             if(project.version.endsWith("-SNAPSHOT")) {
-               setProjectProp("maven.javadoc.skip", "true")
+               setProjectProp("maven.javadoc.skip", "true");
             }
 
             /*
              * loading/locating eclipse Java compiler artifact
              */
-            def javaVersion = getProjectProp("java.version")
-            def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion)
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]
-            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null)
+            def javaVersion = getProjectProp("java.version");
+            def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
             def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                .setArtifact(ecjArtifactMeta)
                .setLocalRepository(session.localRepository)
                .setRemoteRepositories(project.remoteArtifactRepositories)
-            ).artifacts[0]
-            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath)
+            ).artifacts[0];
+            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
 
 
             /*
@@ -294,16 +298,16 @@
                "version": javaVersion,
                "vendor": getProjectProp("java.vendor")
             ]
-            // https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain
-            def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec)
+            /* https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain */
+            def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec);
             if(!compileJDKs)
-                throw new RuntimeException("No toolchain found with specification $compileJDKSpec")
-            def compileJDK = compileJDKs[0]
+                throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
+            def compileJDK = compileJDKs[0];
             if(new File("${compileJDK.javaHome}/jmods").exists()) {
-              setProjectProp("custom.compileBootClasspathOption", "--module-path")
-              setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jmods")
+              setProjectProp("custom.compileBootClasspathOption", "--module-path");
+              setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jmods");
             } else {
-               setProjectProp("custom.compileBootClasspathOption", "-bootclasspath")
+               setProjectProp("custom.compileBootClasspathOption", "-bootclasspath");
                setProjectProp("custom.compileBootClasspath", [
                   "${compileJDK.javaHome}/jre/lib/resources.jar",
                   "${compileJDK.javaHome}/jre/lib/rt.jar",
@@ -312,36 +316,35 @@
                   "${compileJDK.javaHome}/jre/lib/charsets.jar",
                   "${compileJDK.javaHome}/jre/lib/jfr.jar",
                   "${compileJDK.javaHome}/jre/lib/classes"
-               ].join(File.pathSeparator))
+               ].join(File.pathSeparator));
             }
-            def compileClasspath = new LinkedHashSet<String>()
-            compileClasspath.addAll(project.compileClasspathElements)
-            compileClasspath.addAll(project.runtimeClasspathElements)
-            setProjectProp("custom.compileClasspathElements", compileClasspath.join(File.pathSeparator))
+            def compileClasspath = new LinkedHashSet<String>();
+            compileClasspath.addAll(project.compileClasspathElements);
+            compileClasspath.addAll(project.runtimeClasspathElements);
+            setProjectProp("custom.compileClasspathElements", compileClasspath.join(File.pathSeparator));
 
 
             /*
              * determine if the artifact contains Java test sources
              */
-            def isTestable = false
+            def isTestable = false;
             if(new File(project.build.testSourceDirectory).exists())
-               new File(project.build.testSourceDirectory).traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it ->
-                  isTestable = true
-               }
+               new File(project.build.testSourceDirectory)
+                  .traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it -> isTestable = true };
 
             if(isTestable) {
-               setProjectProp("custom.noJavaTests", "false")
+               setProjectProp("custom.noJavaTests", "false");
 
-               compileClasspath.addAll(project.testClasspathElements)
-               setProjectProp("custom.test.classpathElements", compileClasspath.join(File.pathSeparator))
+               compileClasspath.addAll(project.testClasspathElements);
+               setProjectProp("custom.test.classpathElements", compileClasspath.join(File.pathSeparator));
             } else {
-               setProjectProp("custom.noJavaTests", "true")
+               setProjectProp("custom.noJavaTests", "true");
             }
 
-         } else {
-            setProjectProp("custom.noJavaTests", "true")
-            setProjectProp("maven.javadoc.skip", "true")
-         } // isJavaCompilable
+         } else /* if(!isJavaCompilable)*/ {
+            setProjectProp("custom.noJavaTests", "true");
+            setProjectProp("maven.javadoc.skip", "true");
+         }
 
 
          /*
@@ -349,9 +352,9 @@
           */
          if(!project.properties.containsKey("custom.manifestTemplateFile")) {
             if(new File(project.basedir, "src/main/resources/META-INF/MANIFEST.MF").exists())
-               setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF")
+               setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF");
             else if(new File(project.basedir, "src/main/java/META-INF/MANIFEST.MF").exists())
-               setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF")
+               setProjectProp("custom.manifestTemplateFile", "target/classes/META-INF/MANIFEST.MF");
          }
 
 
@@ -360,29 +363,30 @@
           */
          if(!project.properties.containsKey("checkstyle.config.path")) {
             if(new File("src/etc/checkstyle.xml").exists()) {
-               setProjectProp("checkstyle.config.path", "src/etc/checkstyle.xml")
+               setProjectProp("checkstyle.config.path", "src/etc/checkstyle.xml");
             } else {
-               def checkstyleConfigArtifactMeta = null
+               def checkstyleConfigArtifactMeta = null;
                if(project.properties.containsKey("checkstyle.config.artifact")) {
-                 def chunks = project.properties["checkstyle.config.artifact"].split(":")
-                 if(chunks.length == 4)
-                   checkstyleConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3])
-                 else
-                   checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4])
-               } else {
-                 def root = project
-                 while(root.artifactId != "vegardit-maven-parent") {
-                   root = root.parent
+                 def chunks = project.properties["checkstyle.config.artifact"].split(":");
+                 if(chunks.length == 4) {
+                   checkstyleConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3]);
+                 } else {
+                   checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4]);
                  }
-                 checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "checkstyle")
+               } else {
+                 def root = project;
+                 while(root.artifactId != "vegardit-maven-parent") {
+                   root = root.parent;
+                 }
+                 checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "checkstyle");
                }
                def checkstyleConfigArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
-                  .setArtifact(checkstyleConfigArtifactMeta)
-                  .setLocalRepository(session.localRepository)
-                  .setRemoteRepositories(project.remoteArtifactRepositories)
-               ).artifacts[0]
+                     .setArtifact(checkstyleConfigArtifactMeta)
+                     .setLocalRepository(session.localRepository)
+                     .setRemoteRepositories(project.remoteArtifactRepositories)
+               ).artifacts[0];
                if(checkstyleConfigArtifact != null) {
-                 setProjectProp("checkstyle.config.path", checkstyleConfigArtifact.file.absolutePath)
+                 setProjectProp("checkstyle.config.path", checkstyleConfigArtifact.file.absolutePath);
                }
             }
          }
@@ -393,29 +397,29 @@
           */
          if(!project.properties.containsKey("eclipse-formatter.config.path")) {
             if(new File("src/etc/eclipse-formatter.xml").exists()) {
-               setProjectProp("eclipse-formatter.config.path", "src/etc/eclipse-formatter.xml")
+               setProjectProp("eclipse-formatter.config.path", "src/etc/eclipse-formatter.xml");
             } else {
-               def eclipseFormatterConfigArtifactMeta = null
+               def eclipseFormatterConfigArtifactMeta = null;
                if(project.properties.containsKey("eclipse-formatter.config.artifact")) {
-                 def chunks = project.properties["eclipse-formatter.config.artifact"].split(":")
-                 if(chunks.length == 4)
-                   eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3])
-                 else
-                   eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4])
+                  def chunks = project.properties["eclipse-formatter.config.artifact"].split(":");
+                  if(chunks.length == 4)
+                     eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3]);
+                  else
+                     eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4]);
                } else {
-                 def root = project
-                 while(root.artifactId != "vegardit-maven-parent") {
-                   root = root.parent
-                 }
-                 eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "eclipse-formatter")
+                  def root = project;
+                  while(root.artifactId != "vegardit-maven-parent") {
+                      root = root.parent;
+                  }
+                  eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "eclipse-formatter");
                }
                def eclipseFormatterConfigArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
-                  .setArtifact(eclipseFormatterConfigArtifactMeta)
-                  .setLocalRepository(session.localRepository)
-                  .setRemoteRepositories(project.remoteArtifactRepositories)
-               ).artifacts[0]
+                     .setArtifact(eclipseFormatterConfigArtifactMeta)
+                     .setLocalRepository(session.localRepository)
+                     .setRemoteRepositories(project.remoteArtifactRepositories)
+               ).artifacts[0];
                if(eclipseFormatterConfigArtifact != null) {
-                 setProjectProp("eclipse-formatter.config.path", eclipseFormatterConfigArtifact.file.absolutePath)
+                  setProjectProp("eclipse-formatter.config.path", eclipseFormatterConfigArtifact.file.absolutePath);
                }
             }
          }
@@ -426,12 +430,12 @@
             return;
 
          def setProjectProp = { String name, String value ->
-            project.properties[name] = value
-            log.info("Set project property [$name] '${project.properties[name]}'")
-         }
+            project.properties[name] = value;
+            log.info("Set project property [$name] '${project.properties[name]}'");
+         };
 
-         // determine source directories, not doing this in onInitialize more source roots may have been registerd by other plugins
-         setProjectProp("custom.ecjSourcePaths", '"' + project.compileSourceRoots.join('" "') + '"')
+         /* determine source directories, not doing this in onInitialize more source roots may have been registerd by other plugins */
+         setProjectProp("custom.ecjSourcePaths", '"' + project.compileSourceRoots.join('" "') + '"');
       ]]></groovy.script.onProcessResources>
    </properties>
 
@@ -1955,35 +1959,35 @@
                            <scripts>
                               <script><![CDATA[
                               def setProjectProp = { String name, String value ->
-                                 project.properties[name] = value
+                                 project.properties[name] = value;
                                  log.info("Set project property [$name] '${project.properties[name]}'");
                               }
 
-                              // disable deployment via site-maven-plugin for non-SNAPSHOT builds
-                              if(!project.version.endsWith("-SNAPSHOT"))
-                                 setProjectProp("github.site.skip", "true")
-                              else {
-                                 def env = System.getenv()
-                                 def repoSlug = ''
+                              /* disable deployment via site-maven-plugin for non-SNAPSHOT builds */
+                              if(!project.version.endsWith("-SNAPSHOT")) {
+                                 setProjectProp("github.site.skip", "true");
+                              } else {
+                                 def env = System.getenv();
+                                 def repoSlug = '';
                                  if(env["TRAVIS"]) {
-                                    repoSlug = env["TRAVIS_REPO_SLUG"]
-                                    setProjectProp("ci.name", "Travis CI")
-                                    setProjectProp("ci.build_number", env.TRAVIS_JOB_NUMBER)
+                                    repoSlug = env["TRAVIS_REPO_SLUG"];
+                                    setProjectProp("ci.name", "Travis CI");
+                                    setProjectProp("ci.build_number", env.TRAVIS_JOB_NUMBER);
                                  } else if(env["GITHUB_ACTIONS"]) {
-                                    repoSlug = env["GITHUB_REPOSITORY"]
-                                    setProjectProp("ci.name", "GitHub Actions")
-                                    setProjectProp("ci.build_number", env.GITHUB_RUN_ID + "#" + env.GITHUB_RUN_NUMBER)
+                                    repoSlug = env["GITHUB_REPOSITORY"];
+                                    setProjectProp("ci.name", "GitHub Actions");
+                                    setProjectProp("ci.build_number", env.GITHUB_RUN_ID + "#" + env.GITHUB_RUN_NUMBER);
                                  }
 
                                  if(repoSlug) {
                                     if(!project.properties.containsKey("github.site.repositoryOwner"))
-                                       setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")))
+                                       setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")));
                                     if(!project.properties.containsKey("github.site.repositoryName"))
-                                       setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1))
+                                       setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1));
                                     if(!project.properties.containsKey("github.site.branch"))
-                                       setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo")
+                                       setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo");
                                  } else {
-                                    setProjectProp("github.site.skip", "true")
+                                    setProjectProp("github.site.skip", "true");
                                  }
                                }
                               ]]></script>
