@@ -181,7 +181,6 @@ jobs:
 
     - name: "Cache: Update"
       uses: actions/cache/save@v4  # https://github.com/actions/cache/blob/main/save/README.md
-      if: ${{ always() && !cancelled() }}
       with:
         path: |
           ~/.m2/bin

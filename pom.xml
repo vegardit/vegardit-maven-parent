@@ -94,8 +94,8 @@
       <java.version.unit-tests>${java.version}</java.version.unit-tests>
       <java.vendor.unit-tests>${java.vendor}</java.vendor.unit-tests>
 
-      <java.version.integration-tests>${java.version}</java.version.integration-tests>
-      <java.vendor.integration-tests>${java.vendor}</java.vendor.integration-tests>
+      <java.version.integration-tests>${java.version.unit-tests}</java.version.integration-tests>
+      <java.vendor.integration-tests>${java.vendor.unit-tests}</java.vendor.integration-tests>
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
