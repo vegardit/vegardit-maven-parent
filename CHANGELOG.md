@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [5.0.0] - 2024-09-06
+
 ### Changed
-- use the same JDK for compiling unit tests as for library code
+- always use the same JDK for compiling unit tests as for library code (only allow changing of JDK for running tests)
 - by default use the same Java version for running integration tests as for unit tests
 
 ### Added
