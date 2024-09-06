@@ -73,6 +73,12 @@ MAVEN_CLI_OPTS="-e -U --batch-mode --show-version -s .ci/maven-settings.xml -t .
 if [[ -n ${GITEA_ACTIONS:-} || (-n ${CI:-} && -z ${ACT:-}) ]]; then # if running on a remote CI but not on local nektos/act runner
   MAVEN_CLI_OPTS+=" --no-transfer-progress"
 fi
+if [[ -n ${JAVA_VERSION:-} ]]; then
+  MAVEN_CLI_OPTS+=" -Djava.version=$JAVA_VERSION"
+fi
+if [[ -n ${ACT:-} ]]; then
+  MAVEN_CLI_OPTS+=" -Dformatter.validate.lineending=KEEP"
+fi
 echo "  -> MAVEN_CLI_OPTS: $MAVEN_CLI_OPTS"
 
 
