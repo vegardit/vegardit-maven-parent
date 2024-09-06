@@ -127,6 +127,7 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} && ${MAY_CREATE_RELE
       -DreleaseVersion=${POM_RELEASE_VERSION} \
       -DdevelopmentVersion=${nextDevelopmentVersion} \
       help:active-profiles clean release:clean release:prepare release:perform \
+      | grep -v -e "\[INFO\] Download.* from repository-restored-from-cache" `# suppress download messages from repo restored from cache ` \
       | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
 else
    echo
@@ -140,5 +141,6 @@ else
    fi
    ./mvnw $MAVEN_CLI_OPTS "$@" \
       help:active-profiles clean $mavenGoal \
+      | grep -v -e "\[INFO\] Download.* from repository-restored-from-cache" `# suppress download messages from repo restored from cache ` \
       | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
 fi

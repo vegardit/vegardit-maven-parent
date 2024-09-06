@@ -104,7 +104,6 @@ jobs:
 
 
     - name: "Cache: Maven Binary"
-      if: ${{ !env.ACT }}  # https://github.com/nektos/act#skipping-steps
       uses: actions/cache@v4  # https://github.com/actions/cache/blob/main/restore/README.md
       with:
         path: |
@@ -114,7 +113,6 @@ jobs:
 
     - name: "Cache: Restore"
       id: cache-restore
-      if: ${{ !env.ACT }}  # https://github.com/nektos/act#skipping-steps
       uses: actions/cache/restore@v4  # https://github.com/actions/cache/blob/main/restore/README.md
       with:
         # IMPORTANT: path must have exactly the same value as in the cache save step otherwise restore will fail with cache key not found 
@@ -131,14 +129,14 @@ jobs:
 
 
     - name: "Move Restored Repo"
-      if: ${{ steps.cache-restore.outputs.cache-hit && !env.ACT }}
+      if: ${{ steps.cache-restore.outputs.cache-hit }}
       run: |
          RESTORED_REPO_PATH=$HOME/.m2/repository-restored
          mv -v ~/.m2/repository $RESTORED_REPO_PATH
          echo "RESTORED_REPO_PATH=$RESTORED_REPO_PATH" >> $GITHUB_ENV
 
 
-    - name: Test with Maven
+    - name: "Test with Maven 🔨"
       if: ${{ github.ref_name != 'main' || env.ACT }}
       env:
         GITHUB_USER: ${{ github.actor }}
@@ -183,7 +181,7 @@ jobs:
 
     - name: "Cache: Update"
       uses: actions/cache/save@v4  # https://github.com/actions/cache/blob/main/save/README.md
-      if: ${{ always() && !cancelled() && !env.ACT }} # save cache even fails
+      if: ${{ always() && !cancelled() }}
       with:
         path: |
           ~/.m2/bin
