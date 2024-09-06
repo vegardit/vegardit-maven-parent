@@ -61,7 +61,7 @@
 *.py         text
 *.python     text
 *.sql        text
-
+mvnw         text eol=lf
 
 # Archives
 *.7z         binary
