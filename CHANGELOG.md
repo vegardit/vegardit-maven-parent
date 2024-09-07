@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - set failIfNoTests to `true` by default
 - introduce failIfNoITests with default `false`
 
+### Fix
+- test classes are not compiled
+
 
 ## [5.0.0] - 2024-09-06
 

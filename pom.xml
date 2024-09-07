@@ -437,6 +437,7 @@
 
          /* determine source directories, not doing this in onInitialize more source roots may have been registerd by other plugins */
          setProjectProp("custom.ecjSourcePaths", '"' + project.compileSourceRoots.join('" "') + '"');
+         setProjectProp("custom.test.ecjSourcePaths", '"' + project.testCompileSourceRoots.join('" "') + '"');
       ]]></groovy.script.onProcessResources>
    </properties>
 
@@ -937,7 +938,7 @@
                         -source ${java.version}
                         -target ${java.version}
                         -cp "${custom.test.classpathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
-                        ${custom.ecjSourcePaths}
+                        ${custom.test.ecjSourcePaths}
                      </commandlineArgs>
                      <toolchain>
                      </toolchain>
