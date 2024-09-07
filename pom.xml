@@ -174,7 +174,7 @@
       <skip.report.maven-project-info-reports-plugin>false</skip.report.maven-project-info-reports-plugin>
       <skip.report.taglist-maven-plugin>false</skip.report.taglist-maven-plugin>
 
-      <github.site.skip>${maven.deploy.skip}</github.site.skip>
+      <github.site.branch>mvn-snapshots-repo</github.site.branch>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
@@ -1950,18 +1950,11 @@
          <build>
             <plugins>
                <plugin>
-                  <artifactId>maven-deploy-plugin</artifactId>
-                  <configuration>
-                     <altSnapshotDeploymentRepository>temp-snapshots-repo::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
-                  </configuration>
-               </plugin>
-
-               <plugin>
                   <groupId>org.codehaus.gmavenplus</groupId>
                   <artifactId>gmavenplus-plugin</artifactId>
                   <executions>
                      <execution>
-                        <id>configure-github-site-maven-plugin@initialize</id>
+                        <id>configure-deploy-to-github-branch@install</id>
                         <phase>install</phase>
                         <goals>
                            <goal>execute</goal>
@@ -1970,13 +1963,18 @@
                            <skipScriptExecution>${github.site.skip}</skipScriptExecution>
                            <scripts>
                               <script><![CDATA[
+                              def getProjectProp = { String name -> /* workaround for https://github.com/groovy/GMavenPlus/issues/72 */
+                                 def value = session.userProperties[name] ? session.userProperties[name] : project.properties[name];
+                                 log.info("Got project property [$name] '${value}'");
+                                 return value;
+                              };
                               def setProjectProp = { String name, String value ->
                                  project.properties[name] = value;
                                  log.info("Set project property [$name] '${project.properties[name]}'");
                               }
 
-                              /* disable deployment via site-maven-plugin for non-SNAPSHOT builds */
-                              if(!project.version.endsWith("-SNAPSHOT")) {
+                              /* disable deployment via maven-scm-publish-plugin for non-SNAPSHOT builds */
+                              if(getProjectProp("maven.deploy.skip") == "true" || !project.version.endsWith("-SNAPSHOT")) {
                                  setProjectProp("github.site.skip", "true");
                               } else {
                                  def env = System.getenv();
@@ -1992,12 +1990,10 @@
                                  }
 
                                  if(repoSlug) {
-                                    if(!project.properties.containsKey("github.site.repositoryOwner"))
+                                    if(!getProjectProp("github.site.repositoryOwner"))
                                        setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")));
-                                    if(!project.properties.containsKey("github.site.repositoryName"))
+                                    if(!getProjectProp("github.site.repositoryName"))
                                        setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1));
-                                    if(!project.properties.containsKey("github.site.branch"))
-                                       setProjectProp("github.site.branch", "refs/heads/mvn-snapshots-repo");
                                  } else {
                                     setProjectProp("github.site.skip", "true");
                                  }
@@ -2010,35 +2006,35 @@
                </plugin>
 
                <plugin>
-                  <!-- https://github.com/github/maven-plugins -->
-                  <groupId>com.github.github</groupId>
-                  <artifactId>site-maven-plugin</artifactId>
-                  <version>0.12</version>
+                  <artifactId>maven-deploy-plugin</artifactId>
+                  <configuration>
+                     <skip>${maven.deploy.skip}</skip>
+                     <altSnapshotDeploymentRepository>temp-snapshots-repo::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
+                  </configuration>
+               </plugin>
+
+               <plugin>
+                  <!-- https://github.com/apache/maven-scm-publish-plugin -->
+                  <artifactId>maven-scm-publish-plugin</artifactId>
+                  <version>3.3.0</version>
                   <executions>
                      <execution>
-                        <id>deploy</id>
-                        <goals>
-                           <goal>site</goal>
-                        </goals>
+                        <id>deploy-to-github-branch@deploy</id>
                         <phase>deploy</phase>
+                        <goals>
+                           <goal>publish-scm</goal>
+                        </goals>
                         <configuration>
-                           <skip>${github.site.skip}</skip>
-                           <message>Maven artifacts for ${project.version} (${ci.name} build ${ci.build_number})</message>
-                           <noJekyll>true</noJekyll>
-                           <outputDirectory>${project.build.directory}/mvn-snapshots-repo</outputDirectory>
-                           <branch>${github.site.branch}</branch>
-                           <merge>true</merge>
-                           <repositoryOwner>${github.site.repositoryOwner}</repositoryOwner>
-                           <repositoryName>${github.site.repositoryName}</repositoryName>
-                           <includes>
-                              <include>**/*</include>
-                           </includes>
-
+                           <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
+                           <skipDeployment>${github.site.skip}</skipDeployment>
+                           <checkinComment>Maven site for ${project.version} ${github.site.skip} (${ci.name} build ${ci.build_number})</checkinComment>
+                           <pubScmUrl>scm:git:https://github.com/${github.site.repositoryOwner}/${github.site.repositoryName}.git</pubScmUrl>
+                           <scmBranch>${github.site.branch}</scmBranch>
+                           <content>${project.build.directory}/mvn-snapshots-repo</content>
                            <!-- server id as set in settings.xml that contains the credentials -->
-
-                           <server>${github.site.server}</server>
+                           <serverId>${github.site.server}</serverId>
                            <!--
-                              if an access token is used it needs repo.repo_public and user.user:email permissions otherwise
+                              if an access token is used it may need repo.repo_public and user.user:email permissions otherwise
                               "Error retrieving user info: Not Found (404)" occurs, see https://github.com/github/maven-plugins/issues/100
                            -->
                         </configuration>
