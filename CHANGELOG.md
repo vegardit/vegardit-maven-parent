@@ -9,12 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-### Changed
-- set failIfNoTests to `true` by default
-- introduce failIfNoITests with default `false`
+## [5.1.0] - 2024-09-07
 
 ### Fix
 - test classes are not compiled
+
+### Changed
+- set failIfNoTests to `true` by default
+- introduce failIfNoITests with default `false`
+- replaced deprecated **com.github.github:site-maven-plugin** with **maven-scm-publish-plugin**
 
 
 ## [5.0.0] - 2024-09-06
