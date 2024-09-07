@@ -141,6 +141,9 @@
       <formatter.json.skip>true</formatter.json.skip>
       <formatter.xml.skip>true</formatter.xml.skip>
 
+      <failIfNoTests>true</failIfNoTests>
+      <failIfNoITests>false</failIfNoITests>
+
       <maven-bundle-plugin.niceManifest>true</maven-bundle-plugin.niceManifest>
       <maven-bundle-plugin.private-package>*.internal.*</maven-bundle-plugin.private-package>
       <maven-bundle-plugin.import-package>*</maven-bundle-plugin.import-package>
@@ -1507,6 +1510,7 @@
                   <!-- -Djava.rmi.server.hostname=localhost see: https://stackoverflow.com/questions/10494095/java-visualvm-hangs-connecting-to-locally-process-launched-from-eclipse#36192913 -->
                   <!-- -Djdk.net.URLClassPath.disableClassPathURLCheck see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 -->
                   <!-- -Dcom.ibm.jsse2.overrideDefaultTLS=true see: https://www.ibm.com/support/knowledgecenter/SSYKE2_8.0.0/com.ibm.java.security.component.80.doc/security-component/jsse2Docs/matchsslcontext_tls.html#matchsslcontext_tls -->
+                  <failIfNoTests>${failIfNoTests}</failIfNoTests>
                   <excludes>
                      <exclude>**/Abstract*</exclude>
                      <exclude>**/*ITest.java</exclude>
@@ -1532,6 +1536,7 @@
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
                      ${jacoco.surefireAgent}
                   </argLine>
+                  <failIfNoTests>${failIfNoITests}</failIfNoTests>
                   <excludes>
                      <exclude>**/Abstract*</exclude>
                   </excludes>

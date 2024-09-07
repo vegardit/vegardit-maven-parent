@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Changed
+- set failIfNoTests to `true` by default
+- introduce failIfNoITests with default `false`
+
+
 ## [5.0.0] - 2024-09-06
 
 ### Changed
