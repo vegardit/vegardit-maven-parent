@@ -1586,10 +1586,6 @@
                   <notimestamp>true</notimestamp>
                   <failOnError>true</failOnError>
                   <validateLinks>false</validateLinks>
-                  <additionalOptions>
-                     <additionalOption>${custom.javadocOptionXdoclint}</additionalOption>
-                     <additionalOption>${custom.javadocOptionHtml5}</additionalOption>
-                  </additionalOptions>
                </configuration>
             </plugin>
 
