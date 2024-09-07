@@ -68,6 +68,9 @@
       <url>https://github.com/vegardit/vegardit-maven-parent/actions</url>
    </ciManagement>
 
+   <modules>
+      <module>src/test/project</module>
+   </modules>
 
    <properties>
       <!--
@@ -170,6 +173,8 @@
       <skip.report.maven-surefire-report-plugin>false</skip.report.maven-surefire-report-plugin>
       <skip.report.maven-project-info-reports-plugin>false</skip.report.maven-project-info-reports-plugin>
       <skip.report.taglist-maven-plugin>false</skip.report.taglist-maven-plugin>
+
+      <github.site.skip>${maven.deploy.skip}</github.site.skip>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
@@ -284,7 +289,9 @@
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                .setArtifact(ecjArtifactMeta)
                .setLocalRepository(session.localRepository)
                .setRemoteRepositories(project.remoteArtifactRepositories)
@@ -359,12 +366,16 @@
          }
 
 
+         /* in Maven 4: session.topLevelProject.basedir https://github.com/apache/maven/pull/1061 */
+         topdir = project.properties['maven.multiModuleProjectDirectory']
+
+
          /*
           * loading/locating checkstyle config
           */
          if(!project.properties.containsKey("checkstyle.config.path")) {
-            if(new File("src/etc/checkstyle.xml").exists()) {
-               setProjectProp("checkstyle.config.path", "src/etc/checkstyle.xml");
+            if(new File("$topdir/src/etc/checkstyle.xml").exists()) {
+               setProjectProp("checkstyle.config.path", "$topdir/src/etc/checkstyle.xml");
             } else {
                def checkstyleConfigArtifactMeta = null;
                if(project.properties.containsKey("checkstyle.config.artifact")) {
@@ -397,8 +408,8 @@
           * loading eclipse formatter config
           */
          if(!project.properties.containsKey("eclipse-formatter.config.path")) {
-            if(new File("src/etc/eclipse-formatter.xml").exists()) {
-               setProjectProp("eclipse-formatter.config.path", "src/etc/eclipse-formatter.xml");
+            if(new File("$topdir/src/etc/eclipse-formatter.xml").exists()) {
+               setProjectProp("eclipse-formatter.config.path", "$topdir/src/etc/eclipse-formatter.xml");
             } else {
                def eclipseFormatterConfigArtifactMeta = null;
                if(project.properties.containsKey("eclipse-formatter.config.artifact")) {
@@ -1960,6 +1971,7 @@
                            <goal>execute</goal>
                         </goals>
                         <configuration>
+                           <skipScriptExecution>${github.site.skip}</skipScriptExecution>
                            <scripts>
                               <script><![CDATA[
                               def setProjectProp = { String name, String value ->

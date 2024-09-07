@@ -37,25 +37,7 @@ echo "###################################################"
 echo "# Determining GIT branch......                    #"
 echo "###################################################"
 GIT_BRANCH=$(git branch --show-current)
-echo "  -> GIT Branch: $GIT_BRANCH"; echo
-
-
-echo
-echo "###################################################"
-echo "# Configuring JDK Class Data Sharing...           #"
-echo "###################################################"
-java_version=$(java -version 2>&1)
-echo "$java_version"
-# https://docs.oracle.com/javase/8/docs/technotes/guides/vm/class-data-sharing.html
-jdk_version_checksum=$(echo "$java_version" | md5sum | cut -f1 -d" ")
-if [[ ! -f $HOME/.xshare/$jdk_version_checksum ]]; then
-   echo "  -> Generating shared class data archive..."
-   mkdir -p $HOME/.xshare
-   java -Xshare:dump -XX:+UnlockDiagnosticVMOptions -XX:SharedArchiveFile=$HOME/.xshare/$jdk_version_checksum
-else
-   echo "  -> Reusing shared class data archive..."
-fi
-export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Xshare:on -XX:+UnlockDiagnosticVMOptions -XX:SharedArchiveFile=$HOME/.xshare/$jdk_version_checksum"
+echo "  -> GIT Branch: $GIT_BRANCH"
 
 
 echo
