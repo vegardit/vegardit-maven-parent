@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.vegardit.maven</groupId>
+  <artifactId>vegardit-maven-parent</artifactId>
+  <versioning>
+    <versions>
+      <version>5.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20240907125203</lastUpdated>
+  </versioning>
+</metadata>
