@@ -1,0 +1,1 @@
+# vegardit-maven-parent - Maven Snapshots Repo
