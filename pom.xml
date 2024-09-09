@@ -613,12 +613,13 @@
             <version>2.4.0</version>
             <executions>
                <execution>
-                  <id>check-thirdparty-licenses</id>
+                  <id>check-thirdparty-licenses@validate</id>
                   <phase>validate</phase>
                   <goals>
                      <goal>add-third-party</goal>
                   </goals>
                   <configuration>
+                  <thirdPartyFilename>META-INF/LICENSE.THIRD-PARTY.txt</thirdPartyFilename>
                      <skipAddThirdParty>${skip.license-maven-plugin.check-thirdparty-licenses}</skipAddThirdParty>
                      <sortArtifactByName>true</sortArtifactByName>
                      <failOnBlacklist>true</failOnBlacklist>
@@ -642,6 +643,20 @@
                         <excludedLicense>GNU General Public License (GPL) 2.0</excludedLicense>
                         <excludedLicense>GNU General Public License (GPL) 3.0</excludedLicense>
                      </excludedLicenses>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>add-thirdparty-licenses@generate-resources</id>
+                  <phase>generate-resources</phase>
+                  <goals>
+                     <goal>add-third-party</goal>
+                  </goals>
+                  <configuration>
+                     <force>true</force>
+                     <thirdPartyFilename>META-INF/LICENSE.THIRD-PARTY.txt</thirdPartyFilename>
+                     <skipAddThirdParty>false</skipAddThirdParty>
+                     <sortArtifactByName>true</sortArtifactByName>
+                     <includedScopes>compile,provided,runtime</includedScopes>
                   </configuration>
                </execution>
             </executions>
