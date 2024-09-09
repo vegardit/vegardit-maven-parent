@@ -1041,7 +1041,7 @@
                   </goals>
                   <configuration>
                      <destFile>${project.build.directory}/jacoco.exec</destFile>
-                     <propertyName>jacoco.surefireAgent</propertyName>
+                     <propertyName>jacoco.agent.surefireArgs</propertyName>
                   </configuration>
                </execution>
                <execution>
@@ -1063,7 +1063,7 @@
                   </goals>
                   <configuration>
                      <destFile>${project.build.directory}/jacoco-it.exec</destFile>
-                     <propertyName>jacoco.failsafeAgent</propertyName>
+                     <propertyName>jacoco.agent.failsafeArgs</propertyName>
                   </configuration>
                </execution>
                <execution>
@@ -1515,7 +1515,7 @@
                      -Djava.rmi.server.hostname=localhost
                      -Djdk.net.URLClassPath.disableClassPathURLCheck=true
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
-                     ${jacoco.surefireAgent}
+                     ${jacoco.agent.surefireArgs}
                   </argLine>
                   <!-- -Djava.rmi.server.hostname=localhost see: https://stackoverflow.com/questions/10494095/java-visualvm-hangs-connecting-to-locally-process-launched-from-eclipse#36192913 -->
                   <!-- -Djdk.net.URLClassPath.disableClassPathURLCheck see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 -->
@@ -1544,7 +1544,7 @@
                      -Djava.rmi.server.hostname=localhost
                      -Djdk.net.URLClassPath.disableClassPathURLCheck=true
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
-                     ${jacoco.surefireAgent}
+                     ${jacoco.agent.failsafeArgs}
                   </argLine>
                   <failIfNoTests>${failIfNoITests}</failIfNoTests>
                   <excludes>
@@ -2206,6 +2206,10 @@
          <properties>
             <!-- see "How do I add my web project classes to another project's classpath" https://wiki.eclipse.org/M2E-WTP_FAQ#How_do_I_add_my_web_project_classes_to_another_project.27s_classpath.3F -->
             <webClassifier />
+
+            <!-- prevents error "Reference to undefined variable jacoco.agent.surefireArgs" when using "Run As -> J-Unit Test" in Eclipse -->
+            <jacoco.agent.surefireArgs />
+            <jacoco.agent.failsafeArgs />
          </properties>
          <build>
             <pluginManagement>
