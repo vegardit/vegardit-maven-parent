@@ -3,30 +3,30 @@
   <groupId>com.vegardit.maven</groupId>
   <artifactId>vegardit-maven-parent</artifactId>
   <versioning>
-    <lastUpdated>20240907125203</lastUpdated>
+    <lastUpdated>20240910092023</lastUpdated>
     <snapshot>
-      <timestamp>20240907.125203</timestamp>
+      <timestamp>20240910.092023</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
     <snapshotVersions>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>5.0.1-20240907.125203-1</value>
-        <updated>20240907125203</updated>
+        <value>5.1.1-20240910.092023-1</value>
+        <updated>20240910092023</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>checkstyle</classifier>
         <extension>xml</extension>
-        <value>5.0.1-20240907.125203-1</value>
-        <updated>20240907125203</updated>
+        <value>5.1.1-20240910.092023-1</value>
+        <updated>20240910092023</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>eclipse-formatter</classifier>
         <extension>xml</extension>
-        <value>5.0.1-20240907.125203-1</value>
-        <updated>20240907125203</updated>
+        <value>5.1.1-20240910.092023-1</value>
+        <updated>20240910092023</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
-  <version>5.0.1-SNAPSHOT</version>
+  <version>5.1.1-SNAPSHOT</version>
 </metadata>

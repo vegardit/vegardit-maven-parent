@@ -15,7 +15,7 @@
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>5.0.1-SNAPSHOT</version>
+   <version>5.1.1-SNAPSHOT</version>
    <packaging>pom</packaging>
 
 
@@ -89,7 +89,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2024-09-06T21:15:46Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2024-09-07T15:08:08Z</project.build.outputTimestamp>
 
       <java.version>17</java.version>
       <java.vendor>default</java.vendor>
@@ -175,7 +175,6 @@
       <skip.report.taglist-maven-plugin>false</skip.report.taglist-maven-plugin>
 
       <github.site.branch>mvn-snapshots-repo</github.site.branch>
-      <github.site.skip>${maven.deploy.skip}</github.site.skip>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
       <groovy.script.onInitialize><![CDATA[
@@ -290,9 +289,7 @@
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
-            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
-            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                .setArtifact(ecjArtifactMeta)
                .setLocalRepository(session.localRepository)
                .setRemoteRepositories(project.remoteArtifactRepositories)
@@ -616,12 +613,13 @@
             <version>2.4.0</version>
             <executions>
                <execution>
-                  <id>check-thirdparty-licenses</id>
+                  <id>check-thirdparty-licenses@validate</id>
                   <phase>validate</phase>
                   <goals>
                      <goal>add-third-party</goal>
                   </goals>
                   <configuration>
+                  <thirdPartyFilename>META-INF/LICENSE.THIRD-PARTY.txt</thirdPartyFilename>
                      <skipAddThirdParty>${skip.license-maven-plugin.check-thirdparty-licenses}</skipAddThirdParty>
                      <sortArtifactByName>true</sortArtifactByName>
                      <failOnBlacklist>true</failOnBlacklist>
@@ -645,6 +643,20 @@
                         <excludedLicense>GNU General Public License (GPL) 2.0</excludedLicense>
                         <excludedLicense>GNU General Public License (GPL) 3.0</excludedLicense>
                      </excludedLicenses>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>add-thirdparty-licenses@generate-resources</id>
+                  <phase>generate-resources</phase>
+                  <goals>
+                     <goal>add-third-party</goal>
+                  </goals>
+                  <configuration>
+                     <force>true</force>
+                     <thirdPartyFilename>META-INF/LICENSE.THIRD-PARTY.txt</thirdPartyFilename>
+                     <skipAddThirdParty>false</skipAddThirdParty>
+                     <sortArtifactByName>true</sortArtifactByName>
+                     <includedScopes>compile,provided,runtime</includedScopes>
                   </configuration>
                </execution>
             </executions>
@@ -1044,7 +1056,7 @@
                   </goals>
                   <configuration>
                      <destFile>${project.build.directory}/jacoco.exec</destFile>
-                     <propertyName>jacoco.surefireAgent</propertyName>
+                     <propertyName>jacoco.agent.surefireArgs</propertyName>
                   </configuration>
                </execution>
                <execution>
@@ -1066,7 +1078,7 @@
                   </goals>
                   <configuration>
                      <destFile>${project.build.directory}/jacoco-it.exec</destFile>
-                     <propertyName>jacoco.failsafeAgent</propertyName>
+                     <propertyName>jacoco.agent.failsafeArgs</propertyName>
                   </configuration>
                </execution>
                <execution>
@@ -1518,7 +1530,7 @@
                      -Djava.rmi.server.hostname=localhost
                      -Djdk.net.URLClassPath.disableClassPathURLCheck=true
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
-                     ${jacoco.surefireAgent}
+                     ${jacoco.agent.surefireArgs}
                   </argLine>
                   <!-- -Djava.rmi.server.hostname=localhost see: https://stackoverflow.com/questions/10494095/java-visualvm-hangs-connecting-to-locally-process-launched-from-eclipse#36192913 -->
                   <!-- -Djdk.net.URLClassPath.disableClassPathURLCheck see: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911925 -->
@@ -1547,7 +1559,7 @@
                      -Djava.rmi.server.hostname=localhost
                      -Djdk.net.URLClassPath.disableClassPathURLCheck=true
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
-                     ${jacoco.surefireAgent}
+                     ${jacoco.agent.failsafeArgs}
                   </argLine>
                   <failIfNoTests>${failIfNoITests}</failIfNoTests>
                   <excludes>
@@ -1587,10 +1599,6 @@
                   <notimestamp>true</notimestamp>
                   <failOnError>true</failOnError>
                   <validateLinks>false</validateLinks>
-                  <additionalOptions>
-                     <additionalOption>${custom.javadocOptionXdoclint}</additionalOption>
-                     <additionalOption>${custom.javadocOptionHtml5}</additionalOption>
-                  </additionalOptions>
                </configuration>
             </plugin>
 
@@ -1663,7 +1671,7 @@
             <plugin>
                <groupId>com.vegardit.maven</groupId>
                <artifactId>depcheck-maven-plugin</artifactId>
-               <version>2.0.1</version>
+               <version>2.0.2</version>
                <executions>
                   <execution>
                      <id>check-deps@prepare-package</id>
@@ -1955,18 +1963,11 @@
          <build>
             <plugins>
                <plugin>
-                  <artifactId>maven-deploy-plugin</artifactId>
-                  <configuration>
-                     <altSnapshotDeploymentRepository>temp-snapshots-repo::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
-                  </configuration>
-               </plugin>
-
-               <plugin>
                   <groupId>org.codehaus.gmavenplus</groupId>
                   <artifactId>gmavenplus-plugin</artifactId>
                   <executions>
                      <execution>
-                        <id>configure-deploy-to-github-branch@initialize</id>
+                        <id>configure-deploy-to-github-branch@install</id>
                         <phase>install</phase>
                         <goals>
                            <goal>execute</goal>
@@ -1975,13 +1976,18 @@
                            <skipScriptExecution>${github.site.skip}</skipScriptExecution>
                            <scripts>
                               <script><![CDATA[
+                              def getProjectProp = { String name -> /* workaround for https://github.com/groovy/GMavenPlus/issues/72 */
+                                 def value = session.userProperties[name] ? session.userProperties[name] : project.properties[name];
+                                 log.info("Got project property [$name] '${value}'");
+                                 return value;
+                              };
                               def setProjectProp = { String name, String value ->
                                  project.properties[name] = value;
                                  log.info("Set project property [$name] '${project.properties[name]}'");
                               }
 
                               /* disable deployment via maven-scm-publish-plugin for non-SNAPSHOT builds */
-                              if(!project.version.endsWith("-SNAPSHOT")) {
+                              if(getProjectProp("maven.deploy.skip") == "true" || !project.version.endsWith("-SNAPSHOT")) {
                                  setProjectProp("github.site.skip", "true");
                               } else {
                                  def env = System.getenv();
@@ -1997,9 +2003,9 @@
                                  }
 
                                  if(repoSlug) {
-                                    if(!project.properties.containsKey("github.site.repositoryOwner"))
+                                    if(!getProjectProp("github.site.repositoryOwner"))
                                        setProjectProp("github.site.repositoryOwner", repoSlug.substring(0, repoSlug.indexOf("/")));
-                                    if(!project.properties.containsKey("github.site.repositoryName"))
+                                    if(!getProjectProp("github.site.repositoryName"))
                                        setProjectProp("github.site.repositoryName", repoSlug.substring(repoSlug.indexOf("/") + 1));
                                  } else {
                                     setProjectProp("github.site.skip", "true");
@@ -2010,6 +2016,14 @@
                         </configuration>
                      </execution>
                   </executions>
+               </plugin>
+
+               <plugin>
+                  <artifactId>maven-deploy-plugin</artifactId>
+                  <configuration>
+                     <skip>${maven.deploy.skip}</skip>
+                     <altSnapshotDeploymentRepository>temp-snapshots-repo::file://${project.build.directory}/mvn-snapshots-repo</altSnapshotDeploymentRepository>
+                  </configuration>
                </plugin>
 
                <plugin>
@@ -2026,7 +2040,7 @@
                         <configuration>
                            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
                            <skipDeployment>${github.site.skip}</skipDeployment>
-                           <checkinComment>Maven site for ${project.version} (${ci.name} build ${ci.build_number})</checkinComment>
+                           <checkinComment>Maven site for ${project.version} ${github.site.skip} (${ci.name} build ${ci.build_number})</checkinComment>
                            <pubScmUrl>scm:git:https://github.com/${github.site.repositoryOwner}/${github.site.repositoryName}.git</pubScmUrl>
                            <scmBranch>${github.site.branch}</scmBranch>
                            <content>${project.build.directory}/mvn-snapshots-repo</content>
@@ -2207,6 +2221,10 @@
          <properties>
             <!-- see "How do I add my web project classes to another project's classpath" https://wiki.eclipse.org/M2E-WTP_FAQ#How_do_I_add_my_web_project_classes_to_another_project.27s_classpath.3F -->
             <webClassifier />
+
+            <!-- prevents error "Reference to undefined variable jacoco.agent.surefireArgs" when using "Run As -> J-Unit Test" in Eclipse -->
+            <jacoco.agent.surefireArgs />
+            <jacoco.agent.failsafeArgs />
          </properties>
          <build>
             <pluginManagement>
