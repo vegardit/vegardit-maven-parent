@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [6.0.0] - 2024-09-10
+
+### Fix
+- licenses of test dependencies in third-party file
+- "Reference to undefined variable jacoco.xyz" when running J-Unit tests in Eclipse
+
+### Change
+- migrate from nexus-staging-maven-plugin to central-publishing-maven-plugin
+- rename THIRD-PARTY.txt to META-INF/LICENSE.THIRD-PARTY.txt in final jar
+- Maven plugin upgrades:
+  - depcheck-maven-plugin 2.0.1 -> 2.0.2
+
+
 ## [5.1.0] - 2024-09-07
 
 ### Fix
