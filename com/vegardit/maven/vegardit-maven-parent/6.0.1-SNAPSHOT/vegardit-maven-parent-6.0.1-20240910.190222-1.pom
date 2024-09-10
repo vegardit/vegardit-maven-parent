@@ -302,8 +302,9 @@
            /*
             * check if .settings/org.eclipse.jdt.core.prefs is present
             */
-           if(new File("{project.basedir}/.settings/org.eclipse.jdt.core.prefs").exists()) {
-             setProjectProp("custom.ecjProperties", "--properties \"{project.basedir}/.settings/org.eclipse.jdt.core.prefs\"");
+           jdtCorePrefsFile = new File(project.basedir, ".settings/org.eclipse.jdt.core.prefs");
+           if(jdtCorePrefsFile.exists()) {
+             setProjectProp("custom.ecjProperties", "-properties \"" + jdtCorePrefsFile + "\"");
            } else {
              setProjectProp("custom.ecjProperties", "-g"); /* using -g just as placeholder to prevent "Unrecognized option : ''"*/
            }
