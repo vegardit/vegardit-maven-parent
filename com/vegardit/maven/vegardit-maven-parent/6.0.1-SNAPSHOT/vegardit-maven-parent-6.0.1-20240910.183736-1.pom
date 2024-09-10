@@ -15,7 +15,7 @@
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>5.1.1-SNAPSHOT</version>
+   <version>6.0.1-SNAPSHOT</version>
    <packaging>pom</packaging>
 
 
@@ -89,7 +89,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2024-09-07T15:08:08Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2024-09-10T11:49:45Z</project.build.outputTimestamp>
 
       <java.version>17</java.version>
       <java.vendor>default</java.vendor>
@@ -163,7 +163,6 @@
       <skip.enforcer.dependency-convergence>false</skip.enforcer.dependency-convergence>
       <skip.japicmp.cmp>false</skip.japicmp.cmp>
       <skip.license-maven-plugin.check-thirdparty-licenses>false</skip.license-maven-plugin.check-thirdparty-licenses>
-      <skip.central-publishing-maven-plugin>${dryRun}</skip.central-publishing-maven-plugin>
 
       <skip.report.dashboard-maven-plugin>false</skip.report.dashboard-maven-plugin>
       <skip.report.jacoco-maven-plugin>false</skip.report.jacoco-maven-plugin>
@@ -289,7 +288,9 @@
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                .setArtifact(ecjArtifactMeta)
                .setLocalRepository(session.localRepository)
                .setRemoteRepositories(project.remoteArtifactRepositories)
@@ -2087,6 +2088,9 @@
                         <goals>
                            <goal>sign</goal>
                         </goals>
+                        <configuration>
+                           <skip>${maven.deploy.skip}</skip>
+                        </configuration>
                      </execution>
                   </executions>
                </plugin>
@@ -2103,10 +2107,11 @@
                   <version>0.5.0</version>
                   <extensions>true</extensions>
                   <configuration>
-                     <deploymentName>Release ${project.artifactId} ${project.version} (maven)</deploymentName>
+                     <deploymentName>Release ${project.version} (Maven)</deploymentName>
                      <autoPublish>${central-publishing-maven-plugin.autoPublish}</autoPublish>
                      <publishingServerId>${central-publishing-maven-plugin.serverId}</publishingServerId>
-                     <skipPublishing>${skip.central-publishing-maven-plugin}</skipPublishing>
+                     <skipPublishing>${dryRun}</skipPublishing>
+                     <excludeArtifacts>${central-publishing-maven-plugin.excludedArtifacts}</excludeArtifacts>
                   </configuration>
                </plugin>
             </plugins>
