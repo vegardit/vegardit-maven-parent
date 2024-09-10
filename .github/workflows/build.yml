@@ -173,8 +173,8 @@ jobs:
         MAY_CREATE_RELEASE: true
         SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
         SIGN_KEY_PASS: ${{ secrets.GPG_SIGN_KEY_PWD }}
-        SONATYPE_OSSRH_USER: ${{ secrets.SONATYPE_OSSRH_USER }}
-        SONATYPE_OSSRH_USER_TOKEN: ${{ secrets.SONATYPE_OSSRH_USER_TOKEN }}
+        SONATYPE_CENTRAL_USER: ${{ vars.SONATYPE_CENTRAL_USER }}
+        SONATYPE_CENTRAL_TOKEN: ${{ secrets.SONATYPE_CENTRAL_TOKEN }}
       run: |
         set -eu
 

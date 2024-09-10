@@ -3,9 +3,14 @@
    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
    <servers>
       <server>
-         <id>sonatype-ossrh</id>
-         <username>${env.SONATYPE_OSSRH_USER}</username>
-         <password>${env.SONATYPE_OSSRH_USER_TOKEN}</password>
+         <id>central.sonatype.com</id>
+         <username>${env.SONATYPE_CENTRAL_USER}</username>
+         <password>${env.SONATYPE_CENTRAL_TOKEN}</password>
+         <configuration>
+            <!-- https://maven.apache.org/guides/mini/guide-resolver-transport.html#timeouts -->
+            <connectTimeout>10000</connectTimeout>
+            <requestTimeout>30000</requestTimeout>
+         </configuration>
       </server>
       <server>
          <id>github-commits</id>

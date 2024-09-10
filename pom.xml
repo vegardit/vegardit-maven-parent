@@ -152,8 +152,8 @@
       <maven-bundle-plugin.import-package>*</maven-bundle-plugin.import-package>
       <maven-bundle-plugin.export-packages.no-uses>false</maven-bundle-plugin.export-packages.no-uses>
 
-      <nexus-staging-maven-plugin.autoReleaseAfterClose>true</nexus-staging-maven-plugin.autoReleaseAfterClose>
-      <nexus-staging-maven-plugin.nexusUrl>https://oss.sonatype.org/</nexus-staging-maven-plugin.nexusUrl>
+      <central-publishing-maven-plugin.autoPublish>true</central-publishing-maven-plugin.autoPublish>
+      <central-publishing-maven-plugin.serverId>central.sonatype.com</central-publishing-maven-plugin.serverId>
 
       <skip.dependency-scope-maven-plugin.check>false</skip.dependency-scope-maven-plugin.check>
       <skip.enforcer.basic-checks>false</skip.enforcer.basic-checks>
@@ -163,7 +163,6 @@
       <skip.enforcer.dependency-convergence>false</skip.enforcer.dependency-convergence>
       <skip.japicmp.cmp>false</skip.japicmp.cmp>
       <skip.license-maven-plugin.check-thirdparty-licenses>false</skip.license-maven-plugin.check-thirdparty-licenses>
-      <skip.nexus-staging-maven-plugin.deploy>${dryRun}</skip.nexus-staging-maven-plugin.deploy>
 
       <skip.report.dashboard-maven-plugin>false</skip.report.dashboard-maven-plugin>
       <skip.report.jacoco-maven-plugin>false</skip.report.jacoco-maven-plugin>
@@ -2087,6 +2086,9 @@
                         <goals>
                            <goal>sign</goal>
                         </goals>
+                        <configuration>
+                           <skip>${maven.deploy.skip}</skip>
+                        </configuration>
                      </execution>
                   </executions>
                </plugin>
@@ -2097,26 +2099,18 @@
                   </configuration>
                </plugin>
                <plugin>
-                  <!-- https://help.sonatype.com/repomanager2/staging-releases/configuring-your-project-for-deployment -->
-                  <groupId>org.sonatype.plugins</groupId>
-                  <artifactId>nexus-staging-maven-plugin</artifactId>
-                  <version>1.7.0</version>
+                  <!-- https://central.sonatype.org/publish/publish-portal-maven/#publishing-by-using-the-maven-plugin -->
+                  <groupId>org.sonatype.central</groupId>
+                  <artifactId>central-publishing-maven-plugin</artifactId>
+                  <version>0.5.0</version>
                   <extensions>true</extensions>
-                  <executions>
-                     <execution>
-                        <id>deploy@deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                           <goal>deploy</goal>
-                        </goals>
-                        <configuration>
-                           <skipNexusStagingDeployMojo>${skip.nexus-staging-maven-plugin.deploy}</skipNexusStagingDeployMojo>
-                           <autoReleaseAfterClose>${nexus-staging-maven-plugin.autoReleaseAfterClose}</autoReleaseAfterClose>
-                           <serverId>sonatype-ossrh</serverId>
-                           <nexusUrl>${nexus-staging-maven-plugin.nexusUrl}</nexusUrl>
-                        </configuration>
-                     </execution>
-                  </executions>
+                  <configuration>
+                     <deploymentName>Release ${project.version} (Maven)</deploymentName>
+                     <autoPublish>${central-publishing-maven-plugin.autoPublish}</autoPublish>
+                     <publishingServerId>${central-publishing-maven-plugin.serverId}</publishingServerId>
+                     <skipPublishing>${dryRun}</skipPublishing>
+                     <excludeArtifacts>${central-publishing-maven-plugin.excludedArtifacts}</excludeArtifacts>
+                  </configuration>
                </plugin>
             </plugins>
          </build>
