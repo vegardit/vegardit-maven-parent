@@ -283,6 +283,7 @@
                setProjectProp("maven.javadoc.skip", "true");
             }
 
+
             /*
              * loading/locating eclipse Java compiler artifact
              */
@@ -297,6 +298,16 @@
             ).artifacts[0];
             setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
 
+
+           /*
+            * check if .settings/org.eclipse.jdt.core.prefs is present
+            */
+           jdtCorePrefsFile = new File(project.basedir, ".settings/org.eclipse.jdt.core.prefs");
+           if(jdtCorePrefsFile.exists()) {
+             setProjectProp("custom.ecjProperties", "-properties \"" + jdtCorePrefsFile + "\"");
+           } else {
+             setProjectProp("custom.ecjProperties", "-g"); /* using -g just as placeholder to prevent "Unrecognized option : ''"*/
+           }
 
             /*
              * determine bootclasspath for compilation of src/main/java
@@ -347,7 +358,6 @@
             } else {
                setProjectProp("custom.noJavaTests", "true");
             }
-
          } else /* if(!isJavaCompilable)*/ {
             setProjectProp("custom.noJavaTests", "true");
             setProjectProp("maven.javadoc.skip", "true");
@@ -923,6 +933,9 @@
                         ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
                         -encoding ${project.build.sourceEncoding}
                         -g<!-- include debug info -->
+                        ${custom.ecjProperties}<!--load org.eclipse.jdt.core.prefs-->
+                        -annotationpath CLASSPATH<!--lookup of external annotations from the classpath-->
+                        -info:-all<!--disable INFO level warnings-->
                         -parameters<!-- generate method parameters attribute
                           TODO enabling this option breaks
                           1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
@@ -954,6 +967,9 @@
                         ${custom.compileBootClasspathOption} "${custom.compileBootClasspath}"
                         -encoding ${project.build.sourceEncoding}
                         -g<!-- include debug info -->
+                        ${custom.ecjProperties}<!--load org.eclipse.jdt.core.prefs-->
+                        -annotationpath CLASSPATH<!--lookup of external annotations from the classpath-->
+                        -info:-all<!--disable INFO level warnings-->
                         -parameters<!-- generate method parameters attribute -->
                         -genericsignature<!-- generate generic signature for lambda expressions -->
                         -maxProblems 10<!-- max. number of problems per compilation unit -->

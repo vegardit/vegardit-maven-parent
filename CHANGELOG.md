@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Change
+- configure ecj to use .settings/org.eclipse.jdt.core.prefs when present
+
+
 ## [6.0.0] - 2024-09-10
 
 ### Fix
