@@ -935,7 +935,7 @@
                         -g<!-- include debug info -->
                         ${custom.ecjProperties}<!--load org.eclipse.jdt.core.prefs-->
                         -annotationpath CLASSPATH<!--lookup of external annotations from the classpath-->
-                        -warn:-info<!--disable INFO level warnings-->
+                        -info:-all<!--disable INFO level warnings-->
                         -parameters<!-- generate method parameters attribute
                           TODO enabling this option breaks
                           1) maven-bundle-plugin with "java.lang.IllegalArgumentException: invalid signature: *"
@@ -969,7 +969,7 @@
                         -g<!-- include debug info -->
                         ${custom.ecjProperties}<!--load org.eclipse.jdt.core.prefs-->
                         -annotationpath CLASSPATH<!--lookup of external annotations from the classpath-->
-                        -warn:-info<!--disable INFO level warnings-->
+                        -info:-all<!--disable INFO level warnings-->
                         -parameters<!-- generate method parameters attribute -->
                         -genericsignature<!-- generate generic signature for lambda expressions -->
                         -maxProblems 10<!-- max. number of problems per compilation unit -->
