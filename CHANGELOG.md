@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Change
+- relax javadoc `-Xdoclint` option from `all` to `reference,syntax`
+
+
 ## [6.1.0] - 2024-09-10
 
 ### Change
