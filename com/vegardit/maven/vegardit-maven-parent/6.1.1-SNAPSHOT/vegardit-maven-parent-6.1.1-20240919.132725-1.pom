@@ -132,6 +132,8 @@
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
 
+      <doclint>reference,syntax</doclint>
+
       <!-- https://code.revelc.net/formatter-maven-plugin/validate-mojo.html#optional-parameters -->
       <formatter.skip>true</formatter.skip>
       <formatter.lineending>AUTO</formatter.lineending>
@@ -280,7 +282,7 @@
 
          if(isJavaCompilable) {
             if(project.version.endsWith("-SNAPSHOT")) {
-               setProjectProp("maven.javadoc.skip", "true");
+               setProjectProp("skip.maven.javadoc", "true");
             }
 
 
@@ -358,7 +360,7 @@
             }
          } else /* if(!isJavaCompilable)*/ {
             setProjectProp("custom.noJavaTests", "true");
-            setProjectProp("maven.javadoc.skip", "true");
+            setProjectProp("skip.maven.javadoc", "true");
          }
 
 
@@ -1607,9 +1609,9 @@
                <artifactId>maven-javadoc-plugin</artifactId>
                <version>3.10.0</version>
                <configuration>
-                  <skip>${maven.javadoc.skip}</skip>
+                  <skip>${skip.maven.javadoc}</skip>
                   <!-- https://docs.oracle.com/en/java/javase/17/docs/specs/man/javadoc.html#additional-options-provided-by-the-standard-doclet -->
-                  <doclint>reference,syntax</doclint>
+                  <doclint>${doclint}</doclint>
                   <!-- exclude internal package and java.*, javax.* stubs -->
                   <excludePackageNames>*.internal:*.internal.*:java:java.*:javax:javax.*</excludePackageNames>
                   <linksource>false</linksource>
