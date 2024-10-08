@@ -105,7 +105,7 @@
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.38.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.39.0</eclipse-java-compiler.version>
 
       <groovy.version>3.0.22</groovy.version>
 
@@ -291,7 +291,13 @@
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest() .setArtifact(ecjArtifactMeta) .setLocalRepository(session.localRepository) .setRemoteRepositories(project.remoteArtifactRepositories) ).artifacts[0];
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                  .setArtifact(ecjArtifactMeta)
+                  .setLocalRepository(session.localRepository)
+                  .setRemoteRepositories(project.remoteArtifactRepositories)
+            ).artifacts[0];
             setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
 
 
