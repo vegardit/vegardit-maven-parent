@@ -291,7 +291,9 @@
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                   .setArtifact(ecjArtifactMeta)
                   .setLocalRepository(session.localRepository)
                   .setRemoteRepositories(project.remoteArtifactRepositories)
@@ -1610,10 +1612,20 @@
                <version>3.10.1</version>
                <configuration>
                   <skip>${skip.maven.javadoc}</skip>
+
+                  <source>${java.version}</source>
+
+                  <charset>${project.build.sourceEncoding}</charset>
+                  <encoding>${project.build.sourceEncoding}</encoding>
+                  <docencoding>${project.build.sourceEncoding}</docencoding>
+
                   <!-- https://docs.oracle.com/en/java/javase/17/docs/specs/man/javadoc.html#additional-options-provided-by-the-standard-doclet -->
                   <doclint>${doclint}</doclint>
+
                   <!-- exclude internal package and java.*, javax.* stubs -->
                   <excludePackageNames>*.internal:*.internal.*:java:java.*:javax:javax.*</excludePackageNames>
+
+                  <detectLinks>true</detectLinks>
                   <linksource>false</linksource>
                   <notimestamp>true</notimestamp>
                   <failOnError>true</failOnError>
