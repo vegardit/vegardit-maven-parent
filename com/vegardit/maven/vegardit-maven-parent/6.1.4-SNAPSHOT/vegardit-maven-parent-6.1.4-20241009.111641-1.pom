@@ -15,7 +15,7 @@
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>6.1.1-SNAPSHOT</version>
+   <version>6.1.4-SNAPSHOT</version>
    <packaging>pom</packaging>
 
 
@@ -89,7 +89,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2024-09-10T19:29:04Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2024-10-08T22:15:55Z</project.build.outputTimestamp>
 
       <java.version>17</java.version>
       <java.vendor>default</java.vendor>
@@ -105,14 +105,14 @@
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.38.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.39.0</eclipse-java-compiler.version>
 
       <groovy.version>3.0.22</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
 
-      <maven.surefire.version>3.5.0</maven.surefire.version>
+      <maven.surefire.version>3.5.1</maven.surefire.version>
       <maven.scm.version>2.1.0</maven.scm.version>
       <maven.scm.svnjava.version>2.3.0</maven.scm.svnjava.version>
       <maven.wagon.version>3.5.3</maven.wagon.version>
@@ -127,7 +127,7 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.18.1</checkstyle.version>
+      <checkstyle.version>10.18.2</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
@@ -291,10 +291,12 @@
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
-               .setArtifact(ecjArtifactMeta)
-               .setLocalRepository(session.localRepository)
-               .setRemoteRepositories(project.remoteArtifactRepositories)
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                  .setArtifact(ecjArtifactMeta)
+                  .setLocalRepository(session.localRepository)
+                  .setRemoteRepositories(project.remoteArtifactRepositories)
             ).artifacts[0];
             setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
 
@@ -557,7 +559,7 @@
             <!-- https://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>3.0.2</version>
+            <version>4.0.1</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
@@ -812,7 +814,7 @@
                   <!-- http://www.mojohaus.org/extra-enforcer-rules/ -->
                   <groupId>org.codehaus.mojo</groupId>
                   <artifactId>extra-enforcer-rules</artifactId>
-                  <version>1.8.0</version>
+                  <version>1.9.0</version>
                </dependency>
             </dependencies>
          </plugin>
@@ -1511,7 +1513,7 @@
                   <dependency>
                      <groupId>org.apache.maven.doxia</groupId>
                      <artifactId>doxia-module-markdown</artifactId>
-                     <version>1.12.0</version>
+                     <version>2.0.0</version>
                   </dependency>
                   <dependency>
                      <groupId>org.apache.maven.wagon</groupId>
@@ -1607,13 +1609,23 @@
                <!-- http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
                <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#Where_in_the_pom.xml_do_I_configure_the_Javadoc_Plugin -->
                <artifactId>maven-javadoc-plugin</artifactId>
-               <version>3.10.0</version>
+               <version>3.10.1</version>
                <configuration>
                   <skip>${skip.maven.javadoc}</skip>
+
+                  <source>${java.version}</source>
+
+                  <charset>${project.build.sourceEncoding}</charset>
+                  <encoding>${project.build.sourceEncoding}</encoding>
+                  <docencoding>${project.build.sourceEncoding}</docencoding>
+
                   <!-- https://docs.oracle.com/en/java/javase/17/docs/specs/man/javadoc.html#additional-options-provided-by-the-standard-doclet -->
                   <doclint>${doclint}</doclint>
+
                   <!-- exclude internal package and java.*, javax.* stubs -->
                   <excludePackageNames>*.internal:*.internal.*:java:java.*:javax:javax.*</excludePackageNames>
+
+                  <detectLinks>true</detectLinks>
                   <linksource>false</linksource>
                   <notimestamp>true</notimestamp>
                   <failOnError>true</failOnError>
@@ -2122,7 +2134,7 @@
                   <!-- https://central.sonatype.org/publish/publish-portal-maven/#publishing-by-using-the-maven-plugin -->
                   <groupId>org.sonatype.central</groupId>
                   <artifactId>central-publishing-maven-plugin</artifactId>
-                  <version>0.5.0</version>
+                  <version>0.6.0</version>
                   <extensions>true</extensions>
                   <configuration>
                      <deploymentName>Release ${project.version} (Maven)</deploymentName>
