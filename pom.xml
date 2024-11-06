@@ -2071,7 +2071,7 @@
                         <configuration>
                            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
                            <skipDeployment>${github.site.skip}</skipDeployment>
-                           <checkinComment>Maven site for ${project.version} ${github.site.skip} (${ci.name} build ${ci.build_number})</checkinComment>
+                           <checkinComment>Maven site for ${project.version} (${ci.name} build ${ci.build_number})</checkinComment>
                            <pubScmUrl>scm:git:https://github.com/${github.site.repositoryOwner}/${github.site.repositoryName}.git</pubScmUrl>
                            <scmBranch>${github.site.branch}</scmBranch>
                            <content>${project.build.directory}/mvn-snapshots-repo</content>
