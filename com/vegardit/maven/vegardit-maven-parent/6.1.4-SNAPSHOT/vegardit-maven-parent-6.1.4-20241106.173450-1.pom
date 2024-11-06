@@ -112,7 +112,7 @@
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
 
-      <maven.surefire.version>3.5.1</maven.surefire.version>
+      <maven.surefire.version>3.5.2</maven.surefire.version>
       <maven.scm.version>2.1.0</maven.scm.version>
       <maven.scm.svnjava.version>2.3.0</maven.scm.svnjava.version>
       <maven.wagon.version>3.5.3</maven.wagon.version>
@@ -127,7 +127,7 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.18.2</checkstyle.version>
+      <checkstyle.version>10.20.0</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
@@ -525,7 +525,7 @@
          -->
          <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
-            <version>3.8.0</version><!--$NO-MVN-MAN-VER$-->
+            <version>3.8.1</version><!--$NO-MVN-MAN-VER$-->
             <executions>
                <execution>
                   <!-- Add maven project properties containing the path to artifact in the local repo for all dependencies to see https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html -->
@@ -917,7 +917,7 @@
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.0</version>
             <executions>
                <execution>
                   <id>ecj@compile</id>
@@ -1495,7 +1495,7 @@
 
             <plugin>
                <artifactId>maven-site-plugin</artifactId>
-               <version>3.20.0</version>
+               <version>3.21.0</version>
                <configuration>
                   <!-- https://issues.apache.org/jira/browse/WAGON-354 -->
                   <chmod>false</chmod>
@@ -1609,7 +1609,7 @@
                <!-- http://maven.apache.org/guides/mini/guide-configuring-plugins.html#Using_the_reporting_Tag_VS_build_Tag -->
                <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/faq.html#Where_in_the_pom.xml_do_I_configure_the_Javadoc_Plugin -->
                <artifactId>maven-javadoc-plugin</artifactId>
-               <version>3.10.1</version>
+               <version>3.11.1</version>
                <configuration>
                   <skip>${skip.maven.javadoc}</skip>
 
@@ -1679,7 +1679,7 @@
             <plugin>
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <artifactId>maven-checkstyle-plugin</artifactId>
-               <version>3.5.0</version>
+               <version>3.6.0</version>
                <configuration>
                   <configLocation>${checkstyle.config.path}</configLocation>
                   <consoleOutput>true</consoleOutput>
@@ -1854,7 +1854,7 @@
             <!-- TODO, @todo list report -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>taglist-maven-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.1</version>
             <configuration>
                <configuration>
                   <skip>${skip.report.taglist-maven-plugin}</skip>
@@ -1903,7 +1903,7 @@
 
          <plugin>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.7.0</version>
+            <version>3.8.0</version>
             <configuration>
                <skip>${skip.report.maven-project-info-reports-plugin}</skip>
             </configuration>
@@ -2071,7 +2071,7 @@
                         <configuration>
                            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/publish-scm-mojo.html -->
                            <skipDeployment>${github.site.skip}</skipDeployment>
-                           <checkinComment>Maven site for ${project.version} ${github.site.skip} (${ci.name} build ${ci.build_number})</checkinComment>
+                           <checkinComment>Maven site for ${project.version} (${ci.name} build ${ci.build_number})</checkinComment>
                            <pubScmUrl>scm:git:https://github.com/${github.site.repositoryOwner}/${github.site.repositoryName}.git</pubScmUrl>
                            <scmBranch>${github.site.branch}</scmBranch>
                            <content>${project.build.directory}/mvn-snapshots-repo</content>
