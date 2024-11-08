@@ -15,7 +15,7 @@
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>6.1.4-SNAPSHOT</version>
+   <version>6.1.5-SNAPSHOT</version>
    <packaging>pom</packaging>
 
 
@@ -89,7 +89,7 @@
         Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
         See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
       -->
-      <project.build.outputTimestamp>2024-10-08T22:15:55Z</project.build.outputTimestamp>
+      <project.build.outputTimestamp>2024-11-08T10:51:28Z</project.build.outputTimestamp>
 
       <java.version>17</java.version>
       <java.vendor>default</java.vendor>
@@ -107,7 +107,7 @@
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.39.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.22</groovy.version>
+      <groovy.version>3.0.23</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
@@ -127,7 +127,7 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.20.0</checkstyle.version>
+      <checkstyle.version>10.20.1</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
