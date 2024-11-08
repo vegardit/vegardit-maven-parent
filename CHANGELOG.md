@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [6.1.4] - 2024-11-08
+
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 10.18.2 -> 10.20.1
+  - exec-maven-plugin 3.4.1 -> 3.5.0
+  - junit-bom 5.11.2 -> 5.11.3
+  - maven-checkstyle-plugin 3.5.0 -> 3.6.0.
+  - maven-dependency-plugin 3.8.0 -> 3.8.1
+  - maven-javadoc-plugin 3.10.1 -> 3.11.1
+  - maven-project-info-reports-plugin 3.7.0 -> 3.8.0
+  - maven-site-plugin 3.20.0 -> 3.21.0
+  - maven.surefire.version 3.5.1 -> 3.5.2
+  - taglist-maven-plugin 3.1.0 -> 3.2.1
+
+
 ## [6.1.3] - 2024-10-09
 
 ### Changed
