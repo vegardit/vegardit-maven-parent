@@ -107,7 +107,7 @@
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.39.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.22</groovy.version>
+      <groovy.version>3.0.23</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
@@ -127,7 +127,7 @@
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.20.0</checkstyle.version>
+      <checkstyle.version>10.20.1</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
