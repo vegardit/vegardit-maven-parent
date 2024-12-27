@@ -26,8 +26,8 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 #####################
 
 if [[ -f .ci/release-trigger.sh ]]; then
-   echo "Sourcing [.ci/release-trigger.sh]..."
-   source .ci/release-trigger.sh
+  echo "Sourcing [.ci/release-trigger.sh]..."
+  source .ci/release-trigger.sh
 fi
 
 cd $(dirname $0)/..
