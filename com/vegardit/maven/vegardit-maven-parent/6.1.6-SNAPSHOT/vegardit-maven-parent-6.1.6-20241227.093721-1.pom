@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-   SPDX-FileCopyrightText: © Vegard IT GmbH (https://vegardit.com)
-   SPDX-FileContributor: Sebastian Thomschke
-   SPDX-License-Identifier: Apache-2.0
-   SPDX-ArtifactOfProjectHomePage: https://github.com/vegardit/vegardit-maven-parent
+SPDX-FileCopyrightText: © Vegard IT GmbH (https://vegardit.com)
+SPDX-FileContributor: Sebastian Thomschke
+SPDX-License-Identifier: Apache-2.0
+SPDX-ArtifactOfProjectHomePage: https://github.com/vegardit/vegardit-maven-parent
 
-   check for new dependency/plugin updates using:
-      mvn -U -ntp versions:display-dependency-updates versions:display-plugin-updates
-   plugin announcements: https://blogs.apache.org/maven/
+plugin announcements: https://blogs.apache.org/maven/
+check for new dependency/plugin updates using:
+  mvn -U -ntp versions:display-dependency-updates versions:display-plugin-updates
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
