@@ -561,7 +561,7 @@ check for new dependency/plugin updates using:
             <!-- https://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>4.0.1</version>
+            <version>4.1.1</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
