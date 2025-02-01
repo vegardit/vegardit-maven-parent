@@ -129,7 +129,7 @@ check for new dependency/plugin updates using:
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.21.1</checkstyle.version>
+      <checkstyle.version>10.21.2</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
@@ -561,7 +561,7 @@ check for new dependency/plugin updates using:
             <!-- https://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>4.0.1</version>
+            <version>4.1.1</version>
             <executions>
                <execution>
                   <id>groovy.script.onInitialize@initialize</id>
@@ -1639,7 +1639,7 @@ check for new dependency/plugin updates using:
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <groupId>com.github.siom79.japicmp</groupId>
                <artifactId>japicmp-maven-plugin</artifactId>
-               <version>0.23.0</version>
+               <version>0.23.1</version>
                <configuration>
                   <skip>${skip.japicmp.cmp}</skip>
                   <parameter>
@@ -2136,7 +2136,7 @@ check for new dependency/plugin updates using:
                   <!-- https://central.sonatype.org/publish/publish-portal-maven/#publishing-by-using-the-maven-plugin -->
                   <groupId>org.sonatype.central</groupId>
                   <artifactId>central-publishing-maven-plugin</artifactId>
-                  <version>0.6.0</version>
+                  <version>0.7.0</version>
                   <extensions>true</extensions>
                   <configuration>
                      <deploymentName>Release ${project.version} (Maven)</deploymentName>
