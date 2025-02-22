@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 10.21.0 -> 10.21.2
+  - central-publishing-maven-plugin 0.6.0 -> 0.7.0
+  - formatter-maven-plugin 2.24.1 -> 2.25.0
+  - gmavenplus-plugin 4.0.1 -> 4.1.1
+  - japicmp 0.23.0 -> 0.23.1
+  - maven-clean-plugin 3.4.0 -> 3.4.1
+  - maven-compiler-plugin 3.13.0 -> 3.14.0
+
+
 ## [6.1.5] - 2024-12-18
 
 ### Changed
