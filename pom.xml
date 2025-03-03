@@ -1286,7 +1286,7 @@ check for new dependency/plugin updates using:
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
                <artifactId>flatten-maven-plugin</artifactId>
-               <version>1.6.0</version>
+               <version>1.7.0</version>
                <configuration>
                   <embedBuildProfileDependencies>false</embedBuildProfileDependencies>
                   <lineLength>160</lineLength>
