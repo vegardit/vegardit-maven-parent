@@ -107,7 +107,7 @@ check for new dependency/plugin updates using:
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.40.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.23</groovy.version>
+      <groovy.version>3.0.24</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
