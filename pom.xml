@@ -1901,7 +1901,7 @@ check for new dependency/plugin updates using:
 
          <plugin>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.8.0</version>
+            <version>3.9.0</version>
             <configuration>
                <skip>${skip.report.maven-project-info-reports-plugin}</skip>
             </configuration>
