@@ -44,8 +44,11 @@
          <property name="minimum" value="1" />
          <message key="regexp.minimum" value="Java file is missing @author tag." />
       </module>
+      
+      <!-- disabled to allow compact single-line JavaDoc like /** @see SomeClass#someMethod */
       <module name="RequireEmptyLineBeforeBlockTagGroup" />
       <module name="SingleLineJavadoc" />
+      -->
 
       <!-- Naming Conventions -->
       <module name="AbbreviationAsWordInName">

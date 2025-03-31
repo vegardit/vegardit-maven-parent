@@ -8,7 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.7] - 2025-03-31
+
 ### Changed
+- change checkstyle config to allow compact single-line JavaDoc
 - Maven plugin upgrades:
   - checkstyle 10.21.2 -> 10.22.0
   - groovy.version 3.0.23 -> 3.0.24
