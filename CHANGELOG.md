@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 10.21.2 -> 10.22.0
+  - groovy.version 3.0.23 -> 3.0.24
+  - flatten-maven-plugin 1.6.0 -> 1.7.0
+  - formatter-maven-plugin 2.25.0 -> 2.26.0
+  - maven.surefire.version 3.5.2 -> 3.5.3
+  - maven-deploy-plugin 3.1.3 -> 3.1.4
+  - maven-install-plugin 3.1.3 -> 3.1.4
+  - maven-project-info-reports-plugin 3.8.0 -> 3.9.0
+
 
 ## [6.1.6] - 2025-02-22
 
