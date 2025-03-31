@@ -40,8 +40,8 @@
       <module name="NonEmptyAtclauseDescription" />
       <module name="RegexpSinglelineJava">
          <property name="format" value="@author" />
-         <property name="minimum" value="1" />
          <property name="maximum" value="99" />
+         <property name="minimum" value="1" />
          <message key="regexp.minimum" value="Java file is missing @author tag." />
       </module>
       <module name="RequireEmptyLineBeforeBlockTagGroup" />
@@ -58,10 +58,10 @@
       </module>
       <module name="ConstantName">
          <metadata name="net.sf.eclipsecs.core.comment" value="Private constants" />
-         <property name="format" value="^[_A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />
-         <property name="applyToPublic" value="false" />
-         <property name="applyToProtected" value="false" />
          <property name="applyToPackage" value="false" />
+         <property name="applyToProtected" value="false" />
+         <property name="applyToPublic" value="false" />
+         <property name="format" value="^[_A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />
       </module>
       <module name="IllegalIdentifierName" />
       <module name="LambdaParameterName" />
@@ -73,15 +73,15 @@
       </module>
       <module name="MemberName">
          <metadata name="net.sf.eclipsecs.core.comment" value="Non-Private Members" />
-         <property name="format" value="^[a-z][_a-zA-Z0-9]*$" />
          <property name="applyToPrivate" value="false" />
+         <property name="format" value="^[a-z][_a-zA-Z0-9]*$" />
       </module>
       <module name="MemberName">
          <metadata name="net.sf.eclipsecs.core.comment" value="Private Members" />
-         <property name="format" value="^[_a-z][_a-zA-Z0-9]*$" />
-         <property name="applyToPublic" value="false" />
-         <property name="applyToProtected" value="false" />
          <property name="applyToPackage" value="false" />
+         <property name="applyToProtected" value="false" />
+         <property name="applyToPublic" value="false" />
+         <property name="format" value="^[_a-z][_a-zA-Z0-9]*$" />
       </module>
       <module name="MethodName">
          <property name="format" value="^[_a-z][_a-zA-Z0-9]*$" />
@@ -92,15 +92,15 @@
       </module>
       <module name="StaticVariableName">
          <metadata name="net.sf.eclipsecs.core.comment" value="Private Fields" />
-         <property name="format" value="^[_a-z][_a-zA-Z0-9]*$" />
-         <property name="applyToPublic" value="false" />
-         <property name="applyToProtected" value="false" />
          <property name="applyToPackage" value="false" />
+         <property name="applyToProtected" value="false" />
+         <property name="applyToPublic" value="false" />
+         <property name="format" value="^[_a-z][_a-zA-Z0-9]*$" />
       </module>
       <module name="StaticVariableName">
          <metadata name="net.sf.eclipsecs.core.comment" value="Non-Private Fields" />
-         <property name="format" value="^[a-z][_a-zA-Z0-9]*$" />
          <property name="applyToPrivate" value="false" />
+         <property name="format" value="^[a-z][_a-zA-Z0-9]*$" />
       </module>
       <module name="TypeName">
          <property name="format" value="^[A-Z][_a-zA-Z0-9]*$" />
@@ -112,8 +112,8 @@
       </module>
       <module name="IllegalImport" />
       <module name="ImportOrder">
-         <property name="option" value="top" />
          <property name="groups" value="/^java\./,javax,org,com" />
+         <property name="option" value="top" />
          <property name="separated" value="true" />
          <property name="sortStaticImportsAlphabetically" value="true" />
          <property name="useContainerOrderingForStatic" value="true" />
@@ -125,11 +125,11 @@
       <!-- Indentation -->
       <module name="CommentsIndentation" />
       <module name="Indentation">
+         <property name="arrayInitIndent" value="3" />
          <property name="basicOffset" value="3" />
          <property name="caseIndent" value="3" />
-         <property name="throwsIndent" value="3" />
-         <property name="arrayInitIndent" value="3" />
          <property name="lineWrappingIndentation" value="0" />
+         <property name="throwsIndent" value="3" />
       </module>
 
       <!-- Size Violations -->
@@ -150,7 +150,7 @@
          <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit" />
       </module>
       <module name="NoWhitespaceBefore" />
-      <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+      <module name="NoWhitespaceBeforeCaseDefaultColon" />
       <module name="OperatorWrap">
          <property name="tokens"
             value="QUESTION,COLON,EQUAL,NOT_EQUAL,DIV,PLUS,MINUS,STAR,MOD,SR,BSR,GE,GT,SL,LE,LT,BXOR,BOR,LOR,BAND,LAND,LITERAL_INSTANCEOF,TYPE_EXTENSION_AND" />
@@ -173,10 +173,10 @@
       <module name="TypecastParenPad" />
       <module name="WhitespaceAfter" />
       <module name="WhitespaceAround">
+         <property name="allowEmptyCatches" value="true" />
          <property name="allowEmptyConstructors" value="true" />
          <property name="allowEmptyMethods" value="true" />
          <property name="allowEmptyTypes" value="true" />
-         <property name="allowEmptyCatches" value="true" />
          <property name="tokens"
             value="ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,BXOR_ASSIGN,COLON,DIV,DIV_ASSIGN,DO_WHILE,EQUAL,GE,GT,LAMBDA,LAND,LCURLY,LE,LITERAL_ASSERT,LITERAL_CATCH,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_RETURN,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,LOR,LT,MINUS,MINUS_ASSIGN,MOD,MOD_ASSIGN,NOT_EQUAL,PLUS,PLUS_ASSIGN,QUESTION,SL,SLIST,SL_ASSIGN,SR,SR_ASSIGN,STAR,STAR_ASSIGN,TYPE_EXTENSION_AND" />
       </module>
@@ -213,7 +213,7 @@
          <module name="InnerAssignment" />
          "final var button = this.button = new Button()" is needed to workaround Eclipse Null Analysis issues
       -->
-      <module name="NoEnumTrailingComma"/>
+      <module name="NoEnumTrailingComma" />
       <module name="NoFinalizer" />
       <module name="OneStatementPerLine" />
       <module name="PackageDeclaration" />
@@ -237,8 +237,8 @@
       <module name="ArrayTypeStyle" />
       <module name="AvoidEscapedUnicodeCharacters">
          <property name="allowEscapesForControlCharacters" value="true" />
-         <property name="allowNonPrintableEscapes" value="true" />
          <property name="allowIfAllCharactersEscaped" value="true" />
+         <property name="allowNonPrintableEscapes" value="true" />
       </module>
       <module name="OuterTypeFilename" />
       <module name="UpperEll" />
@@ -246,25 +246,25 @@
       <!-- Filters -->
       <module name="SuppressWithNearbyCommentFilter">
          <metadata name="net.sf.eclipsecs.core.comment" value="Disable matching checkstyle rules for the following line" />
-         <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+) FOR NEXT LINE" />
          <property name="checkFormat" value="$1" />
+         <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+) FOR NEXT LINE" />
          <property name="influenceFormat" value="1" />
       </module>
       <module name="SuppressWithNearbyCommentFilter">
          <metadata name="net.sf.eclipsecs.core.comment" value="Disable matching checkstyle rules for the following N lines" />
-         <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+) FOR NEXT (\d+) LINES" />
          <property name="checkFormat" value="$1" />
+         <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+) FOR NEXT (\d+) LINES" />
          <property name="influenceFormat" value="$2" />
       </module>
       <module name="SuppressWithNearbyCommentFilter">
          <metadata name="net.sf.eclipsecs.core.comment" value="Disable matching checkstyle rules on the same line" />
-         <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+)" />
          <property name="checkFormat" value="$1" />
+         <property name="commentFormat" value="CHECKSTYLE:IGNORE ([^ ]+)" />
       </module>
       <module name="SuppressWithNearbyCommentFilter">
          <metadata name="net.sf.eclipsecs.core.comment" value="Disable switch fallthrough warning for the following line" />
-         <property name="commentFormat" value="\$FALL-THROUGH\$" />
          <property name="checkFormat" value="FallThrough" />
+         <property name="commentFormat" value="\$FALL-THROUGH\$" />
          <property name="influenceFormat" value="1" />
       </module>
 
@@ -286,8 +286,8 @@
       <module name="ForbidThrowAnonymousExceptionsCheck" />
       <module name="LogicConditionNeedOptimizationCheck" />
       <module name="LineLengthExtendedCheck">
-         <property name="max" value="160" />
          <property name="ignorePattern" value="^import .*$|^\s+(\*|//)\s.*https?:\/\/.+" />
+         <property name="max" value="160" />
       </module>
       <module name="MapIterationInForEachLoopCheck">
          <property name="proposeKeySetUsage" value="true" />
@@ -333,7 +333,7 @@
    <module name="BeforeExecutionExclusionFileFilter">
       <!-- https://github.com/checkstyle/checkstyle/issues/8240 -->
       <metadata name="net.sf.eclipsecs.core.comment" value="Ignore module-info.java files which are currently not parseable by checkstyle" />
-      <property name="fileNamePattern" value="module\-info\.java$"/>
+      <property name="fileNamePattern" value="module\-info\.java$" />
    </module>
    <module name="BeforeExecutionExclusionFileFilter">
       <metadata name="net.sf.eclipsecs.core.comment" value="Ignore temp files generated by Eclipse markdown editor" />
