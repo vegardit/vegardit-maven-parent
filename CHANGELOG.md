@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- upgrade Eclipse Java Compiler 3.40.0 -> 3.41.0
+
+
 ## [6.1.7] - 2025-03-31
 
 ### Changed
