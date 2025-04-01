@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.8] - 2025-04-1
+
 ### Changed
 - upgrade Eclipse Java Compiler 3.40.0 -> 3.41.0
 - Maven plugin upgrades:
