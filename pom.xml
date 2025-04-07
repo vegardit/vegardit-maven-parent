@@ -1312,7 +1312,7 @@ check for new dependency/plugin updates using:
                <artifactId>versions-maven-plugin</artifactId>
                <version>2.18.0</version>
                <configuration>
-                  <ignoredVersions>.*-(alpha|beta|M|RC|SNAPSHOT)([-_0-9].*)?</ignoredVersions>
+                  <ignoredVersions>.*-(alpha|beta|M|rc|RC|SNAPSHOT)([-_0-9].*)?</ignoredVersions>
                </configuration>
             </plugin>
 
