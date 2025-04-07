@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- versions-maven-plugin doesn't ignore *-rc* release candidates
+
+### Changed
+- Maven plugin upgrades:
+  - checkstyle 10.22.0 -> 10.23.0
+
+
 ## [6.1.8] - 2025-04-1
 
 ### Changed
