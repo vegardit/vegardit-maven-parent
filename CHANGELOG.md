@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.9] - 2025-04-15
+
 ### Fixed
 - versions-maven-plugin doesn't ignore *-rc* release candidates
 
@@ -15,9 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - calculate project.build.outputTimestamp based on last commit date
 - Maven plugin upgrades:
   - checkstyle 10.22.0 -> 10.23.0
+  - jacoco-maven-plugin from 0.8.12 -> 0.8.13
 
 
-## [6.1.8] - 2025-04-1
+## [6.1.8] - 2025-04-01
 
 ### Changed
 - upgrade Eclipse Java Compiler 3.40.0 -> 3.41.0
