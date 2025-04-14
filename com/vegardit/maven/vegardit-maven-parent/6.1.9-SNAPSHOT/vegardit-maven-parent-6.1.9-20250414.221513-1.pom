@@ -85,12 +85,6 @@ check for new dependency/plugin updates using:
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
       <maven-resources-plugin.propertiesEncoding>ISO-8859-1</maven-resources-plugin.propertiesEncoding>
 
-      <!--
-        Use the Maven Build Timestamp as modification timestamp for all entries in the produced JAR file.
-        See https://maven.apache.org/guides/mini/guide-reproducible-builds.html
-      -->
-      <project.build.outputTimestamp>2025-04-01T20:32:19Z</project.build.outputTimestamp>
-
       <java.version>17</java.version>
       <java.vendor>default</java.vendor>
 
@@ -178,6 +172,50 @@ check for new dependency/plugin updates using:
       <github.site.branch>mvn-snapshots-repo</github.site.branch>
 
       <!-- https://groovy.github.io/gmaven/groovy-maven-plugin/variables.html -->
+      <groovy.script.onValidate><![CDATA[
+         /*
+          * skip this script if run via m2eclipse
+          */
+         if(System.getProperty("eclipse.application") != null)
+            return;
+
+         def setProjectProp = { String name, String value ->
+            project.properties[name] = value;
+            log.info("Set project property [$name] '${project.properties[name]}'");
+         };
+
+         /*
+          * Set the Maven Build Timestamp property to be used as the modification time for all entries in the generated JAR.
+          * This ensures reproducible builds by fixing file timestamps.
+          * See: https://maven.apache.org/guides/mini/guide-reproducible-builds.html
+          */
+         @Grab(group='org.eclipse.jgit', module='org.eclipse.jgit', version='7.2.0.202503040940-r')
+         import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+
+         def builder = new FileRepositoryBuilder().findGitDir(project.basedir);
+         if (builder.getGitDir() == null) {
+            log.warn("No Git repository found at or above [" + project.basedir + "]. Cannot set 'project.build.outputTimestamp'.");
+            return;
+         }
+
+         def gitRepo;
+         try {
+            gitRepo = builder.build();
+            def head = gitRepo.resolve("HEAD");
+            def revWalk = new org.eclipse.jgit.revwalk.RevWalk(gitRepo);
+            def commitTime = revWalk.parseCommit(head).getCommitTime();
+            revWalk.dispose();
+            def outputTimestamp = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                  .withZone(java.time.ZoneOffset.UTC)
+                  .format(java.time.Instant.ofEpochSecond(commitTime));
+            setProjectProp("project.build.outputTimestamp", outputTimestamp);
+         } catch (Exception e) {
+            log.error("Failed to read Git commit info: ${e.message}", e)
+         } finally {
+            gitRepo?.close();
+         }
+      ]]></groovy.script.onValidate>
+
       <groovy.script.onInitialize><![CDATA[
          /*
           * skip this script if run via m2eclipse
@@ -189,7 +227,6 @@ check for new dependency/plugin updates using:
           * workaround for https://github.com/timgifford/maven-buildtime-extension/issues/33
           */
          session.systemProperties["buildtime.output.log"] = "true";
-
 
          def artifactResolver = session.lookup("org.apache.maven.artifact.resolver.ArtifactResolver");
          def artifactFactory = session.lookup("org.apache.maven.artifact.factory.ArtifactFactory");
@@ -556,6 +593,18 @@ check for new dependency/plugin updates using:
             <version>4.1.1</version>
             <executions>
                <execution>
+                  <id>groovy.script.onValidate@validate</id>
+                  <phase>validate</phase>
+                  <goals>
+                     <goal>execute</goal>
+                  </goals>
+                  <configuration>
+                     <scripts>
+                        <script>${groovy.script.onValidate}</script>
+                     </scripts>
+                  </configuration>
+               </execution>
+               <execution>
                   <id>groovy.script.onInitialize@initialize</id>
                   <phase>initialize</phase>
                   <goals>
@@ -595,6 +644,7 @@ check for new dependency/plugin updates using:
             <configuration>
                <scripts>
                   <!-- script source used by direct invocation via <completionGoals>org.codehaus.gmavenplus:gmavenplus-plugin:execute</completionGoals> -->
+                  <script>${groovy.script.onValidate}</script>
                   <script>${groovy.script.onInitialize}</script>
                </scripts>
             </configuration>
@@ -1059,7 +1109,7 @@ check for new dependency/plugin updates using:
             <!-- enable code coverage -->
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.12</version>
+            <version>0.8.13</version>
             <executions>
                <execution>
                   <id>pre-unit-test</id>
@@ -1801,7 +1851,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.12</version>
+            <version>0.8.13</version>
             <configuration>
                <skip>${skip.report.jacoco-maven-plugin}</skip>
             </configuration>
