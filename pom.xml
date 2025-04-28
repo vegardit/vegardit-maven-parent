@@ -121,7 +121,7 @@ check for new dependency/plugin updates using:
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.23.0</checkstyle.version>
+      <checkstyle.version>10.23.1</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
