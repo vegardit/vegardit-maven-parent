@@ -101,7 +101,7 @@ check for new dependency/plugin updates using:
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.41.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.24</groovy.version>
+      <groovy.version>3.0.25</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
@@ -121,7 +121,7 @@ check for new dependency/plugin updates using:
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>10.24.0</checkstyle.version>
+      <checkstyle.version>10.25.0</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
@@ -957,7 +957,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.5.1</version>
             <executions>
                <execution>
                   <id>ecj@compile</id>
@@ -1424,7 +1424,7 @@ check for new dependency/plugin updates using:
 
             <plugin>
                <artifactId>maven-clean-plugin</artifactId>
-               <version>3.4.1</version>
+               <version>3.5.0</version>
             </plugin>
 
             <plugin>
