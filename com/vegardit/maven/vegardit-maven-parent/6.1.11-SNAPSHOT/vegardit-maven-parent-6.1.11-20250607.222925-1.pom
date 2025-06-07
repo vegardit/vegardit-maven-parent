@@ -15,7 +15,7 @@ check for new dependency/plugin updates using:
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>6.1.10-SNAPSHOT</version>
+   <version>6.1.11-SNAPSHOT</version>
    <packaging>pom</packaging>
 
 
@@ -328,7 +328,15 @@ check for new dependency/plugin updates using:
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest() .setArtifact(ecjArtifactMeta) .setLocalRepository(session.localRepository) .setRemoteRepositories(project.remoteArtifactRepositories) ).artifacts[0]; setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath); /*
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                                .setArtifact(ecjArtifactMeta)
+                                .setLocalRepository(session.localRepository)
+                                .setRemoteRepositories(project.remoteArtifactRepositories)
+                              ).artifacts[0];
+           setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
+           /*
             * check if .settings/org.eclipse.jdt.core.prefs is present
             */
            jdtCorePrefsFile = new File(project.basedir, ".settings/org.eclipse.jdt.core.prefs");
@@ -1160,7 +1168,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.6.0</version>
+            <version>3.6.1</version>
             <executions>
                <execution>
                   <id>parse-version</id>
