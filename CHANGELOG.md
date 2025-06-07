@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.10] - 2025-06-07
+
+### Changed
+- Maven plugin upgrades:
+  - build-helper-maven-plugin 3.6.0 -> 3.6.1
+  - checkstyle 10.23.0 -> 10.25.0
+  - exec-maven-plugin 3.5.0 -> 3.5.1
+  - gmavenplus-plugin 4.1.1 -> 4.2.0
+  - groovy.version 3.0.24 -> 3.0.25
+  - maven-clean-plugin 3.4.1 -> 3.5.0
+
+
 ## [6.1.9] - 2025-04-15
 
 ### Fixed
