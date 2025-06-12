@@ -188,11 +188,6 @@ jobs:
         SONATYPE_CENTRAL_USER: ${{ vars.SONATYPE_CENTRAL_USER }}
         SONATYPE_CENTRAL_TOKEN: ${{ secrets.SONATYPE_CENTRAL_TOKEN }}
       run: |
-        set -eu
-
-        # https://github.community/t/github-actions-bot-email-address/17204
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         bash .ci/build.sh ${{ github.event.inputs.additional_maven_args }}
 
 
