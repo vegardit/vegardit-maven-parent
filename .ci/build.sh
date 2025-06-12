@@ -28,8 +28,8 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR/.."
 
 if [[ -f .ci/release-trigger.sh ]]; then
-   echo "Sourcing [.ci/release-trigger.sh]..."
-   source .ci/release-trigger.sh
+  echo "Sourcing [.ci/release-trigger.sh]..."
+  source .ci/release-trigger.sh
 fi
 
 
@@ -54,10 +54,13 @@ export MAVEN_OPTS
 
 MAVEN_CLI_OPTS="-e -U --batch-mode --show-version -s .ci/maven-settings.xml -t .ci/maven-toolchains.xml"
 if [[ -n ${GITEA_ACTIONS:-} || (-n ${CI:-} && -z ${ACT:-}) ]]; then # if running on a remote CI but not on local nektos/act runner
-   MAVEN_CLI_OPTS+=" --no-transfer-progress"
+  MAVEN_CLI_OPTS+=" --no-transfer-progress"
 fi
 if [[ -n ${ACT:-} ]]; then
-   MAVEN_CLI_OPTS+=" -Dformatter.validate.lineending=KEEP"
+  MAVEN_CLI_OPTS+=" -Dformatter.validate.lineending=KEEP"
+fi
+if [[ ${MAY_CREATE_RELEASE:-false} == "true" && ${GITHUB_ACTIONS:-} == "true" ]]; then
+  MAVEN_CLI_OPTS+=" -Dskip.maven.javadoc=false"
 fi
 echo "  -> MAVEN_CLI_OPTS: $MAVEN_CLI_OPTS"
 
@@ -71,34 +74,52 @@ projectVersion=$(python -c "import xml.etree.ElementTree as ET; \
   print(ET.parse(open('pom.xml')).getroot().find(  \
   '{http://maven.apache.org/POM/4.0.0}version').text)")
 echo "  -> Current Version: $projectVersion"
+if [[ ${GITHUB_ACTIONS:-} == "true" ]]; then
+  echo "MAVEN_PROJECT_VERSION=$projectVersion" >> $GITHUB_ENV
+fi
 
+
+#
+# ensure mnvw is executable
+#
 chmod u+x ./mvnw
 
+
 #
-# decide whether to perform a release build or build+deploy a snapshot version
+# set github author for commits during release and site builds
+#
+if [[ ${MAY_CREATE_RELEASE:-false} == "true" && ${GITHUB_ACTIONS:-} == "true" ]]; then
+  # https://github.community/t/github-actions-bot-email-address/17204
+  git config --global user.name "github-actions[bot]"
+  git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+fi
+
+
+#
+# determine if this is a release build
 #
 if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} && ${MAY_CREATE_RELEASE:-false} == "true" ]]; then
-   # https://stackoverflow.com/questions/8653126/how-to-increment-version-number-in-a-shell-script/21493080#21493080
-   nextDevelopmentVersion="$(echo ${POM_RELEASE_VERSION} | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')-SNAPSHOT"
+  # https://stackoverflow.com/questions/8653126/how-to-increment-version-number-in-a-shell-script/21493080#21493080
+  nextDevelopmentVersion="$(echo ${POM_RELEASE_VERSION} | perl -pe 's/^((\d+\.)*)(\d+)(.*)$/$1.($3+1).$4/e')-SNAPSHOT"
 
-   SKIP_TESTS=${SKIP_TESTS:-false}
+  SKIP_TESTS=${SKIP_TESTS:-false}
 
-   echo
-   echo "###################################################"
-   echo "# Creating Maven Release...                       #"
-   echo "###################################################"
-   echo "  ->          Release Version: ${POM_RELEASE_VERSION}"
-   echo "  -> Next Development Version: ${nextDevelopmentVersion}"
-   echo "  ->           Skipping Tests: ${SKIP_TESTS}"
-   echo "  ->               Is Dry-Run: ${DRY_RUN}"
+  echo
+  echo "###################################################"
+  echo "# Creating Maven Release...                       #"
+  echo "###################################################"
+  echo "  ->          Release Version: ${POM_RELEASE_VERSION}"
+  echo "  -> Next Development Version: ${nextDevelopmentVersion}"
+  echo "  ->           Skipping Tests: ${SKIP_TESTS}"
+  echo "  ->               Is Dry-Run: ${DRY_RUN}"
 
-   # workaround for "No toolchain found with specification [version:11, vendor:default]" during release builds
-   cp -f .ci/maven-settings.xml $HOME/.m2/settings.xml
-   cp -f .ci/maven-toolchains.xml $HOME/.m2/toolchains.xml
+  # workaround for "No toolchain found with specification [version:11, vendor:default]" during release builds
+  cp -f .ci/maven-settings.xml $HOME/.m2/settings.xml
+  cp -f .ci/maven-toolchains.xml $HOME/.m2/toolchains.xml
 
-   export DEPLOY_RELEASES_TO_MAVEN_CENTRAL=true
+  export DEPLOY_RELEASES_TO_MAVEN_CENTRAL=true
 
-   ./mvnw $MAVEN_CLI_OPTS "$@" \
+  ./mvnw $MAVEN_CLI_OPTS "$@" \
       -DskipTests=${SKIP_TESTS} \
       -DskipITs=${SKIP_TESTS} \
       -DdryRun=${DRY_RUN} \
@@ -109,18 +130,23 @@ if [[ ${projectVersion:-foo} == ${POM_CURRENT_VERSION:-bar} && ${MAY_CREATE_RELE
       help:active-profiles clean release:clean release:prepare release:perform \
       | grep -v -e "\[INFO\] Download.* from repository-restored-from-cache" `# suppress download messages from repo restored from cache ` \
       | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
-else
-   echo
-   echo "###################################################"
-   echo "# Building Maven Project...                       #"
-   echo "###################################################"
-   if [[ ${MAY_CREATE_RELEASE:-false} == "true" ]]; then
-      mavenGoal="deploy"
-   else
-      mavenGoal="verify"
-   fi
-   ./mvnw $MAVEN_CLI_OPTS "$@" \
-      help:active-profiles clean $mavenGoal \
-      | grep -v -e "\[INFO\] Download.* from repository-restored-from-cache" `# suppress download messages from repo restored from cache ` \
-      | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
+  exit $?
 fi
+
+
+#
+# build/deploy snapshot version
+#
+echo
+echo "###################################################"
+echo "# Building Maven Project...                       #"
+echo "###################################################"
+if [[ ${MAY_CREATE_RELEASE:-false} == "true" ]]; then
+  mavenGoal="deploy"
+else
+  mavenGoal="verify"
+fi
+./mvnw $MAVEN_CLI_OPTS "$@" \
+    help:active-profiles clean $mavenGoal \
+    | grep -v -e "\[INFO\] Download.* from repository-restored-from-cache" `# suppress download messages from repo restored from cache ` \
+    | grep -v -e "\[INFO\]  .* \[0.0[0-9][0-9]s\]" # the grep command suppresses all lines from maven-buildtime-extension that report plugins with execution time <=99ms
