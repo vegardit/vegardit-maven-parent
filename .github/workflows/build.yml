@@ -83,7 +83,6 @@ jobs:
           may_create_release: false
           experimental: false
 
-
     # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/control-the-concurrency-of-workflows-and-jobs
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.maven_version }}
@@ -147,7 +146,7 @@ jobs:
           !~/.m2/repository/.meta
           !~/.m2/repository/com/vegardit/maven
           !~/.m2/repository/*SNAPSHOT*
-        key: ${{ runner.os }}-${{ runner.arch }}-mvn-repo-${{ hashFiles('**/pom.xml') }}
+        key: ${{ runner.os }}-${{ runner.arch }}-mvn-repo-${{ matrix.maven_version }}-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-${{ runner.arch }}-mvn-repo-
 
@@ -155,9 +154,9 @@ jobs:
     - name: "Move Restored Repo"
       if: ${{ steps.cache-restore.outputs.cache-hit }}
       run: |
-         RESTORED_REPO_PATH=$HOME/.m2/repository-restored
-         mv -v ~/.m2/repository $RESTORED_REPO_PATH
-         echo "RESTORED_REPO_PATH=$RESTORED_REPO_PATH" >> $GITHUB_ENV
+        RESTORED_REPO_PATH=$HOME/.m2/repository-restored
+        mv -v ~/.m2/repository $RESTORED_REPO_PATH
+        echo "RESTORED_REPO_PATH=$RESTORED_REPO_PATH" >> $GITHUB_ENV
 
     - name: Set Maven version [${{ matrix.maven_version }}]
       run: |
@@ -206,6 +205,7 @@ jobs:
 
     - name: "Cache: Update"
       uses: actions/cache/save@v4  # https://github.com/actions/cache/blob/main/save/README.md
+      if: ${{ always() && !cancelled() }} # save the cache even when the build failed
       with:
         path: |
           ~/.m2/bin
