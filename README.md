@@ -1,8 +1,8 @@
 # vegardit-maven-parent - the Mother of all Maven parent POMs
 
 [![Build Status](https://github.com/vegardit/vegardit-maven-parent/workflows/Build/badge.svg "GitHub Actions")](https://github.com/vegardit/vegardit-maven-parent/actions?query=workflow%3ABuild)
-[![License](https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?color=blue)](LICENSE.txt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+[![License](https://img.shields.io/github/license/vegardit/vegardit-maven-parent.svg?color=blue)](LICENSE.txt)
 [![Maven Central](https://img.shields.io/maven-central/v/com.vegardit.maven/vegardit-maven-parent)](https://central.sonatype.com/artifact/com.vegardit.maven/vegardit-maven-parent)
 
 1. [What is it?](#what-is-it)

@@ -1,6 +1,9 @@
 package com.vegardit.maven.parent.test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.DataInputStream;
+import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +11,16 @@ import org.junit.jupiter.api.Test;
  * @author Sebastian Thomschke
  */
 class RuntimeJavaVersionTest {
+
+   public static int getJavaCompilerVersion(final Class<?> clazz) throws IOException {
+      try (var is = clazz.getClassLoader().getResourceAsStream(clazz.getName().replace('.', '/') + ".class");
+           var dis = new DataInputStream(is)) {
+         if (dis.readInt() != 0xCA_FE_BA_BE)
+            throw new IllegalArgumentException("Not a valid class file");
+         dis.readUnsignedShort(); // skip minor
+         return dis.readUnsignedShort() - 44;
+      }
+   }
 
    /**
     * This tests if the following config in the pom.xml is effective
@@ -18,9 +31,12 @@ class RuntimeJavaVersionTest {
     * }</pre>
     */
    @Test
-   void ensureJava21IsUsed() {
-      final String javaVersion = System.getProperty("java.version");
-      System.out.println("java.version = " + javaVersion);
-      assertTrue(javaVersion.startsWith("21."), "Java 21 is expected for unit tests.");
+   void ensureRightJDKsAreUsed() throws Exception {
+      System.out.println("Compile Java Version: " + getJavaCompilerVersion(Shape.class));
+      System.out.println("Runtime Java Version: " + Runtime.version().feature());
+      System.out.println("java.version: " + System.getProperty("java.version"));
+      System.out.println("java.version.unit-tests: " + System.getProperty("java.version.unit-tests"));
+      assertEquals(17, getJavaCompilerVersion(Shape.class));
+      assertEquals(Runtime.version().feature(), Integer.getInteger("java.version.unit-tests"));
    }
 }

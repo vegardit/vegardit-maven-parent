@@ -19,7 +19,7 @@
 
   <properties>
     <java.version.unit-tests>21</java.version.unit-tests>
-
+    <maven.surefire.args>-Djava.version.unit-tests=${java.version.unit-tests}</maven.surefire.args>
     <maven.deploy.skip>true</maven.deploy.skip>
     <central-publishing-maven-plugin.excludedArtifacts>${project.artifactId}</central-publishing-maven-plugin.excludedArtifacts>
   </properties>

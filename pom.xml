@@ -106,6 +106,8 @@ check for new dependency/plugin updates using:
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
 
+      <maven.failsafe.args></maven.failsafe.args>
+      <maven.surefire.args></maven.surefire.args>
       <maven.surefire.version>3.5.3</maven.surefire.version>
       <maven.scm.version>2.1.0</maven.scm.version>
       <maven.scm.svnjava.version>2.3.0</maven.scm.svnjava.version>
@@ -1597,6 +1599,7 @@ check for new dependency/plugin updates using:
                      -Djava.rmi.server.hostname=localhost
                      -Djdk.net.URLClassPath.disableClassPathURLCheck=true
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
+                     ${maven.surefire.args}
                      ${jacoco.agent.surefireArgs}
                   </argLine>
                   <!-- -Djava.rmi.server.hostname=localhost see: https://stackoverflow.com/questions/10494095/java-visualvm-hangs-connecting-to-locally-process-launched-from-eclipse#36192913 -->
@@ -1626,6 +1629,7 @@ check for new dependency/plugin updates using:
                      -Djava.rmi.server.hostname=localhost
                      -Djdk.net.URLClassPath.disableClassPathURLCheck=true
                      -Dcom.ibm.jsse2.overrideDefaultTLS=true
+                     ${maven.failsafe.args}
                      ${jacoco.agent.failsafeArgs}
                   </argLine>
                   <failIfNoTests>${failIfNoITests}</failIfNoTests>
