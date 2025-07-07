@@ -728,7 +728,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.6.0</version>
             <executions>
                <execution>
                   <id>basic-checks@validate</id>
@@ -1434,7 +1434,7 @@ check for new dependency/plugin updates using:
 
             <plugin>
                <artifactId>maven-clean-plugin</artifactId>
-               <version>3.5.0</version>
+               <version>3.6.0</version>
             </plugin>
 
             <plugin>
