@@ -1745,7 +1745,7 @@ check for new dependency/plugin updates using:
             <plugin>
                <groupId>net.revelc.code.formatter</groupId>
                <artifactId>formatter-maven-plugin</artifactId>
-               <version>2.27.0</version>
+               <version>2.29.0</version>
                <configuration>
                   <configFile>${eclipse-formatter.config.path}</configFile>
                </configuration>
