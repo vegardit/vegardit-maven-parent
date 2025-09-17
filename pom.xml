@@ -415,7 +415,7 @@ check for new dependency/plugin updates using:
 
 
          /* in Maven 4: session.topLevelProject.basedir https://github.com/apache/maven/pull/1061 */
-         topdir = project.properties['maven.multiModuleProjectDirectory']
+         def topdir = project.properties['maven.multiModuleProjectDirectory']
 
 
          /*
