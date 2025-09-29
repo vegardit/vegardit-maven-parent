@@ -66,7 +66,7 @@ jobs:
       timeout-minutes: 10
 
       compile-jdk: 17
-      test-jdks: 21,24
+      test-jdks: 21,25
       maven-versions: mvnw,3.6.3 # 3.6.3 = oldest supported Maven version
 
       extra-maven-args: ${{ inputs.extra-maven-args }}
