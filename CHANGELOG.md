@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [6.1.11] - 2025-09-29
+
+### Changed
+
+- upgrade Eclipse Java Compiler 3.41.0 -> 3.43.0
+- Maven plugin upgrades:
+  - central-publishing-maven-plugin 0.7.0 -> 0.8.0
+  - checkstyle 10.25.0 -> 11.1.0
+  - flatten-maven-plugin 1.7.0 -> 1.7.3
+  - formatter-maven-plugin 2.26.0 -> 2.29.0
+  - gmavenplus-plugin 4.2.0 -> 4.2.1
+  - license-maven-plugin 2.5.0 -> 2.7.0
+  - maven-compiler-plugin 3.14.0 -> 3.14.1
+  - maven-ear-plugin 3.3.0 -> 3.4.0
+  - maven-enforcer-plugin 3.5.0 -> 3.6.1
+  - maven-javadoc-plugin 3.11.2 -> 3.12.0
+  - maven-scm-plugin 2.1.0 -> 2.2.1
+  - maven-shade-plugin 3.6.0 -> 3.6.1
+  - maven.surefire.version 3.5.3 -> 3.5.4
+  - versions-maven-plugin 2.18.0 -> 2.19.1
+
+
 ## [6.1.10] - 2025-06-07
 
 ### Changed

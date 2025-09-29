@@ -3,8 +3,8 @@
 
 # this file is evaluated by shared workflow https://github.com/sebthom/gha-shared/blob/v1/.github/workflows/maven-build.yml
 
-POM_CURRENT_VERSION="6.1.10-SNAPSHOT" # perform release if pom.xml matches this version
-POM_RELEASE_VERSION="6.1.10" # next release version
+POM_CURRENT_VERSION="6.1.11-SNAPSHOT" # perform release if pom.xml matches this version
+POM_RELEASE_VERSION="6.1.11" # next release version
 
 DRY_RUN=false # is dry run?
 SKIP_TESTS=true # skip tests during release build?
