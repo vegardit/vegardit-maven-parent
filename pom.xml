@@ -2184,7 +2184,7 @@ check for new dependency/plugin updates using:
                   <!-- https://central.sonatype.org/publish/publish-portal-maven/#publishing-by-using-the-maven-plugin -->
                   <groupId>org.sonatype.central</groupId>
                   <artifactId>central-publishing-maven-plugin</artifactId>
-                  <version>0.8.0</version>
+                  <version>0.9.0</version>
                   <extensions>true</extensions>
                   <configuration>
                      <deploymentName>Release ${project.version} (Maven)</deploymentName>
