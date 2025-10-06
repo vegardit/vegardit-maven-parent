@@ -726,7 +726,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <!-- https://maven.apache.org/enforcer/maven-enforcer-plugin/usage.html -->
             <artifactId>maven-enforcer-plugin</artifactId>
-            <version>3.6.1</version>
+            <version>3.6.2</version>
             <executions>
                <execution>
                   <id>basic-checks@validate</id>
@@ -1168,7 +1168,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>build-helper-maven-plugin</artifactId>
-            <version>3.6.1</version>
+            <version>3.6.2</version>
             <executions>
                <execution>
                   <id>parse-version</id>
@@ -1651,7 +1651,7 @@ check for new dependency/plugin updates using:
             <plugin>
                <!-- This plugin provides the capability to package the artifact in an uber-jar -->
                <artifactId>maven-shade-plugin</artifactId>
-               <version>3.6.1</version>
+               <version>3.6.2</version>
             </plugin>
 
             <plugin>
