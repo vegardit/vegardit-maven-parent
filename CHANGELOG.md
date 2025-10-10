@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [6.1.12] - 2025-10-10
+
+### Fixed
+- align formatter setting with checkstyle rules
+
+### Changed
+
+- Maven plugin upgrades:
+  - central-publishing-maven-plugin 0.8.0 -> 0.9.0
+  - checkstyle from 11.1.0 -> 12.0.0
+  - exec-maven-plugin from 3.5.1 -> 3.6.1
+  - extra-enforcer-rules 1.10.0 -> 1.11.0
+  - japicmp-maven-plugin 0.23.1 -> 0.24.1
+  - maven-dependency-plugin 3.8.1 -> 3.9.0
+  - maven-enforcer-plugin from 3.6.1 -> 3.6.2
+
+
 ## [6.1.11] - 2025-09-29
 
 ### Changed
