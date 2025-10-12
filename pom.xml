@@ -124,7 +124,7 @@ check for new dependency/plugin updates using:
       <!-- enables https://github.com/timgifford/maven-buildtime-extension -->
       <buildtime.output.log>true</buildtime.output.log>
 
-      <checkstyle.version>12.0.0</checkstyle.version>
+      <checkstyle.version>12.0.1</checkstyle.version>
       <checkstyle.skip>false</checkstyle.skip>
       <checkstyle.sevntu-checks.version>1.44.1</checkstyle.sevntu-checks.version>
       <checkstyle.violation-severity>warning</checkstyle.violation-severity>
@@ -1112,7 +1112,7 @@ check for new dependency/plugin updates using:
             <!-- enable code coverage -->
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.13</version>
+            <version>0.8.14</version>
             <executions>
                <execution>
                   <id>pre-unit-test</id>
@@ -1686,7 +1686,7 @@ check for new dependency/plugin updates using:
                <!-- defined under pluginManagement to reuse config in plugin and reporting section, see https://stackoverflow.com/questions/32136828/share-maven-plugin-configuration-between-build-and-reporting-sections/32181937#32181937 -->
                <groupId>com.github.siom79.japicmp</groupId>
                <artifactId>japicmp-maven-plugin</artifactId>
-               <version>0.24.1</version>
+               <version>0.24.2</version>
                <configuration>
                   <skip>${skip.japicmp.cmp}</skip>
                   <parameter>
@@ -1856,7 +1856,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.13</version>
+            <version>0.8.14</version>
             <configuration>
                <skip>${skip.report.jacoco-maven-plugin}</skip>
             </configuration>

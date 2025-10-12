@@ -12,7 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Maven plugin upgrades:
+  - checkstyle 12.0.0 -> 12.0.1
   - groovy.version 3.0.25 -> 5.0.1
+  - jacoco-maven-plugin 0.8.13 -> 0.8.14
+  - japicmp-maven-plugin 0.24.1 -> 0.24.2
+
 
 ## [6.1.12] - 2025-10-10
 
