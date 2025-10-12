@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Changed
+
+- Maven plugin upgrades:
+  - groovy.version 3.0.25 -> 5.0.1
+
 ## [6.1.12] - 2025-10-10
 
 ### Fixed

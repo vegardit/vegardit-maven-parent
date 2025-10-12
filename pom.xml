@@ -101,7 +101,8 @@ check for new dependency/plugin updates using:
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
       <eclipse-java-compiler.version>3.43.0</eclipse-java-compiler.version>
 
-      <groovy.version>3.0.25</groovy.version>
+      <groovy.groupId>org.apache.groovy</groovy.groupId> <!-- old: org.codehaus.groovy -->
+      <groovy.version>5.0.1</groovy.version>
 
       <maven.minimum.version>3.6.3</maven.minimum.version>
       <maven.maximum.version />
@@ -500,7 +501,7 @@ check for new dependency/plugin updates using:
    <dependencyManagement>
       <dependencies>
          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
+            <groupId>${groovy.groupId}</groupId>
             <artifactId>groovy-bom</artifactId>
             <version>${groovy.version}</version>
             <type>pom</type>
@@ -652,7 +653,7 @@ check for new dependency/plugin updates using:
             </configuration>
             <dependencies>
                <dependency>
-                  <groupId>org.codehaus.groovy</groupId>
+                  <groupId>${groovy.groupId}</groupId>
                   <artifactId>groovy-all</artifactId>
                   <version>${groovy.version}</version>
                   <type>pom</type>
