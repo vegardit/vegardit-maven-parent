@@ -315,8 +315,8 @@ check for new dependency/plugin updates using:
           * determine if the artifact contains Java sources
           */
          def isJavaCompilable = project.packaging in ["jar", "war", "ejb", "ear", "par", "bundle", "maven-plugin"]
-           && !project.compileSourceRoots.isEmpty()
-           && new File(project.compileSourceRoots[0]).exists();
+               && !project.compileSourceRoots.isEmpty()
+               && new File(project.compileSourceRoots[0]).exists();
          setProjectProp("custom.noJavaArtifact", isJavaCompilable ? "false" : "true");
          setProjectProp("skip.jacoco", isJavaCompilable ? "false" : "true");
 
@@ -331,17 +331,24 @@ check for new dependency/plugin updates using:
              */
             def javaVersion = getProjectProp("java.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest() .setArtifact(ecjArtifactMeta) .setLocalRepository(session.localRepository) .setRemoteRepositories(project.remoteArtifactRepositories) ).artifacts[0];
-           setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
-           /*
-            * check if .settings/org.eclipse.jdt.core.prefs is present
-            */
-           jdtCorePrefsFile = new File(project.basedir, ".settings/org.eclipse.jdt.core.prefs");
-           if(jdtCorePrefsFile.exists()) {
-             setProjectProp("custom.ecjProperties", "-properties \"" + jdtCorePrefsFile + "\"");
-           } else {
-             setProjectProp("custom.ecjProperties", "-g"); /* using -g just as placeholder to prevent "Unrecognized option : ''"*/
-           }
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"];
+            def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null);
+            def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
+                  .setArtifact(ecjArtifactMeta)
+                  .setLocalRepository(session.localRepository)
+                  .setRemoteRepositories(project.remoteArtifactRepositories)
+            ).artifacts[0];
+            setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath);
+
+            /*
+             * check if .settings/org.eclipse.jdt.core.prefs is present
+             */
+            jdtCorePrefsFile = new File(project.basedir, ".settings/org.eclipse.jdt.core.prefs");
+            if(jdtCorePrefsFile.exists()) {
+               setProjectProp("custom.ecjProperties", "-properties \"" + jdtCorePrefsFile + "\"");
+            } else {
+               setProjectProp("custom.ecjProperties", "-g"); /* using -g just as placeholder to prevent "Unrecognized option : ''"*/
+            }
 
             /*
              * determine bootclasspath for compilation of src/main/java
@@ -353,11 +360,11 @@ check for new dependency/plugin updates using:
             /* https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain */
             def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec);
             if(!compileJDKs)
-                throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
+               throw new RuntimeException("No toolchain found with specification $compileJDKSpec");
             def compileJDK = compileJDKs[0];
             if(new File("${compileJDK.javaHome}/jmods").exists()) {
-              setProjectProp("custom.compileBootClasspathOption", "--module-path");
-              setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jmods");
+               setProjectProp("custom.compileBootClasspathOption", "--module-path");
+               setProjectProp("custom.compileBootClasspath", "${compileJDK.javaHome}/jmods");
             } else {
                setProjectProp("custom.compileBootClasspathOption", "-bootclasspath");
                setProjectProp("custom.compileBootClasspath", [
@@ -382,7 +389,7 @@ check for new dependency/plugin updates using:
             def isTestable = false;
             if(new File(project.build.testSourceDirectory).exists())
                new File(project.build.testSourceDirectory)
-                  .traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it -> isTestable = true };
+                     .traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.java/) { it -> isTestable = true };
 
             if(isTestable) {
                setProjectProp("custom.noJavaTests", "false");
@@ -422,18 +429,18 @@ check for new dependency/plugin updates using:
             } else {
                def checkstyleConfigArtifactMeta = null;
                if(project.properties.containsKey("checkstyle.config.artifact")) {
-                 def chunks = project.properties["checkstyle.config.artifact"].split(":");
-                 if(chunks.length == 4) {
-                   checkstyleConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3]);
-                 } else {
-                   checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4]);
-                 }
+                  def chunks = project.properties["checkstyle.config.artifact"].split(":");
+                  if(chunks.length == 4) {
+                     checkstyleConfigArtifactMeta = artifactFactory.createArtifact(chunks[0], chunks[1], chunks[2], chunks[3]);
+                  } else {
+                     checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(chunks[0], chunks[1], chunks[2], chunks[3], chunks[4]);
+                  }
                } else {
-                 def root = project;
-                 while(root.artifactId != "vegardit-maven-parent") {
-                   root = root.parent;
-                 }
-                 checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "checkstyle");
+                  def root = project;
+                  while(root.artifactId != "vegardit-maven-parent") {
+                     root = root.parent;
+                  }
+                  checkstyleConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "checkstyle");
                }
                def checkstyleConfigArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest()
                      .setArtifact(checkstyleConfigArtifactMeta)
@@ -441,7 +448,7 @@ check for new dependency/plugin updates using:
                      .setRemoteRepositories(project.remoteArtifactRepositories)
                ).artifacts[0];
                if(checkstyleConfigArtifact != null) {
-                 setProjectProp("checkstyle.config.path", checkstyleConfigArtifact.file.absolutePath);
+                  setProjectProp("checkstyle.config.path", checkstyleConfigArtifact.file.absolutePath);
                }
             }
          }
@@ -464,7 +471,7 @@ check for new dependency/plugin updates using:
                } else {
                   def root = project;
                   while(root.artifactId != "vegardit-maven-parent") {
-                      root = root.parent;
+                     root = root.parent;
                   }
                   eclipseFormatterConfigArtifactMeta = artifactFactory.createArtifactWithClassifier(root.groupId, root.artifactId, root.version, "xml", "eclipse-formatter");
                }
