@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Changed
+
+- Maven plugin upgrades:
+  - checkstyle 12.0.1 -> 12.1.0
+  - exec-maven-plugin from 3.6.1 to 3.6.2
+  - groovy.version 5.0.1 -> 5.0.2
+
+
 ## [6.1.13] - 2025-10-12
 
 ### Changed
