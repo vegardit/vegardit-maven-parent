@@ -1044,7 +1044,7 @@ check for new dependency/plugin updates using:
 
          <plugin>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>3.1.0</version> <!--$NO-MVN-MAN-VER$-->
+            <version>3.2.0</version> <!--$NO-MVN-MAN-VER$-->
             <executions>
                <execution>
                   <id>delete-java-stubs@process-classes</id>
