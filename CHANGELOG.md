@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [6.1.14] - 2025-11-11
+
 ### Fixed
 
 - maven-javadoc-plugin fails with `javadoc: error - invalid flag: -no-fonts`, see https://github.com/apache/maven-javadoc-plugin/issues/1244
@@ -16,9 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Maven plugin upgrades:
-  - checkstyle 12.0.1 -> 12.1.0
+  - checkstyle 12.0.1 -> 12.1.1
   - exec-maven-plugin from 3.6.1 to 3.6.2
   - groovy.version 5.0.1 -> 5.0.2
+  - maven-antrun-plugin) 3.1.0 -> 3.2.0
+  - maven-release 3.1.1 -> 3.2.0
+  - maven-war-plugin 3.4.0 -> 3.5.0
 
 
 ## [6.1.13] - 2025-10-12
