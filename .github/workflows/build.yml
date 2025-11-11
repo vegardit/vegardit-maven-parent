@@ -3,12 +3,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-ArtifactOfProjectHomePage: https://github.com/vegardit/vegardit-maven-parent
 #
-# https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions
+# https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
 name: Build
 
-on:
+on: # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
   schedule:
-    # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule
     - cron: "0 15 1 * *"
   push:
     branches-ignore:  # build all branches except:
@@ -37,7 +37,7 @@ on:
     - ".github/workflows/stale.yml"
     - "codecov.yml"
   workflow_dispatch:
-    # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_dispatch
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_dispatch
     inputs:
       extra-maven-args:
         description: "Additional command-line arguments to append to all Maven invocations"
@@ -67,7 +67,8 @@ jobs:
 
       compile-jdk: 17
       test-jdks: 21,25
-      maven-versions: mvnw,3.6.3 # 3.6.3 = oldest supported Maven version
+      extra-jdks: 21  # always required by src/test/project
+      maven-versions: mvnw,3.6.3  # 3.6.3 = oldest supported Maven version
 
       extra-maven-args: ${{ inputs.extra-maven-args }}
       snapshots-branch: mvn-snapshots-repo
