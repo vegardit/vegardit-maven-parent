@@ -1679,6 +1679,9 @@ check for new dependency/plugin updates using:
                   <!-- exclude internal package and java.*, javax.* stubs -->
                   <excludePackageNames>*.internal:*.internal.*:java:java.*:javax:javax.*</excludePackageNames>
 
+                  <!-- TODO temporary workaround for "javadoc: error - invalid flag: -no-fonts" https://github.com/apache/maven-javadoc-plugin/issues/1244 -->
+                  <disableNoFonts>true</disableNoFonts>
+
                   <detectLinks>true</detectLinks>
                   <linksource>false</linksource>
                   <notimestamp>true</notimestamp>

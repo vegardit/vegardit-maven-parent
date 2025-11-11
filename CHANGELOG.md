@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+### Fixed
+
+- maven-javadoc-plugin fails with `javadoc: error - invalid flag: -no-fonts`, see https://github.com/apache/maven-javadoc-plugin/issues/1244
+
 ### Changed
 
 - Maven plugin upgrades:
