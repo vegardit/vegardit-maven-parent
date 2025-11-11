@@ -192,7 +192,7 @@ check for new dependency/plugin updates using:
           * This ensures reproducible builds by fixing file timestamps.
           * See: https://maven.apache.org/guides/mini/guide-reproducible-builds.html
           */
-         @Grab(group='org.eclipse.jgit', module='org.eclipse.jgit', version='7.2.0.202503040940-r')
+         @Grab(group='org.eclipse.jgit', module='org.eclipse.jgit', version='7.4.0.202509020913-r')
          import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
          def builder = new FileRepositoryBuilder().findGitDir(project.basedir);
