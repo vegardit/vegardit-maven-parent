@@ -68,7 +68,7 @@ jobs:
       compile-jdk: 17
       test-jdks: 21,25
       extra-jdks: 21  # always required by src/test/project
-      maven-versions: mvnw,3.6.3  # 3.6.3 = oldest supported Maven version
+      maven-versions: mvnw,3.9.0  # 3.9.0 = oldest supported Maven version
 
       extra-maven-args: ${{ inputs.extra-maven-args }}
       snapshots-branch: mvn-snapshots-repo

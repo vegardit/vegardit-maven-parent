@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- increase minimum required Maven version 3.6.3 -> 3.9.0
+- Maven plugin upgrades:
+  - checkstyle 12.1.1 -> 12.1.2
+  - maven-ejb-plugin 3.2.1 -> 3.3.0
+  - maven-jar-plugin 3.4.2 -> 3.5.0.
+  - taglist-maven-plugin 3.2.1 -> 3.2.2
+  - versions-maven-plugin 2.19.1 -> 2.20.0
+
 
 ## [6.1.14] - 2025-11-11
 
