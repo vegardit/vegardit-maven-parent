@@ -1909,7 +1909,7 @@ check for new dependency/plugin updates using:
             <!-- TODO, @todo list report -->
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>taglist-maven-plugin</artifactId>
-            <version>3.2.1</version>
+            <version>3.2.2</version>
             <configuration>
                <configuration>
                   <skip>${skip.report.taglist-maven-plugin}</skip>
