@@ -144,7 +144,7 @@ ArtifactResolutionException: Unable to locate site descriptor`.\
 
 ### Using release builds
 
-Releases of this project are available at https://search.maven.org/artifact/com.vegardit.maven/vegardit-maven-parent
+Releases of this project are available at https://central.sonatype.com/artifact/com.vegardit.maven/vegardit-maven-parent
 
 Add the following `parent` declaration to your Maven project `pom.xml`.
 
