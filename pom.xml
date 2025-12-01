@@ -1439,7 +1439,7 @@ check for new dependency/plugin updates using:
 
             <plugin>
                <artifactId>maven-resources-plugin</artifactId>
-               <version>3.3.1</version>
+               <version>3.4.0</version>
                <configuration>
                  <!-- see https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html#Filtering_Properties_Files -->
                   <encoding>${project.build.sourceEncoding}</encoding>
