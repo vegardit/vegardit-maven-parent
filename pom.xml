@@ -1223,7 +1223,7 @@ check for new dependency/plugin updates using:
 
          <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.1</version>
+            <version>3.4.0</version>
             <executions>
                <execution>
                   <id>attach-sources-no-fork</id>
