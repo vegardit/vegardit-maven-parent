@@ -960,8 +960,7 @@ check for new dependency/plugin updates using:
             </executions>
             <!-- the source and target configuration is added here for the maven-javadoc-plugin and the m2eclipse project configuration which rely on these values-->
             <configuration>
-               <source>${java.version}</source>
-               <target>${java.version}</target>
+               <release>${java.version}</release>
             </configuration>
          </plugin>
          <plugin>
@@ -997,8 +996,7 @@ check for new dependency/plugin updates using:
                         -time<!-- display speed information. -->
                         -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.outputDirectory}"
-                        -source ${java.version}
-                        -target ${java.version}
+                        --release ${java.version}
                         -cp "${custom.compileClasspathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
                         ${custom.ecjSourcePaths}
                      </commandlineArgs>
@@ -1028,8 +1026,7 @@ check for new dependency/plugin updates using:
                         -time<!-- display speed information. -->
                         -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.testOutputDirectory}"
-                        -source ${java.version}
-                        -target ${java.version}
+                        --release ${java.version}
                         -cp "${custom.test.classpathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
                         ${custom.test.ecjSourcePaths}
                      </commandlineArgs>
