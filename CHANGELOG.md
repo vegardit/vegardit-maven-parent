@@ -8,15 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [7.0.0] - 2025-12-10
+
 ### Changed
 
-- increase minimum required Maven version 3.6.3 -> 3.9.0
+- **increase minimum required Maven version 3.6.3 -> 3.9.0**
+- use --release instead of source/target in compiler configuration
 - Maven plugin upgrades:
-  - checkstyle 12.1.1 -> 12.1.2
+  - checkstyle 12.1.1 -> 12.2.0
+  - groovy.version 5.0.2 -> 5.0.3
+  - japicmp-maven-plugin 0.24.2 -> 0.25.0
+  - maven-assembly-plugin 3.7.1 -> 3.8.0.
   - maven-ejb-plugin 3.2.1 -> 3.3.0
-  - maven-jar-plugin 3.4.2 -> 3.5.0.
+  - maven-jar-plugin 3.4.2 -> 3.5.0
+  - maven-release-plugin 3.2.0 -> 3.3.0
+  - maven-resources-plugin 3.3.1 -> 3.4.0
+  - maven-source-plugin 3.3.1 -> 3.4.0
+  - maven-war-plugin 3.5.0 -> 3.5.1
   - taglist-maven-plugin 3.2.1 -> 3.2.2
-  - versions-maven-plugin 2.19.1 -> 2.20.0
+  - versions-maven-plugin 2.19.1 -> 2.20.1
 
 
 ## [6.1.14] - 2025-11-11
