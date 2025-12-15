@@ -1472,7 +1472,7 @@ check for new dependency/plugin updates using:
 
             <plugin>
                <artifactId>maven-release-plugin</artifactId>
-               <version>3.3.0</version>
+               <version>3.3.1</version>
                <configuration>
                   <checkModificationExcludes>
                      <!-- workaround for https://stackoverflow.com/questions/16199154/maven-releaseprepare-cannot-prepare-the-release -->
