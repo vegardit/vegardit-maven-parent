@@ -964,7 +964,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>3.6.3</version>
             <executions>
                <execution>
                   <id>ecj@compile</id>
