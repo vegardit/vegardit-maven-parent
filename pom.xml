@@ -102,7 +102,7 @@ check for new dependency/plugin updates using:
       <eclipse-java-compiler.version>3.43.0</eclipse-java-compiler.version>
 
       <groovy.groupId>org.apache.groovy</groovy.groupId> <!-- old: org.codehaus.groovy -->
-      <groovy.version>5.0.3</groovy.version>
+      <groovy.version>5.0.4</groovy.version>
 
       <maven.minimum.version>3.9.0</maven.minimum.version>
       <maven.maximum.version />
