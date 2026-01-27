@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [8.0.0] - 2026-01-27
+
 ### Changed
 - **BREAKING** renamed `java.*` Maven properties to `jdk.*` to prevent clashing with the JVM’s standard system properties
   `java.version`/`java.vendor` (e.g. via `-Djava.*`) and misleading Maven/plugin prerequisite checks when Maven runs on a newer JDK while toolchains target an older JDK.
