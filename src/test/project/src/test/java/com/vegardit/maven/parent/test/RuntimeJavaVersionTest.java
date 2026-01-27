@@ -26,7 +26,7 @@ class RuntimeJavaVersionTest {
     * This tests if the following config in the pom.xml is effective
     * <pre>{@code
     *   <properties>
-    *     <java.version.unit-tests>21</java.version.unit-tests>
+    *     <jdk.version.unit-tests>21</jdk.version.unit-tests>
     *   </properties>
     * }</pre>
     */
@@ -35,8 +35,9 @@ class RuntimeJavaVersionTest {
       System.out.println("Compile Java Version: " + getJavaCompilerVersion(Shape.class));
       System.out.println("Runtime Java Version: " + Runtime.version().feature());
       System.out.println("java.version: " + System.getProperty("java.version"));
-      System.out.println("java.version.unit-tests: " + System.getProperty("java.version.unit-tests"));
+      System.out.println("jdk.version: " + System.getProperty("jdk.version"));
+      System.out.println("jdk.version.unit-tests: " + System.getProperty("jdk.version.unit-tests"));
       assertEquals(17, getJavaCompilerVersion(Shape.class));
-      assertEquals(Runtime.version().feature(), Integer.getInteger("java.version.unit-tests"));
+      assertEquals(Runtime.version().feature(), Integer.getInteger("jdk.version.unit-tests"));
    }
 }

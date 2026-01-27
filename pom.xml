@@ -85,21 +85,21 @@ check for new dependency/plugin updates using:
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
       <maven-resources-plugin.propertiesEncoding>ISO-8859-1</maven-resources-plugin.propertiesEncoding>
 
-      <java.version>17</java.version>
-      <java.vendor>default</java.vendor>
+      <jdk.version>17</jdk.version>
+      <jdk.vendor>default</jdk.vendor>
 
-      <java.version.unit-tests>${java.version}</java.version.unit-tests>
-      <java.vendor.unit-tests>${java.vendor}</java.vendor.unit-tests>
+      <jdk.version.unit-tests>${jdk.version}</jdk.version.unit-tests>
+      <jdk.vendor.unit-tests>${jdk.vendor}</jdk.vendor.unit-tests>
 
-      <java.version.integration-tests>${java.version.unit-tests}</java.version.integration-tests>
-      <java.vendor.integration-tests>${java.vendor.unit-tests}</java.vendor.integration-tests>
+      <jdk.version.integration-tests>${jdk.version.unit-tests}</jdk.version.integration-tests>
+      <jdk.vendor.integration-tests>${jdk.vendor.unit-tests}</jdk.vendor.integration-tests>
 
-      <java.version.verify>${java.version}</java.version.verify>
-      <java.vendor.verify>${java.vendor}</java.vendor.verify>
+      <jdk.version.verify>${jdk.version}</jdk.version.verify>
+      <jdk.vendor.verify>${jdk.vendor}</jdk.vendor.verify>
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.43.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.44.0</eclipse-java-compiler.version>
 
       <groovy.groupId>org.apache.groovy</groovy.groupId> <!-- old: org.codehaus.groovy -->
       <groovy.version>5.0.4</groovy.version>
@@ -329,7 +329,7 @@ check for new dependency/plugin updates using:
             /*
              * loading/locating eclipse Java compiler artifact
              */
-            def javaVersion = getProjectProp("java.version");
+            def javaVersion = getProjectProp("jdk.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
             def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest() .setArtifact(ecjArtifactMeta) .setLocalRepository(session.localRepository)
                   .setRemoteRepositories(project.remoteArtifactRepositories)
@@ -351,7 +351,7 @@ check for new dependency/plugin updates using:
              */
             def compileJDKSpec = [
                "version": javaVersion,
-               "vendor": getProjectProp("java.vendor")
+               "vendor": getProjectProp("jdk.vendor")
             ]
             /* https://github.com/apache/maven/tree/master/maven-core/src/main/java/org/apache/maven/toolchain */
             def compileJDKs = session.lookup("org.apache.maven.toolchain.ToolchainManager")?.getToolchains(session, "jdk", compileJDKSpec);
@@ -808,7 +808,7 @@ check for new dependency/plugin updates using:
                      <skip>${skip.enforcer.enforce-bytecode-version}</skip>
                      <rules>
                         <enforceBytecodeVersion>
-                           <maxJdkVersion>${java.version}</maxJdkVersion>
+                           <maxJdkVersion>${jdk.version}</maxJdkVersion>
                            <ignoreOptionals>true</ignoreOptionals>
                            <ignoredScopes>
                               <ignoredScope>provided</ignoredScope>
@@ -958,7 +958,7 @@ check for new dependency/plugin updates using:
             </executions>
             <!-- the source and target configuration is added here for the maven-javadoc-plugin and the m2eclipse project configuration which rely on these values-->
             <configuration>
-               <release>${java.version}</release>
+               <release>${jdk.version}</release>
             </configuration>
          </plugin>
          <plugin>
@@ -994,7 +994,7 @@ check for new dependency/plugin updates using:
                         -time<!-- display speed information. -->
                         -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.outputDirectory}"
-                        --release ${java.version}
+                        --release ${jdk.version}
                         -cp "${custom.compileClasspathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
                         ${custom.ecjSourcePaths}
                      </commandlineArgs>
@@ -1024,7 +1024,7 @@ check for new dependency/plugin updates using:
                         -time<!-- display speed information. -->
                         -showversion<!-- display the build number of the compiler -->
                         -d "${project.build.testOutputDirectory}"
-                        --release ${java.version}
+                        --release ${jdk.version}
                         -cp "${custom.test.classpathElements}"<!-- <classpath /> doesn't work here as it misses runtime dependencies -->
                         ${custom.test.ecjSourcePaths}
                      </commandlineArgs>
@@ -1276,8 +1276,8 @@ check for new dependency/plugin updates using:
                      <configuration>
                         <toolchains>
                            <jdk>
-                              <version>${java.version}</version>
-                              <vendor>${java.vendor}</vendor>
+                              <version>${jdk.version}</version>
+                              <vendor>${jdk.vendor}</vendor>
                            </jdk>
                         </toolchains>
                      </configuration>
@@ -1291,8 +1291,8 @@ check for new dependency/plugin updates using:
                      <configuration>
                         <toolchains>
                            <jdk>
-                              <version>${java.version.unit-tests}</version>
-                              <vendor>${java.vendor.unit-tests}</vendor>
+                              <version>${jdk.version.unit-tests}</version>
+                              <vendor>${jdk.vendor.unit-tests}</vendor>
                            </jdk>
                         </toolchains>
                      </configuration>
@@ -1306,8 +1306,8 @@ check for new dependency/plugin updates using:
                      <configuration>
                         <toolchains>
                            <jdk>
-                              <version>${java.version.integration-tests}</version>
-                              <vendor>${java.vendor.integration-tests}</vendor>
+                              <version>${jdk.version.integration-tests}</version>
+                              <vendor>${jdk.vendor.integration-tests}</vendor>
                            </jdk>
                         </toolchains>
                      </configuration>
@@ -1321,8 +1321,8 @@ check for new dependency/plugin updates using:
                      <configuration>
                         <toolchains>
                            <jdk>
-                              <version>${java.version.verify}</version>
-                              <vendor>${java.vendor.verify}</vendor>
+                              <version>${jdk.version.verify}</version>
+                              <vendor>${jdk.vendor.verify}</vendor>
                            </jdk>
                         </toolchains>
                      </configuration>
@@ -1660,7 +1660,7 @@ check for new dependency/plugin updates using:
                <configuration>
                   <skip>${skip.maven.javadoc}</skip>
 
-                  <source>${java.version}</source>
+                  <source>${jdk.version}</source>
 
                   <charset>${project.build.sourceEncoding}</charset>
                   <encoding>${project.build.sourceEncoding}</encoding>

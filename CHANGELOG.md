@@ -8,6 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **BREAKING** renamed `java.*` Maven properties to `jdk.*` to prevent clashing with the JVM’s standard system properties
+  `java.version`/`java.vendor` (e.g. via `-Djava.*`) and misleading Maven/plugin prerequisite checks when Maven runs on a newer JDK while toolchains target an older JDK.
+
+  | Old property                     | New property
+  | -------------------------------- | -------------
+  | `java.version`                   | `jdk.version`
+  | `java.vendor`                    | `jdk.vendor`
+  | `java.version.unit-tests`        | `jdk.version.unit-tests`
+  | `java.vendor.unit-tests`         | `jdk.vendor.unit-tests`
+  | `java.version.integration-tests` | `jdk.version.integration-tests`
+  | `java.vendor.integration-tests`  | `jdk.vendor.integration-tests`
+  | `java.version.verify`            | `jdk.version.verify`
+  | `java.vendor.verify`             | `jdk.vendor.verify`
+- upgrade Eclipse Java Compiler 3.43.0 -> 3.44.0
+- Maven plugin upgrades:
+  - central-publishing-maven-plugin 0.9.0 -> 0.10.0
+  - checkstyle 12.2.0 -> 13.0.0
+  - exec-maven-plugin 3.6.2 -> 3.6.3
+  - groovy.version 5.0.3 -> 5.0.4
+  - gmavenplus-plugin 4.2.1 -> 4.3.0
+  - japicmp-maven-plugin 0.25.0 -> 0.25.4
+  - license-maven-plugin) from 2.7.0 to 2.7.1
+  - maven-release-plugin 3.3.0 -> 3.3.1
+  - versions-maven-plugin 2.20.1 -> 2.21.0
+
 
 ## [7.0.0] - 2025-12-10
 

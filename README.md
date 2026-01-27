@@ -21,16 +21,16 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
     ```xml
     <properties>
        <!-- use Oracle JDK 11 for compilation -->
-       <java.version>11</java.version>
-       <java.vendor>oracle</java.vendor>
+       <jdk.version>11</jdk.version>
+       <jdk.vendor>oracle</jdk.vendor>
 
        <!-- use Open JDK 17 for running unit tests -->
-       <java.version.unit-tests>17</java.version.unit-tests>
-       <java.vendor.unit-tests>openjdk</java.vendor.unit-tests>
+       <jdk.version.unit-tests>17</jdk.version.unit-tests>
+       <jdk.vendor.unit-tests>openjdk</jdk.vendor.unit-tests>
 
        <!-- use Open JDK 21 for running integration tests -->
-       <java.version.integration-tests>21</java.version.integration-tests>
-       <java.vendor.integration-tests>openjdk</java.vendor.integration-tests>
+       <jdk.version.integration-tests>21</jdk.version.integration-tests>
+       <jdk.vendor.integration-tests>openjdk</jdk.vendor.integration-tests>
     </properties>
     ```
 - Configures the [Eclipse Java Compiler](https://mvnrepository.com/artifact/org.eclipse.jdt.core.compiler/ecj) instead of javac:
