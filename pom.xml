@@ -558,7 +558,7 @@ check for new dependency/plugin updates using:
          -->
          <plugin>
             <artifactId>maven-dependency-plugin</artifactId>
-            <version>3.9.0</version><!--$NO-MVN-MAN-VER$-->
+            <version>3.10.0</version><!--$NO-MVN-MAN-VER$-->
             <executions>
                <execution>
                   <!-- Add maven project properties containing the path to artifact in the local repo for all dependencies to see https://maven.apache.org/plugins/maven-dependency-plugin/properties-mojo.html -->
