@@ -1646,7 +1646,7 @@ check for new dependency/plugin updates using:
             <plugin>
                <!-- This plugin provides the capability to package the artifact in an uber-jar -->
                <artifactId>maven-shade-plugin</artifactId>
-               <version>3.6.1</version>
+               <version>3.6.2</version>
             </plugin>
 
             <plugin>
