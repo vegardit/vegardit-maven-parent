@@ -99,7 +99,7 @@ check for new dependency/plugin updates using:
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.44.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.45.0</eclipse-java-compiler.version>
 
       <groovy.groupId>org.apache.groovy</groovy.groupId> <!-- old: org.codehaus.groovy -->
       <groovy.version>5.0.6</groovy.version>
