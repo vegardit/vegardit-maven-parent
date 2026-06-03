@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.1.0] - 2026-06-03
+
+### Changed
+
+- upgrade Eclipse Java Compiler 3.44.0 -> 3.45.0
+- Maven plugin upgrades:
+  - checkstyle 13.0.0 -> 13.5.0
+  - doxia-module-markdown 2.0.0 -> 2.1.0
+  - extra-enforcer-rules 1.11.0 -> 1.12.0
+  - gmavenplus-plugin 4.3.0 -> 4.3.1
+  - groovy.version 5.0.4 -> 5.0.6
+  - japicmp-maven-plugin 0.25.0 -> 0.26.1
+  - maven-bundle-plugin 6.0.0 -> 6.0.2
+  - maven-compiler-plugin 3.14.1 -> 3.15.0
+  - maven-dependency-plugin 3.9.0 -> 3.11.0
+  - maven-enforcer-plugin from 3.6.2 -> 3.6.3
+  - maven-resources-plugin 3.4.0 -> 3.5.0
+  - maven-shade-plugin 3.6.1 -> 3.6.3
+  - maven-site-plugin 3.21.0 -> 3.22.0
+  - maven.surefire.version 3.5.4 -> 3.5.6
 
 ## [8.0.0] - 2026-01-27
 
