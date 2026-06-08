@@ -1105,7 +1105,7 @@ check for new dependency/plugin updates using:
             <!-- enable code coverage -->
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.14</version>
+            <version>0.8.15</version>
             <executions>
                <execution>
                   <id>pre-unit-test</id>
@@ -1852,7 +1852,7 @@ check for new dependency/plugin updates using:
          <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.14</version>
+            <version>0.8.15</version>
             <configuration>
                <skip>${skip.report.jacoco-maven-plugin}</skip>
             </configuration>
