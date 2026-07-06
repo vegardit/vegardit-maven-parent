@@ -589,7 +589,7 @@ check for new dependency/plugin updates using:
             <!-- https://groovy.github.io/GMavenPlus/ -->
             <groupId>org.codehaus.gmavenplus</groupId>
             <artifactId>gmavenplus-plugin</artifactId>
-            <version>5.0.0</version>
+            <version>5.1.0</version>
             <executions>
                <execution>
                   <id>groovy.script.onValidate@validate</id>
