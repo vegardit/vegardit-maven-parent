@@ -1260,7 +1260,7 @@ check for new dependency/plugin updates using:
          <plugins>
             <plugin>
                <artifactId>maven-toolchains-plugin</artifactId>
-               <version>3.2.0</version>
+               <version>3.3.0</version>
                <executions>
                   <execution>
                      <id>toolchain@validate</id>
