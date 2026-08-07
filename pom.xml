@@ -9,7 +9,8 @@ plugin announcements: https://blogs.apache.org/maven/
 check for new dependency/plugin updates using:
   mvn -U -ntp versions:display-dependency-updates versions:display-plugin-updates
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
@@ -99,7 +100,7 @@ check for new dependency/plugin updates using:
 
       <!-- https://central.sonatype.com/artifact/org.eclipse.jdt/ecj/ -->
       <!-- https://github.com/eclipse-jdt/eclipse.jdt.core.git -->
-      <eclipse-java-compiler.version>3.45.0</eclipse-java-compiler.version>
+      <eclipse-java-compiler.version>3.46.0</eclipse-java-compiler.version>
 
       <groovy.groupId>org.apache.groovy</groovy.groupId> <!-- old: org.codehaus.groovy -->
       <groovy.version>5.0.8</groovy.version>
