@@ -8,9 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.2.0] - 2026-08-08
+
+### Fix
+
+- build failure:
+  ```
+  [ERROR] Failed to execute goal org.codehaus.gmavenplus:gmavenplus-plugin:4.3.0:execute (groovy.script.onValidate@validate) on project no-npe-eea-spring-7: Error occurred while calling a method on a Groovy class from classpath.: InvocationTargetException: startup failed:
+  [ERROR] General error during conversion: Error grabbing Grapes -- [download failed: commons-codec#commons-codec;1.19.0!commons-codec.jar]
+  [ERROR]
+  [ERROR] java.lang.RuntimeException: Error grabbing Grapes -- [download failed: commons-codec#commons-codec;1.19.0!commons-codec.jar]
+  [ERROR]         at groovy.grape.GrapeIvy.getDependencies(GrapeIvy.groovy:487)
+  [ERROR]         at groovy.grape.GrapeIvy.resolve(GrapeIvy.groovy:648)
+  [ERROR]         at groovy.grape.GrapeIvy.resolve(GrapeIvy.groovy:624)
+  [ERROR]         at groovy.grape.GrapeIvy.grab(GrapeIvy.groovy:288)
+  [ERROR]         at groovy.grape.Grape$1.run(Grape.java:172)
+  [ERROR]         at groovy.grape.Grape$1.run(Grape.java:158)
+  ```
+
 ### Changed
 
 - upgrade Eclipse Java Compiler 3.45.0 -> 3.45.0
+- Maven plugin upgrades:
+  - central-publishing-maven-plugin 0.10.0 -> 0.11.0
+  - checkstyle 13.5.0 -> 13.9.0
+  - flatten-maven-plugin 1.7.3 -> 1.8.0
+  - gmavenplus-plugin 5.0.0 -> 5.1.0
+  - groovy.version 5.0.6 -> 5.0.8
+  - jacoco-maven-plugin 0.8.14 -> 0.8.15
+  - maven-bundle-plugin 6.0.2 -> 6.1.0
+  - maven-jar-plugin 3.5.0 -> 3.5.1
+  - maven-toolchains-plugin 3.2.0 -> 3.3.0
+
 
 ## [8.1.0] - 2026-06-03
 
@@ -32,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - maven-shade-plugin 3.6.1 -> 3.6.3
   - maven-site-plugin 3.21.0 -> 3.22.0
   - maven.surefire.version 3.5.4 -> 3.5.6
+
 
 ## [8.0.0] - 2026-01-27
 
