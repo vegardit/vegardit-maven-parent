@@ -193,7 +193,6 @@ check for new dependency/plugin updates using:
           * This ensures reproducible builds by fixing file timestamps.
           * See: https://maven.apache.org/guides/mini/guide-reproducible-builds.html
           */
-         @Grab(group='org.eclipse.jgit', module='org.eclipse.jgit', version='7.4.0.202509020913-r')
          import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
          def builder = new FileRepositoryBuilder().findGitDir(project.basedir);
@@ -655,6 +654,12 @@ check for new dependency/plugin updates using:
                   <version>${groovy.version}</version>
                   <type>pom</type>
                </dependency>
+               <dependency>
+                  <!-- used by groovy.script.onValidate, not using @Grab inline because it ignores repo config in Maven settings -->
+                  <groupId>org.eclipse.jgit</groupId>
+                  <artifactId>org.eclipse.jgit</artifactId>
+                  <version>7.7.1.202607240634-r</version>
+               </dependency>
             </dependencies>
          </plugin>
 
@@ -676,7 +681,7 @@ check for new dependency/plugin updates using:
                      <goal>add-third-party</goal>
                   </goals>
                   <configuration>
-                  <thirdPartyFilename>META-INF/LICENSE.THIRD-PARTY.txt</thirdPartyFilename>
+                     <thirdPartyFilename>META-INF/LICENSE.THIRD-PARTY.txt</thirdPartyFilename>
                      <skipAddThirdParty>${skip.license-maven-plugin.check-thirdparty-licenses}</skipAddThirdParty>
                      <sortArtifactByName>true</sortArtifactByName>
                      <failOnBlacklist>true</failOnBlacklist>
@@ -1043,9 +1048,9 @@ check for new dependency/plugin updates using:
                      <target>
                         <!-- delete the java.*/javax.* class stubs after compilation, before testing -->
                         <delete>
-                            <!-- we only delete class files not any potential other resource files -->
-                            <fileset erroronmissingdir="false" dir="${project.build.directory}/classes/java" includes="**/*.class" />
-                            <fileset erroronmissingdir="false" dir="${project.build.directory}/classes/javax" includes="**/*.class" />
+                           <!-- we only delete class files not any potential other resource files -->
+                           <fileset erroronmissingdir="false" dir="${project.build.directory}/classes/java" includes="**/*.class" />
+                           <fileset erroronmissingdir="false" dir="${project.build.directory}/classes/javax" includes="**/*.class" />
                         </delete>
 
                         <!-- recursively delete empty directories -->
@@ -1432,7 +1437,7 @@ check for new dependency/plugin updates using:
                <artifactId>maven-resources-plugin</artifactId>
                <version>3.5.0</version>
                <configuration>
-                 <!-- see https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html#Filtering_Properties_Files -->
+                  <!-- see https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html#Filtering_Properties_Files -->
                   <encoding>${project.build.sourceEncoding}</encoding>
                   <propertiesEncoding>${maven-resources-plugin.propertiesEncoding}</propertiesEncoding>
                </configuration>
