@@ -9,14 +9,13 @@ plugin announcements: https://blogs.apache.org/maven/
 check for new dependency/plugin updates using:
   mvn -U -ntp versions:display-dependency-updates versions:display-plugin-updates
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
    <modelVersion>4.0.0</modelVersion>
 
    <groupId>com.vegardit.maven</groupId>
    <artifactId>vegardit-maven-parent</artifactId>
-   <version>8.1.1-SNAPSHOT</version>
+   <version>8.2.0</version>
    <packaging>pom</packaging>
 
 
@@ -54,7 +53,7 @@ check for new dependency/plugin updates using:
       <url>https://github.com/vegardit/vegardit-maven-parent</url>
       <connection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</connection>
       <developerConnection>scm:git:https://github.com/vegardit/vegardit-maven-parent.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>8.2.0</tag>
    </scm>
 
 
@@ -331,8 +330,7 @@ check for new dependency/plugin updates using:
              */
             def javaVersion = getProjectProp("jdk.version");
             def javaMajorVersion = Integer.parseInt(javaVersion.indexOf(".") > -1 ? javaVersion.substring(0, javaVersion.indexOf(".")) : javaVersion);
-            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest() .setArtifact(ecjArtifactMeta) .setLocalRepository(session.localRepository) .setRemoteRepositories(project.remoteArtifactRepositories) ).artifacts[0]; setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath); /*
-             * check if .settings/org.eclipse.jdt.core.prefs is present
+            def ecjVersion = javaMajorVersion < 17 ? "3.33.0" : project.properties["eclipse-java-compiler.version"]; def ecjArtifactMeta = artifactFactory.createArtifactWithClassifier("org.eclipse.jdt", "ecj", ecjVersion, "jar", null); def ecjArtifact = artifactResolver.resolve(new org.apache.maven.artifact.resolver.ArtifactResolutionRequest() .setArtifact(ecjArtifactMeta) .setLocalRepository(session.localRepository) .setRemoteRepositories(project.remoteArtifactRepositories) ).artifacts[0]; setProjectProp("custom.ecjJarPath", ecjArtifact.file.absolutePath); /* * check if .settings/org.eclipse.jdt.core.prefs is present
              */
             jdtCorePrefsFile = new File(project.basedir, ".settings/org.eclipse.jdt.core.prefs");
             if(jdtCorePrefsFile.exists()) {
