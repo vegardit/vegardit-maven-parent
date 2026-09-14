@@ -666,7 +666,7 @@ check for new dependency/plugin updates using:
                   <!-- used by groovy.script.onValidate, not using @Grab inline because it ignores repo config in Maven settings -->
                   <groupId>org.eclipse.jgit</groupId>
                   <artifactId>org.eclipse.jgit</artifactId>
-                  <version>7.7.1.202607240634-r</version>
+                  <version>7.8.0.202609011348-r</version>
                </dependency>
             </dependencies>
          </plugin>
