@@ -1081,7 +1081,7 @@ check for new dependency/plugin updates using:
             <!-- https://github.com/apache/felix-dev/tree/master/tools/maven-bundle-plugin -->
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
-            <version>6.1.2</version>
+            <version>6.2.0</version>
             <extensions>true</extensions>
             <executions>
                <execution>
