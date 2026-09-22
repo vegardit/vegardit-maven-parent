@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.2.2] - 2026-09-22
+
+### Fixed
+
+- correct maven-shade-plugin version 3.6.3 -> 3.6.2
+
+### Changed
+
+- upgrade JGit 7.7.1.202607240634-r -> 7.8.0.202609011348-r
+- Maven plugin upgrades:
+  - extra-enforcer-rules 1.12.0 -> 1.12.1
+  - maven-bundle-plugin 6.1.2 -> 6.2.0
+  - maven-install-plugin 3.1.4 -> 3.2.0
+  - taglist-maven-plugin 3.2.2 -> 3.2.3
+  - versions-maven-plugin 2.21.0 -> 2.22.0
+
 
 ## [8.2.1] - 2026-09-07
 
