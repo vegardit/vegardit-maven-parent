@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Activate the managed Failsafe executions so inherited builds run `*ITest` classes during `mvn verify`.
 
+### Changed
+
+- Replace the retired `sign-maven-plugin` with `maven-gpg-plugin` using its pure Java BC signer.
+  Existing `SIGN_KEY` and `SIGN_KEY_PASS` configuration and key-file fallback are preserved.
+  No GPG executable or agent is required.
+  Missing signing keys now fail Maven Central release builds.
+
+
 ## [8.2.2] - 2026-09-22
 
 ### Fixed

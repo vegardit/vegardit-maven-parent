@@ -16,7 +16,7 @@
   </parent>
 
   <artifactId>vegardit-maven-parent.test</artifactId>
-  <description>Verifies the parent POM's compiler and test toolchain configuration.</description>
+  <description>Verifies the parent POM's toolchains and inherited artifact signing.</description>
 
   <properties>
     <jdk.version.unit-tests>21</jdk.version.unit-tests>
@@ -51,6 +51,32 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>check-signing@verify</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <scripts>
+                <script>${project.basedir}/src/test/groovy/verify-signing.groovy</script>
+              </scripts>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <!-- Generate disposable keys and verify signatures without a GPG executable. -->
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpg-jdk18on</artifactId>
+            <version>1.85</version>
+          </dependency>
+        </dependencies>
+      </plugin>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>

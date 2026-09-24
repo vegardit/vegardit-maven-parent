@@ -223,6 +223,25 @@ Add the following `parent` declaration to your Maven project `pom.xml`.
 ```
 
 
+### Signing releases
+
+Set `DEPLOY_RELEASES_TO_MAVEN_CENTRAL=true` to enable the release publishing profile.
+Artifacts are signed during `verify` using the [Maven GPG Plugin](https://maven.apache.org/plugins/maven-gpg-plugin/)
+and its pure Java BC signer.
+No GPG executable or agent is required.
+
+Existing signing configuration remains supported:
+
+- `SIGN_KEY`: the exported OpenPGP private key.
+  When absent, the signer reads `~/.m2/sign-key.asc`.
+- `SIGN_KEY_PASS`: the normal key passphrase, typically supplied as a CI secret.
+- `maven.deploy.skip=true`: skips signing.
+
+The Maven Central release profile requires valid signing credentials.
+Missing or invalid keys and incorrect passphrases fail the build.
+Environment values are passed directly to Maven GPG without trimming or special handling of `null`.
+
+
 ## <a name="changelog"></a>Changelog / Version History
 
 This project maintains a [changelog](CHANGELOG.md) and adheres to [Semantic Versioning](https://semver.org) and [Keep a CHANGELOG](https://keepachangelog.com)

@@ -2168,23 +2168,36 @@ check for new dependency/plugin updates using:
          <build>
             <plugins>
                <plugin>
-                  <!-- https://github.com/s4u/sign-maven-plugin -->
-                  <!-- use a pure Java based GPG plugin instead of maven-gpg-plugin to allow easy cross platform builds -->
-                  <groupId>org.simplify4u.plugins</groupId>
-                  <artifactId>sign-maven-plugin</artifactId>
-                  <version>1.2.0</version>
+                  <!-- https://maven.apache.org/plugins/maven-gpg-plugin/usage.html -->
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-gpg-plugin</artifactId>
+                  <version>3.2.8</version>
                   <executions>
                      <execution>
+                        <!-- Source and Javadoc artifacts are attached in post-integration-test, before signing. -->
                         <id>sign@verify</id>
                         <phase>verify</phase>
                         <goals>
                            <goal>sign</goal>
                         </goals>
                         <configuration>
+                           <!-- Explicit deployment skips remain supported; missing keys must fail Central releases. -->
                            <skip>${maven.deploy.skip}</skip>
                         </configuration>
                      </execution>
                   </executions>
+                  <configuration>
+                     <!-- BC signs in Java; disabling the agent also removes any local GPG setup requirement. -->
+                     <signer>bc</signer>
+                     <useAgent>false</useAgent>
+                     <!-- Only environment passphrases are supported; do not fall back to settings.xml credentials. -->
+                     <bestPractices>true</bestPractices>
+                     <!-- Keep existing CI secret names without putting their values in the POM. -->
+                     <keyEnvName>SIGN_KEY</keyEnvName>
+                     <passphraseEnvName>SIGN_KEY_PASS</passphraseEnvName>
+                     <!-- Relative key paths are resolved against user.home, matching the old default. -->
+                     <keyFilePath>.m2/sign-key.asc</keyFilePath>
+                  </configuration>
                </plugin>
                <plugin>
                   <artifactId>maven-deploy-plugin</artifactId>
