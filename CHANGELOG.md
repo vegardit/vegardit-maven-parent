@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Activate the managed Failsafe executions so inherited builds run `*ITest` classes during `mvn verify`.
+
 ## [8.2.2] - 2026-09-22
 
 ### Fixed

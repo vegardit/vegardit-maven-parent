@@ -64,7 +64,11 @@ Opinionated best practices [Maven](https://maven.apache.org) parent project with
 - Configures the [japicmp-maven-plugin](https://siom79.github.io/japicmp/MavenPlugin.html) to ensure [SemVer](https://semver.org/)-compliant binary compatibility between versions
 - Configures the [license-maven-plugin](https://www.mojohaus.org/license-maven-plugin/) to block dependencies licensed under GPL/AGPL.
 - Configures the [jacoco-maven-plugin](https://www.eclemma.org/jacoco/trunk/doc/maven.html) for [test coverage](https://en.wikipedia.org/wiki/Code_coverage).
-- Executes test classes named `*Test` as unit-tests with the [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin/) and test classes named `*ITest` as integration-tests with the [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin/) in the verify [licefycle phase](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
+- Runs unit tests with the [maven-surefire-plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
+  in the `test` lifecycle phase, excluding `*ITest` classes.
+- Runs `*ITest` classes with the [maven-failsafe-plugin](https://maven.apache.org/surefire/maven-failsafe-plugin/)
+  in the `integration-test` lifecycle phase and checks their results in `verify`.
+  Run `mvn verify` to include integration tests.
 - Displays execution times of Maven plugins at the end of the build via [maven-buildtime-extension](https://github.com/timgifford/maven-buildtime-extension), e.g.:
   ```py
   [INFO] ------------------------------------------------------------------------

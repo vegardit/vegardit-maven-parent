@@ -16,10 +16,15 @@
   </parent>
 
   <artifactId>vegardit-maven-parent.test</artifactId>
+  <description>Verifies the parent POM's compiler and test toolchain configuration.</description>
 
   <properties>
     <jdk.version.unit-tests>21</jdk.version.unit-tests>
+    <!-- Use a different JDK to verify the switch from unit tests to integration tests. -->
+    <jdk.version.integration-tests>17</jdk.version.integration-tests>
     <maven.surefire.args>-Djdk.version.unit-tests=${jdk.version.unit-tests}</maven.surefire.args>
+    <maven.failsafe.args>-Djdk.version.integration-tests=${jdk.version.integration-tests}</maven.failsafe.args>
+    <failIfNoITests>true</failIfNoITests>
     <maven.deploy.skip>true</maven.deploy.skip>
     <central-publishing-maven-plugin.excludedArtifacts>${project.artifactId}</central-publishing-maven-plugin.excludedArtifacts>
   </properties>
@@ -43,4 +48,38 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>check-integration-tests@verify</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <!-- A missing Failsafe binding must fail a clean build even though no integration test can run. -->
+                <fail message="Failsafe did not run RuntimeJavaVersionITest. Check that the parent activates maven-failsafe-plugin.">
+                  <condition>
+                    <and>
+                      <not><istrue value="${skipTests}" /></not>
+                      <not><istrue value="${skipITs}" /></not>
+                      <not><istrue value="${maven.test.skip}" /></not>
+                      <not>
+                        <available file="${project.build.directory}/failsafe-reports/TEST-com.vegardit.maven.parent.test.RuntimeJavaVersionITest.xml" type="file" />
+                      </not>
+                    </and>
+                  </condition>
+                </fail>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
