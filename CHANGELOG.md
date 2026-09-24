@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [8.2.3] - 2026-09-24
+
 ### Fixed
 
 - Activate the managed Failsafe executions so inherited builds run `*ITest` classes during `mvn verify`.
@@ -18,6 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Existing `SIGN_KEY` and `SIGN_KEY_PASS` configuration and key-file fallback are preserved.
   No GPG executable or agent is required.
   Missing signing keys now fail Maven Central release builds.
+
+- Maven plugin upgrades:
+  - build-helper-maven-plugin 3.6.1 -> 3.6.2
+  - exec-maven-plugin 3.6.3 -> 3.6.4
+  - jrebel-maven-plugin 1.2.1 -> 1.2.2
+  - maven-deploy-plugin 3.1.4 -> 3.2.0
+  - sign-maven-plugin 1.1.0 -> 1.2.0
 
 
 ## [8.2.2] - 2026-09-22
