@@ -73,7 +73,7 @@
             <!-- Generate disposable keys and verify signatures without a GPG executable. -->
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpg-jdk18on</artifactId>
-            <version>1.85</version>
+            <version>1.86</version>
           </dependency>
         </dependencies>
       </plugin>
