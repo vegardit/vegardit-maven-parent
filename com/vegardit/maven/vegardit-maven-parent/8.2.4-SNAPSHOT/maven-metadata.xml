@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.vegardit.maven</groupId>
+  <artifactId>vegardit-maven-parent</artifactId>
+  <versioning>
+    <lastUpdated>20261103180805</lastUpdated>
+    <snapshot>
+      <timestamp>20261103.180805</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>8.2.4-20261103.180805-1</value>
+        <updated>20261103180805</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>checkstyle</classifier>
+        <extension>xml</extension>
+        <value>8.2.4-20261103.180805-1</value>
+        <updated>20261103180805</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>eclipse-formatter</classifier>
+        <extension>xml</extension>
+        <value>8.2.4-20261103.180805-1</value>
+        <updated>20261103180805</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+  <version>8.2.4-SNAPSHOT</version>
+</metadata>
