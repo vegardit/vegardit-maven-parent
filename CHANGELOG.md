@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [8.2.4 ] - 2026-11-03
+
+### Changed
+
+- Maven plugin upgrades:
+  - central-publishing-maven-plugin 0.11.0 -> 0.12.0
+  - checkstyle 14.1.0 -> 14.4.0
+  - doxia-module-markdown 2.1.0 -> 2.2.0
+  - jacoco-maven-plugin 0.8.15 -> 0.8.16
+  - japicmp-maven-plugin 0.26.2 -> 0.26.5
+  - maven-enforcer-plugin 3.6.3 -> 3.7.0
+  - maven.surefire.version 3.6.0 -> 3.6.1
+  - versions-maven-plugin 2.22.0 -> 2.23.0
+
+
 ## [8.2.3] - 2026-09-24
 
 ### Fixed
